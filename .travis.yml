@@ -1,0 +1,20 @@
+language: python
+dist: xenial
+sudo: required
+env:
+python:
+    - "3.7"
+    - "3.7-dev"
+install:
+    - "pip install -U black mypy pylint isort"
+    - "pip install -U ."
+script:
+    - "make test"
+matrix:
+    allow_failures:
+        - python: "3.7-dev"
+    include:
+        - python: "3.6"
+          env: LINTING=true
+          script:
+              - "make lint test"

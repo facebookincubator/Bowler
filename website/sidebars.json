@@ -1,0 +1,21 @@
+{
+  "docs": {
+    "Basics": [
+      "basics-intro",
+      "basics-refactoring",
+      "basics-setup",
+      "basics-usage"
+    ],
+    "API Reference": [
+      "api-query",
+      "api-selectors",
+      "api-filters",
+      "api-modifiers",
+      "api-commands"
+    ],
+    "Contributing": [
+      "dev-intro",
+      "dev-roadmap"
+    ]
+  }
+}

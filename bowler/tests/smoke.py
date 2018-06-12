@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import logging
+
+from pathlib import Path
+from unittest import TestCase
+
+from fissix.fixer_util import Call, Name
+from ..types import TOKEN
+from ..query import Query
+
+
+class SmokeTest(TestCase):
+    def test_tr(self):
+        target = Path(__file__).parent / "smoke-target.py"
+
+        def takes_string_literal(node, capture, fn):
+            args = capture.get("args")
+            return args and args[0].type == TOKEN.STRING
+
+        def wrap_string(node, capture, fn):
+            args = capture["args"]
+            if args and args[0].type == TOKEN.STRING:
+                literal = args[0]
+                literal.replace(Call(Name("tr"), [literal.clone()]))
+
+        files_processed = []
+        hunks_processed = 0
+
+        def verify_hunk(filename, hunk):
+            nonlocal hunks_processed
+            files_processed.append(filename)
+            hunks_processed += 1
+
+            self.assertIn("""-print("Hello world!")""", hunk)
+            self.assertIn("""+print(tr("Hello world!"))""", hunk)
+
+        (
+            Query(str(target))
+            .select(
+                """
+                power< "print" trailer< "(" args=any* ")" > >
+            """
+            )
+            .filter(takes_string_literal)
+            .modify(wrap_string)
+            .process(verify_hunk)
+            .silent()
+        )
+
+        self.assertEqual(hunks_processed, 1)
+        self.assertEqual(len(files_processed), 1)
+        self.assertIn("smoke-target.py", files_processed[0])
