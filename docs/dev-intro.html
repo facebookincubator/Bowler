@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Developing Bowler · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="We want to make contributing to this project as easy and transparent as"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Developing Bowler · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/index.html"/><meta property="og:description" content="We want to make contributing to this project as easy and transparent as"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function(){
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Contributing</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul><li class="navListItem navListItemActive"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Developing Bowler</h1></header><article><div><span><p>We want to make contributing to this project as easy and transparent as
+possible.</p>
+<h2><a class="anchor" aria-hidden="true" id="getting-started"></a><a href="#getting-started" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Getting Started</h2>
+<p>When developing Bowler, follow these steps to setup your environment,
+format your code, and run linters and unit  tests:</p>
+<ol>
+<li><p>Fork <a href="https://github.com/facebookincubator/bowler">Bowler</a> on Github.</p></li>
+<li><p>Clone the git repo:</p></li>
+</ol>
+<pre><code class="hljs css languages- bash">$ <span class="token function">git</span> clone https://github.com/<span class="token variable">$USERNAME</span>/bowler
+$ <span class="token function">cd</span> bowler
+</code></pre>
+<ol>
+<li>Setup the virtual environment with dependencies and tools:</li>
+</ol>
+<pre><code class="hljs css languages- bash">$ <span class="token function">make</span> dev
+$ <span class="token function">source</span> .venv/bin/activate
+</code></pre>
+<ol>
+<li>Format your code using <a href="https://github.com/ambv/black"><em>Black</em></a> and
+<a href="https://pypi.org/project/isort/">isort</a>:</li>
+</ol>
+<pre><code class="hljs css languages- bash">$ <span class="token function">make</span> <span class="token function">format</span>
+</code></pre>
+<ol>
+<li>Run linter, type checks, and unit tests:</li>
+</ol>
+<pre><code class="hljs css languages- bash">$ <span class="token function">make</span> lint <span class="token function">test</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="pull-requests"></a><a href="#pull-requests" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pull Requests</h2>
+<p>We actively welcome your pull requests.</p>
+<ol>
+<li>If you've added code that should be tested, add unit tests.</li>
+<li>If you've changed APIs, update the documentation.</li>
+<li>Ensure the test suite passes.</li>
+<li>Make sure your code lints.</li>
+<li>If you haven't already, complete the Contributor License Agreement (&quot;CLA&quot;).</li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="contributor-license-agreement-cla"></a><a href="#contributor-license-agreement-cla" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Contributor License Agreement (&quot;CLA&quot;)</h2>
+<p>In order to accept your pull request, we need you to submit a CLA. You only need
+to do this once to work on any of Facebook's open source projects.</p>
+<p>Complete your CLA here: <a href="https://code.facebook.com/cla">https://code.facebook.com/cla</a></p>
+<h2><a class="anchor" aria-hidden="true" id="issues"></a><a href="#issues" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Issues</h2>
+<p>We use GitHub issues to track public bugs. Please ensure your description is
+clear and has sufficient instructions to be able to reproduce the issue.</p>
+<p>Facebook has a <a href="https://www.facebook.com/whitehat/">bounty program</a> for the safe
+disclosure of security bugs. In those cases, please go through the process
+outlined on that page and do not file a public issue.</p>
+<h2><a class="anchor" aria-hidden="true" id="license"></a><a href="#license" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>License</h2>
+<p>By contributing to Bowler, you agree that your contributions will be licensed
+under the <code>LICENSE</code> file in the root directory of this source tree.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api-commands">← CLI Commands</a><a class="docs-next button" href="/docs/dev-roadmap">Roadmap to the Future →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#getting-started">Getting Started</a></li><li><a href="#pull-requests">Pull Requests</a></li><li><a href="#contributor-license-agreement-cla">Contributor License Agreement (&quot;CLA&quot;)</a></li><li><a href="#issues">Issues</a></li><li><a href="#license">License</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2018 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

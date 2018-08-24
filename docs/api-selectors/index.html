@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Selectors · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Selectors are defined using the **lib2to3** pattern syntax to search the syntax tree"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Selectors · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/index.html"/><meta property="og:description" content="Selectors are defined using the **lib2to3** pattern syntax to search the syntax tree"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function(){
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>API Reference</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul><li class="navListItem"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Selectors</h1></header><article><div><span><p>Selectors are defined using the <strong>lib2to3</strong> pattern syntax to search the syntax tree
+for elements matching that pattern, and capturing specific nested nodes when matches
+are found. Patterns can be nested, with alternate branches, allowing arbitrarily
+complex matching.</p>
+<h2><a class="anchor" aria-hidden="true" id="pattern-syntax"></a><a href="#pattern-syntax" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pattern Syntax</h2>
+<p>Selector patterns follow a very simple syntax, as defined in the <strong>lib2to3</strong>
+<a href="https://github.com/python/cpython/blob/master/Lib/lib2to3/PatternGrammar.txt">pattern grammar</a>. Matching elements of the <a href="https://github.com/python/cpython/blob/master/Lib/lib2to3/Grammar.txt">Python grammar</a> is done by listing
+the grammar element, optionally followed by angle brackets containing nested match
+expressions. The <code>any</code> keyword can be used to match grammar elements, regardless of
+their type, while <code>*</code> denotes elements that repeat zero or more times. Make sure to
+include necessary string literal tokens when using nested expressions, and <code>any*</code> to
+match remaining grammar elements.</p>
+<p>Example pattern to match class definitions that contain a function definition (the
+&quot;suite&quot; denotes the body of the class definition):</p>
+<pre><code class="hljs css languages- python">PATTERN <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    classdef&lt;
+        any*
+        suite&lt;
+            any* funcdef any*
+        >
+    >
+"""</span>
+</code></pre>
+<p>The root element of the expression is what will be passed to filters and modifiers by
+default when matched. Capturing nested elements is done by preceding elements in the
+expressions with the desired name and an equals sign – these elements will then show
+up in the <code>Capture</code> argument to filters and modifiers. Square brackets can denote
+optional (zero or one) elements.</p>
+<p>Building on the example above, we can capture the defined classname, any ancestors, and
+the function name:</p>
+<pre><code class="hljs css languages- python">PATTERN <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    classdef&lt;
+        "class" name=NAME ["(" [ancestors=arglist] ")"] ":"
+        suite&lt;
+            any*
+            funcdef&lt; "def" func_name=NAME any* >
+            any*
+        >
+    >
+"""</span>
+</code></pre>
+<p>To capture multiple possible arrangements of grammar elements, the <code>|</code> can be used with
+parentheses to combine expressions. You can reuse capture names for each expression,
+and you can further nest alternative expressions.</p>
+<p>To find both function definitions and function calls in a single selector:</p>
+<pre><code class="hljs css languages- python">PATTERN <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    (
+        funcdef&lt; "def" name=NAME "(" [args=typedargslist] ")" any* >
+    |
+        power&lt; name=NAME trailer&lt; "(" [args=arglist] ")" > any* >
+    )
+"""</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="selector-reference"></a><a href="#selector-reference" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Selector Reference</h2>
+<p>All selectors are accessed as methods on the <a href="api-query"><code>Query</code></a> class:</p>
+<ul>
+<li><a href="#select"><code>.select()</code></a></li>
+<li><a href="#select-root"><code>.select_root()</code></a></li>
+<li><a href="#select-module"><code>.select_module()</code></a></li>
+<li><a href="#select-class"><code>.select_class()</code></a></li>
+<li><a href="#select-subclass"><code>.select_subclass()</code></a></li>
+<li><a href="#select-attribute"><code>.select_attribute()</code></a></li>
+<li><a href="#select-method"><code>.select_method()</code></a></li>
+<li><a href="#select-function"><code>.select_function()</code></a></li>
+<li><a href="#select-var"><code>.select_var()</code></a></li>
+</ul>
+<blockquote>
+<p>Note: Bowler's API is still in a &quot;provisional&quot; phase.  The core concepts will likely
+stay the same, but individual method signatures may change as the tool matures or
+gains new functionality.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="select"></a><a href="#select" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select()</code></h3>
+<p>Supply a custom selector pattern as the given string, and auto-format it with any
+supplied keyword arguments. Captures are defined by the supplied pattern.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select<span class="token punctuation">(</span>pattern<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="select-root"></a><a href="#select-root" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_root()</code></h3>
+<p>Select only the root node of the syntax tree, the <code>file_input</code> node. No captures.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_root<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="select-module"></a><a href="#select-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_module()</code></h3>
+<p>Select specified modules when imported and referenced.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_module<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>module_access</td><td>Attributes accessed</td><td><code>foo.bar()</code></td><td><code>bar</code></td></tr>
+<tr><td>module_imports</td><td>Attributes imported</td><td><code>from foo import bar</code></td><td><code>[bar]</code></td></tr>
+<tr><td>module_name</td><td>Name of module</td><td><code>import foo</code></td><td><code>foo</code></td></tr>
+<tr><td>module_nickname</td><td>Nickname at import</td><td><code>import foo as bar</code></td><td><code>bar</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-class"></a><a href="#select-class" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_class()</code></h3>
+<p>Select specified classes when imported, defined, subclassed, or instantiated.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_class<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>class_arguments</td><td>Arguments of instantiation</td><td><code>Foo(bar)</code></td><td><code>bar</code></td></tr>
+<tr><td>class_call</td><td>Class being instantiated</td><td><code>Foo()</code></td><td><code>Foo</code></td></tr>
+<tr><td>class_def</td><td>Root of the class definition</td><td><code>class Foo:</code></td><td><code>class</code></td></tr>
+<tr><td>class_import</td><td>Root of the import</td><td><code>from foo import Bar</code></td><td><code>from</code></td></tr>
+<tr><td>class_name</td><td>Name of class</td><td><code>class Bar(Foo):</code></td><td><code>Bar</code></td></tr>
+<tr><td>class_subclass</td><td>Root of the subclass definition</td><td><code>class Bar(Foo):</code></td><td><code>class</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-subclass"></a><a href="#select-subclass" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_subclass()</code></h3>
+<p>Select subclasses of specified classes when defined.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_subclass<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>class_ancestor</td><td>Name of ancestor class</td><td><code>class Bar(Foo):</code></td><td><code>Foo</code></td></tr>
+<tr><td>class_def</td><td>Root of the class definition</td><td><code>class Bar(Foo):</code></td><td><code>class</code></td></tr>
+<tr><td>class_name</td><td>Name of class</td><td><code>class Bar(Foo):</code></td><td><code>Bar</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-attribute"></a><a href="#select-attribute" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_attribute()</code></h3>
+<p>Select specified class attributes when defined, assigned, or accessed.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_attribute<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>attr_class</td><td>Root of class definition</td><td>n/a</td><td>n/a</td></tr>
+<tr><td>attr_access</td><td>Attribute access</td><td><code>value = self.foo</code></td><td><code>value</code></td></tr>
+<tr><td>attr_assignment</td><td>Attribute assignment</td><td><code>self.foo = 42</code></td><td><code>self.foo</code></td></tr>
+<tr><td>attr_name</td><td>Name of attribute</td><td><code>self.foo = 42</code></td><td><code>foo</code></td></tr>
+<tr><td>attr_value</td><td>Value of attribute</td><td><code>self.foo = 42</code></td><td><code>42</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-method"></a><a href="#select-method" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_method()</code></h3>
+<p>Select specified class methods when defined or called.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_method<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>decorator</td><td>Method decorator</td><td><code>@classmethod</code></td><td><code>@classmethod</code></td></tr>
+<tr><td>function_arguments</td><td>Method arguments</td><td><code>def foo(self):</code></td><td><code>[self]</code></td></tr>
+<tr><td>function_call</td><td>Method invocation</td><td><code>foo.bar()</code></td><td><code>foo</code></td></tr>
+<tr><td>function_def</td><td>Method definition</td><td><code>def foo(self):</code></td><td><code>def</code></td></tr>
+<tr><td>function_name</td><td>Method name</td><td><code>def foo(self):</code></td><td><code>foo</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-function"></a><a href="#select-function" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_function()</code></h3>
+<p>Select specified functions when imported, defined, or called.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_class<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>decorator</td><td>Function decorator</td><td><code>@wraps</code></td><td><code>@wraps</code></td></tr>
+<tr><td>function_arguments</td><td>Function arguments</td><td><code>def foo(a, b):</code></td><td><code>[a, b]</code></td></tr>
+<tr><td>function_call</td><td>Function invocation</td><td><code>foo()</code></td><td><code>foo</code></td></tr>
+<tr><td>function_def</td><td>Function definition</td><td><code>def foo(self):</code></td><td><code>def</code></td></tr>
+<tr><td>function_import</td><td>Function import</td><td><code>from foo import bar</code></td><td><code>from</code></td></tr>
+<tr><td>function_name</td><td>Function name</td><td><code>def foo(self):</code></td><td><code>foo</code></td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="select-var"></a><a href="#select-var" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.select_var()</code></h3>
+<p>Select arbitrary names when assigned or referenced.</p>
+<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>select_var<span class="token punctuation">(</span>name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span>
+</code></pre>
+<table>
+<thead>
+<tr><th>Capture</th><th>Description</th><th>Example</th><th>Match</th></tr>
+</thead>
+<tbody>
+<tr><td>var_assignment</td><td>Variable assignment</td><td><code>foo = 42</code></td><td><code>foo = 42</code></td></tr>
+<tr><td>var_name</td><td>Variable name</td><td><code>foo = 42</code></td><td><code>foo</code></td></tr>
+<tr><td>var_value</td><td>Assignment value</td><td><code>foo = 42</code></td><td><code>42</code></td></tr>
+</tbody>
+</table>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api-query">← Queries</a><a class="docs-next button" href="/docs/api-filters">Filters →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#pattern-syntax">Pattern Syntax</a></li><li><a href="#selector-reference">Selector Reference</a><ul class="toc-headings"><li><a href="#select"><code>.select()</code></a></li><li><a href="#select-root"><code>.select_root()</code></a></li><li><a href="#select-module"><code>.select_module()</code></a></li><li><a href="#select-class"><code>.select_class()</code></a></li><li><a href="#select-subclass"><code>.select_subclass()</code></a></li><li><a href="#select-attribute"><code>.select_attribute()</code></a></li><li><a href="#select-method"><code>.select_method()</code></a></li><li><a href="#select-function"><code>.select_function()</code></a></li><li><a href="#select-var"><code>.select_var()</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2018 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

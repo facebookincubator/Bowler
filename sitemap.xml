@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://pybowler.io/help</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/en/help" /> </url>
+<url> <loc>https://pybowler.io/index</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/en/index" /> </url>
+<url> <loc>https://pybowler.io/users</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/en/users" /> </url>
+<url> <loc>https://pybowler.io/blog/2018/08/24/launch</loc> <changefreq>weekly</changefreq> <priority>0.3</priority> </url>
+<url> <loc>https://pybowler.io/docs/api-commands</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/api-commands" /> </url>
+<url> <loc>https://pybowler.io/docs/api-filters</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/api-filters" /> </url>
+<url> <loc>https://pybowler.io/docs/api-modifiers</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/api-modifiers" /> </url>
+<url> <loc>https://pybowler.io/docs/api-query</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/api-query" /> </url>
+<url> <loc>https://pybowler.io/docs/api-selectors</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/api-selectors" /> </url>
+<url> <loc>https://pybowler.io/docs/basics-intro</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/basics-intro" /> </url>
+<url> <loc>https://pybowler.io/docs/basics-refactoring</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/basics-refactoring" /> </url>
+<url> <loc>https://pybowler.io/docs/basics-setup</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/basics-setup" /> </url>
+<url> <loc>https://pybowler.io/docs/basics-usage</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/basics-usage" /> </url>
+<url> <loc>https://pybowler.io/docs/dev-intro</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/dev-intro" /> </url>
+<url> <loc>https://pybowler.io/docs/dev-roadmap</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://pybowler.io/docs/dev-roadmap" /> </url>
+</urlset>
