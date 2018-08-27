@@ -98,8 +98,9 @@ class BowlerTool(RefactoringTool):
             self.hunk_processor = lambda f, h: True
 
     def get_fixers(self) -> Tuple[Fixers, Fixers]:
-        pre: Fixers = []
-        post: Fixers = [f(self.options, self.fixer_log) for f in self.fixers]
+        fixers = [f(self.options, self.fixer_log) for f in self.fixers]
+        pre: Fixers = [f for f in fixers if f.order == "pre"]
+        post: Fixers = [f for f in fixers if f.order == "post"]
         return pre, post
 
     def processed_file(

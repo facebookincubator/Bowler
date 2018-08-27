@@ -864,6 +864,45 @@ class Query:
         self.processors.append(callback)
         return self
 
+    def create_fixer(self, transform):
+        if transform.fixer:
+            bm_compat = transform.fixer.BM_compatible
+            pattern = transform.fixer.PATTERN
+
+        else:
+            bm_compat = False
+            log.debug(f"select {transform.selector}[{transform.kwargs}]")
+            pattern = SELECTORS[transform.selector].format(**transform.kwargs)
+
+            pattern = " ".join(
+                line
+                for wholeline in pattern.splitlines()
+                for line in (wholeline.strip(),)
+                if line
+            )
+
+            log.debug(f"generated pattern: {pattern}")
+
+        filters = transform.filters
+        callbacks = transform.callbacks
+
+        log.debug(f"registered {len(filters)} filters: {filters}")
+        log.debug(f"registered {len(callbacks)} callbacks: {callbacks}")
+
+        class Fixer(BaseFix):
+            PATTERN = pattern  # type: ignore
+            BM_compatible = bm_compat
+
+            def transform(self, node: Node, capture: Capture) -> None:
+                filename = cast(Filename, self.filename)
+                if not filters or all(f(node, capture, filename) for f in filters):
+                    if transform.fixer:
+                        transform.fixer().transform(node, capture)
+                    for callback in callbacks:
+                        callback(node, capture, filename)
+
+        return Fixer
+
     def compile(self) -> List[Type[BaseFix]]:
         if not self.transforms:
             log.debug(f"no selectors chosen, defaulting to select_root")
@@ -871,43 +910,7 @@ class Query:
 
         fixers: List[Type[BaseFix]] = []
         for transform in self.transforms:
-            if transform.fixer:
-                bm_compat = transform.fixer.BM_compatible
-                pattern = transform.fixer.PATTERN
-
-            else:
-                bm_compat = False
-                log.debug(f"select {transform.selector}[{transform.kwargs}]")
-                pattern = SELECTORS[transform.selector].format(**transform.kwargs)
-
-                pattern = " ".join(
-                    line
-                    for wholeline in pattern.splitlines()
-                    for line in (wholeline.strip(),)
-                    if line
-                )
-
-                log.debug(f"generated pattern: {pattern}")
-
-            filters = transform.filters
-            callbacks = transform.callbacks
-
-            log.debug(f"registered {len(filters)} filters: {filters}")
-            log.debug(f"registered {len(callbacks)} callbacks: {callbacks}")
-
-            class Fixer(BaseFix):
-                PATTERN = pattern  # type: ignore
-                BM_compatible = bm_compat
-
-                def transform(self, node: Node, capture: Capture) -> None:
-                    filename = cast(Filename, self.filename)
-                    if not filters or all(f(node, capture, filename) for f in filters):
-                        if transform.fixer:
-                            transform.fixer().transform(node, capture)
-                        for callback in callbacks:
-                            callback(node, capture, filename)
-
-            fixers.append(Fixer)
+            fixers.append(self.create_fixer(transform))
 
         return fixers
 

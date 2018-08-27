@@ -34,16 +34,20 @@ class SmokeTest(TestCase):
 
             self.assertIn("""-print("Hello world!")""", hunk)
             self.assertIn("""+print(tr("Hello world!"))""", hunk)
+            self.assertIn("""-def foo():""", hunk)
+            self.assertIn("""+def foo(bar="something"):""", hunk)
 
         (
             Query(str(target))
             .select(
                 """
                 power< "print" trailer< "(" args=any* ")" > >
-            """
+                """
             )
             .filter(takes_string_literal)
             .modify(wrap_string)
+            .select_function("foo")
+            .add_argument("bar", '"something"')
             .process(verify_hunk)
             .silent()
         )
