@@ -17,7 +17,7 @@ Bowler uses a "fluent" `Query` API to build refactoring scripts through a series
 of selectors, filters, and modifiers.  Many simple modifications are already possible
 using the existing API, but you can also provide custom selectors, filters, and
 modifiers as needed to build more complex or custom refactorings.  See the
-[Query Reference](https://pybowler.io/docs/api-query.md) for more details.
+[Query Reference](https://pybowler.io/docs/api-query) for more details.
 
 Using the query API to rename a single function, and generate an interactive diff from
 the results, would look something like this:
