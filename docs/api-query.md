@@ -13,7 +13,7 @@ Example usage of the fluent API:
 ```python
 (
     Query()
-    .select_name("foo")
+    .select_function("foo")
     .rename("bar")
     .diff()
 )
@@ -24,7 +24,7 @@ build, and execute an equivalent query without the fluent API:
 
 ```python
 query = Query()
-query.select_name("foo")
+query.select_function("foo")
 query.rename("bar")
 query.diff()
 ```
