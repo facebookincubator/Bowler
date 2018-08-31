@@ -34,7 +34,7 @@ to a variable or reference that variable for every method call.</p>
 <p>Example usage of the fluent API:</p>
 <pre><code class="hljs css languages- python"><span class="token punctuation">(</span>
     Query<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span>select_name<span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span>select_function<span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span>rename<span class="token punctuation">(</span><span class="token string">"bar"</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span>diff<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span>
@@ -42,7 +42,7 @@ to a variable or reference that variable for every method call.</p>
 <p>In the example, the query object was never assigned to a variable, but you could write,
 build, and execute an equivalent query without the fluent API:</p>
 <pre><code class="hljs css languages- python">query <span class="token operator">=</span> Query<span class="token punctuation">(</span><span class="token punctuation">)</span>
-query<span class="token punctuation">.</span>select_name<span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
+query<span class="token punctuation">.</span>select_function<span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
 query<span class="token punctuation">.</span>rename<span class="token punctuation">(</span><span class="token string">"bar"</span><span class="token punctuation">)</span>
 query<span class="token punctuation">.</span>diff<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
