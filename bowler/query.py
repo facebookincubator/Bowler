@@ -142,6 +142,7 @@ class Query:
              [')'] >
         |
             module_name=power<
+                [TOKEN]
                 {power_name}
                 module_access=trailer< any* >*
             >
@@ -318,6 +319,7 @@ class Query:
             >
         |
             function_call=power<
+                [TOKEN]
                 function_name='{name}'
                 function_parameters=trailer< '(' function_arguments=any* ')' >
                 remainder=any*
