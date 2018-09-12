@@ -169,7 +169,7 @@ query.select_method(name: str)
 
 Capture | Description | Example | Match
 ---|---|---|---
-decorator | Method decorator | `@classmethod` | `@classmethod`
+decorators | Method decorators | `@classmethod` | `@classmethod`
 function_arguments | Method arguments | `def foo(self):` | `[self]`
 function_call | Method invocation | `foo.bar()` | `foo`
 function_def | Method definition | `def foo(self):` | `def`
@@ -185,7 +185,7 @@ query.select_class(name: str)
 
 Capture | Description | Example | Match
 ---|---|---|---
-decorator | Function decorator | `@wraps` | `@wraps`
+decorators | Function decorators | `@wraps` | `@wraps`
 function_arguments | Function arguments | `def foo(a, b):` | `[a, b]`
 function_call | Function invocation | `foo()` | `foo`
 function_def | Function definition | `def foo(self):` | `def`

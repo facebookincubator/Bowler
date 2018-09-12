@@ -265,7 +265,7 @@ class Query:
         """
         (
             decorated=decorated<
-                decorator=decorator< any* >
+                decorators=decorators
                 function_def=funcdef<
                     'def' function_name='{name}'
                     function_parameters=parameters< '('
@@ -303,7 +303,7 @@ class Query:
         """
         (
             decorated=decorated<
-                decorator=decorator< any* >
+                decorators=decorators
                 function_def=funcdef<
                     'def' function_name='{name}'
                     function_parameters=parameters< '(' function_arguments=any* ')' >
