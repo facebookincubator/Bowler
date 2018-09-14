@@ -17,7 +17,7 @@ pip install bowler
 You can also install a development version from source by checking out the Git repo:
 
 ```bash
-git clone https://github.com/facebook/bowler
+git clone https://github.com/facebookincubator/Bowler
 cd bowler
 python setup.py install
 ```
