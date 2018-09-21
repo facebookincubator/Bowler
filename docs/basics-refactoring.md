@@ -79,7 +79,7 @@ An example selector to find all uses of the `print` function might look like:
 ```python
 pattern = """
     power< "print"
-        trailer< "(" print_args=any* ")"
+        trailer< "(" print_args=any* ")" >
     >
 """
 
