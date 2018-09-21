@@ -30,6 +30,7 @@ from .types import (
     START,
     SYMBOL,
     TOKEN,
+    BowlerException,
     Callback,
     Capture,
     Filename,
@@ -895,7 +896,7 @@ class Query:
             PATTERN = pattern  # type: ignore
             BM_compatible = bm_compat
 
-            def transform(self, node: Node, capture: Capture) -> Optional[Node]:
+            def transform(self, node: LN, capture: Capture) -> LN[Node]:
                 filename = cast(Filename, self.filename)
                 returned_node = None
                 if not filters or all(f(node, capture, filename) for f in filters):
@@ -906,7 +907,7 @@ class Query:
                         # If the modifier returns a node
                         if callback_return is not None:
                             if returned_node and not (returned_node is callback_return):
-                                raise Exception(
+                                raise BowlerException(
                                     "Multiple modifier functions used, "
                                     "each returned a different node."
                                 )
