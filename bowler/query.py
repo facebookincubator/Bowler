@@ -895,13 +895,23 @@ class Query:
             PATTERN = pattern  # type: ignore
             BM_compatible = bm_compat
 
-            def transform(self, node: Node, capture: Capture) -> None:
+            def transform(self, node: Node, capture: Capture) -> Optional[Node]:
                 filename = cast(Filename, self.filename)
+                returned_node = None
                 if not filters or all(f(node, capture, filename) for f in filters):
                     if transform.fixer:
-                        transform.fixer().transform(node, capture)
+                        returned_node = transform.fixer().transform(node, capture)
                     for callback in callbacks:
-                        callback(node, capture, filename)
+                        callback_return = callback(node, capture, filename)
+                        # If the modifier returns a node
+                        if callback_return is not None:
+                            if returned_node and not (returned_node is callback_return):
+                                raise Exception(
+                                    "Multiple modifier functions used, "
+                                    "each returned a different node."
+                                )
+                            returned_node = callback_return
+                return returned_node
 
         return Fixer
 
