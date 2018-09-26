@@ -58,8 +58,8 @@ def do(interactive: bool, query: str, paths: List[str]) -> None:
             }
             IPython.start_ipython(argv=[], user_ns=namespace)
 
-        except ImportError:
-            pass
+        except ImportError as e:
+            raise click.ClickException(f"failed to import IPython: {e}") from e
 
         finally:
             return
