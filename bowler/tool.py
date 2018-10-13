@@ -136,9 +136,10 @@ class BowlerTool(RefactoringTool):
             return hunks
 
         try:
+            if not input.endswith("\n"):
+                input += "\n"
             tree = self.refactor_string(input, filename)
             hunks = self.processed_file(str(tree), filename, input)
-
         except ParseError:
             self.log_debug("Failed to parse %s, skipping", filename)
 
