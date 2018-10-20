@@ -18,7 +18,7 @@ You can also install a development version from source by checking out the Git r
 
 ```bash
 git clone https://github.com/facebookincubator/Bowler
-cd bowler
+cd Bowler
 python setup.py install
 ```
 

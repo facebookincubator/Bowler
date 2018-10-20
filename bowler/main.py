@@ -20,7 +20,7 @@ from .types import START, SYMBOL, TOKEN
 def main(ctx: click.Context, debug: bool, version: bool) -> None:
     """Safe Python code modification and refactoring."""
     if version:
-        from python.bowler import __version__
+        from bowler import __version__
 
         click.echo(f"bowler {__version__}")
         return
