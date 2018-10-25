@@ -243,7 +243,7 @@ class BowlerTool(RefactoringTool):
         auto_yes = False
         need_patch = False
         result = ""
-        accepted_hunks = (f"--- {filename}\n+++ {filename}\n").encode("utf-8")
+        accepted_hunks = f"--- {filename}\n+++ {filename}\n"
         for hunk in hunks:
             if self.hunk_processor(filename, hunk) is False:
                 continue
@@ -284,13 +284,15 @@ class BowlerTool(RefactoringTool):
 
             if result == "y" or self.write:
                 need_patch = True
-                accepted_hunks += ("\n".join(hunk[2:]) + "\n").encode("utf-8")
+                accepted_hunks += "\n".join(hunk[2:]) + "\n"
 
         if need_patch:
             args = ["patch", "-u", filename]
             self.log_debug(f"running {args}")
             try:
-                sh.patch("-u", filename, _in=accepted_hunks)  # type: ignore
+                sh.patch(
+                    "-u", filename, _in=accepted_hunks.encode("utf-8")
+                )  # type: ignore
             except sh.ErrorReturnCode:
                 log.exception("failed to apply patch hunk")
                 return  # TODO: better response?
