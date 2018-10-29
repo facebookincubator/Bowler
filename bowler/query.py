@@ -2,6 +2,7 @@
 
 import inspect
 import logging
+import pathlib
 import re
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, cast
@@ -85,6 +86,8 @@ class Query:
         for path in paths:
             if isinstance(path, str):
                 self.paths.append(path)
+            elif isinstance(path, pathlib.Path):
+                self.paths.append(str(path))
             else:
                 self.paths.extend(path)
 
