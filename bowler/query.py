@@ -12,10 +12,11 @@ import re
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, cast
 
-from attr import Factory, dataclass
 from fissix.fixer_base import BaseFix
 from fissix.fixer_util import Attr, Comma, Dot, LParen, Name, Newline, RParen
 from fissix.pytree import Leaf, Node, type_repr
+
+from attr import Factory, dataclass
 
 from .helpers import (
     Once,
@@ -963,7 +964,9 @@ class Query:
             kwargs["hunk_processor"] = processor
 
         kwargs.setdefault("filename_matcher", self.filename_matcher)
-        self.retcode = BowlerTool(fixers, **kwargs).run(self.paths)
+        tool = BowlerTool(fixers, **kwargs)
+        self.retcode = tool.run(self.paths)
+        self.exceptions = tool.exceptions
         return self
 
     def dump(self, selector_pattern=False) -> "Query":

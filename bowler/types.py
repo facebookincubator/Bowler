@@ -7,11 +7,12 @@
 
 from typing import Any, Callable, Dict, List, NewType, Optional, Type, Union
 
-from attr import Factory, dataclass
 from fissix.fixer_base import BaseFix
 from fissix.pgen2 import token
 from fissix.pygram import python_symbols
 from fissix.pytree import Leaf, Node
+
+from attr import Factory, dataclass
 
 
 class Passthrough:
@@ -61,7 +62,12 @@ class Transform:
 
 
 class BowlerException(Exception):
-    pass
+    def __init__(
+        self, message: str = "", *, filename: str = "", hunks: List[Hunk] = None
+    ) -> None:
+        super().__init__(message)
+        self.filename = filename
+        self.hunks = hunks
 
 
 class BowlerQuit(BowlerException):
@@ -73,4 +79,8 @@ class IMRError(BowlerException):
 
 
 class RetryFile(BowlerException):
+    pass
+
+
+class BadTransform(BowlerException):
     pass

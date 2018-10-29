@@ -33,7 +33,20 @@ def main(ctx: click.Context, debug: bool, version: bool) -> None:
     if debug:
         BowlerTool.NUM_PROCESSES = 1
         BowlerTool.IN_PROCESS = True
-    logging.basicConfig(level=(logging.DEBUG if debug else logging.WARNING))
+
+    root = logging.getLogger()
+    if not root.hasHandlers():
+        logging.addLevelName(logging.DEBUG, "DBG")
+        logging.addLevelName(logging.INFO, "INF")
+        logging.addLevelName(logging.WARNING, "WRN")
+        logging.addLevelName(logging.ERROR, "ERR")
+        level = logging.DEBUG if debug else logging.WARNING
+        fmt = logging.Formatter("{levelname}:{filename}:{lineno}  {message}", style="{")
+        han = logging.StreamHandler(stream=sys.stderr)
+        han.setFormatter(fmt)
+        han.setLevel(level)
+        root.setLevel(level)
+        root.addHandler(han)
 
     if ctx.invoked_subcommand is None:
         return do(None, None)

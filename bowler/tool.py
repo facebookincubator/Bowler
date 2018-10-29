@@ -5,13 +5,14 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import ast
 import difflib
 import logging
 import multiprocessing
 import os
 import time
 from queue import Empty
-from typing import Callable, Iterator, List, Optional, Sequence, Tuple
+from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple
 
 import click
 import sh
@@ -20,12 +21,14 @@ from fissix.refactor import RefactoringTool
 
 from .helpers import filename_endswith
 from .types import (
+    BadTransform,
     BowlerException,
     BowlerQuit,
     Filename,
     FilenameMatcher,
     Fixers,
     Hunk,
+    Node,
     Processor,
     RetryFile,
 )
@@ -104,11 +107,15 @@ class BowlerTool(RefactoringTool):
         self.silent = silent
         # pick the most restrictive of flags
         self.in_process = in_process or self.IN_PROCESS
+        self.exceptions: List[BowlerException] = []
         if hunk_processor is not None:
             self.hunk_processor = hunk_processor
         else:
             self.hunk_processor = lambda f, h: True
         self.filename_matcher = filename_matcher or filename_endswith(".py")
+
+    def log_error(self, msg: str, *args: Any, **kwds: Any) -> None:
+        self.logger.error(msg, *args, **kwds)
 
     def get_fixers(self) -> Tuple[Fixers, Fixers]:
         fixers = [f(self.options, self.fixer_log) for f in self.fixers]
@@ -134,6 +141,15 @@ class BowlerTool(RefactoringTool):
 
             if hunk:
                 hunks.append([a, b, *hunk])
+
+            try:
+                ast.parse(new_text, filename)
+            except Exception as e:
+                raise BadTransform(
+                    f"Transforms generated invalid AST for {filename}",
+                    filename=filename,
+                    hunks=hunks,
+                ) from e
 
         return hunks
 
@@ -187,17 +203,17 @@ class BowlerTool(RefactoringTool):
 
             try:
                 hunks = self.refactor_file(filename)
-                self.results.put((filename, hunks))
+                self.results.put((filename, hunks, None))
 
             except RetryFile:
                 self.log_debug(f"Retrying {filename} later...")
                 self.queue.put(filename)
             except BowlerException as e:
                 log.error(f"Bowler exception during transform of {filename}: {e}")
-                self.results.put((filename, []))
+                self.results.put((filename, e.hunks, e))
             except Exception as e:
                 log.error(f"Skipping {filename}: failed to transform because {e}")
-                self.results.put((filename, []))
+                self.results.put((filename, [], e))
 
             finally:
                 self.queue.task_done()
@@ -239,10 +255,22 @@ class BowlerTool(RefactoringTool):
 
         while True:
             try:
-                filename, hunks = self.results.get_nowait()
-                self.log_debug(f"results: got {len(hunks)} hunks for {filename}")
+                filename, hunks, exc = self.results.get_nowait()
                 results_count += 1
-                self.process_hunks(filename, hunks)
+
+                if isinstance(exc, BowlerException):
+                    self.log_error(f"{type(exc).__name__}: {exc}")
+                    if exc.__cause__:
+                        self.log_error(
+                            f"  {type(exc.__cause__).__name__}: {exc.__cause__}"
+                        )
+                    if exc.hunks:
+                        diff = "\n".join("\n".join(hunk) for hunk in exc.hunks)
+                        self.log_error(f"Generated transform:\n{diff}")
+                    self.exceptions.append(exc)
+                else:
+                    self.log_debug(f"results: got {len(hunks)} hunks for {filename}")
+                    self.process_hunks(filename, hunks)
 
             except Empty:
                 if self.queue.empty() and results_count == self.queue_count:
@@ -260,7 +288,7 @@ class BowlerTool(RefactoringTool):
             except BowlerQuit:
                 for child in children:
                     child.terminate()
-                return
+                break
 
         self.log_debug(f"all children stopped and all diff hunks processed")
 
@@ -336,4 +364,4 @@ class BowlerTool(RefactoringTool):
             self.refactor(paths)
             self.summarize()
 
-        return int(bool(self.errors))
+        return int(bool(self.errors or self.exceptions))
