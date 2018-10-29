@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 import logging
-
 from pathlib import Path
 from unittest import TestCase
 
 from fissix.fixer_util import Call, Name
-from ..types import TOKEN
+
 from ..query import Query
+from ..types import TOKEN
 
 
 class SmokeTest(TestCase):
