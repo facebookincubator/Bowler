@@ -38,7 +38,7 @@ class SmokeTest(TestCase):
             self.assertIn("""+def foo(bar="something"):""", hunk)
 
         (
-            Query(str(target))
+            Query(target)
             .select(
                 """
                 power< "print" trailer< "(" args=any* ")" > >
