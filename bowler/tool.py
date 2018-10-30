@@ -246,9 +246,8 @@ class BowlerTool(RefactoringTool):
 
     def process_hunks(self, filename: Filename, hunks: List[Hunk]) -> None:
         auto_yes = False
-        need_patch = False
         result = ""
-        accepted_hunks = f"--- {filename}\n+++ {filename}\n"
+        accepted_hunks = ""
         for hunk in hunks:
             if self.hunk_processor(filename, hunk) is False:
                 continue
@@ -288,19 +287,25 @@ class BowlerTool(RefactoringTool):
                         raise ValueError("unknown response")
 
             if result == "y" or self.write:
-                need_patch = True
                 accepted_hunks += "\n".join(hunk[2:]) + "\n"
 
-        if need_patch:
+        if accepted_hunks:
+            accepted_hunks = f"--- {filename}\n+++ {filename}\n" + accepted_hunks
             args = ["patch", "-u", filename]
             self.log_debug(f"running {args}")
             try:
-                sh.patch(
-                    "-u", filename, _in=accepted_hunks.encode("utf-8")
-                )  # type: ignore
-            except sh.ErrorReturnCode:
-                log.exception("failed to apply patch hunk")
-                return  # TODO: better response?
+                sh.patch(*args[1:], _in=accepted_hunks.encode("utf-8"))  # type: ignore
+            except sh.ErrorReturnCode as e:
+                if e.stderr:
+                    err = e.stderr.strip().decode("utf-8")
+                else:
+                    err = e.stdout.strip().decode("utf-8")
+                    if "saving rejects to file" in err:
+                        err = err.split("saving rejects to file")[1]
+                        log.exception(f"hunks failed to apply, rejects saved to{err}")
+                        return
+                log.exception(f"failed to apply patch hunk: {err}")
+                return
 
     def run(self, paths: Sequence[str]) -> int:
         if not self.errors:
