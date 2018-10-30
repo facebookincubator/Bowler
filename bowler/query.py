@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
+#
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 import inspect
 import logging
+import pathlib
 import re
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, cast
@@ -85,6 +91,8 @@ class Query:
         for path in paths:
             if isinstance(path, str):
                 self.paths.append(path)
+            elif isinstance(path, pathlib.Path):
+                self.paths.append(str(path))
             else:
                 self.paths.extend(path)
 
