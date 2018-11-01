@@ -210,7 +210,6 @@ class FunctionSpec:
             is_def = "function_def" in capture
             args = capture["function_arguments"]
         except KeyError as e:
-            print("throwing imr error")
             raise IMRError("function spec invalid") from e
 
         arguments = FunctionArgument.build_list(args, is_def)

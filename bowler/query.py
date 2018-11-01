@@ -739,6 +739,9 @@ class Query:
         def add_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
             done = False
             value_leaf = Name(value)
@@ -807,6 +810,9 @@ class Query:
         def modify_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
 
             for argument in spec.arguments:
@@ -854,6 +860,9 @@ class Query:
         def remove_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
 
             if spec.is_def or not positional:
