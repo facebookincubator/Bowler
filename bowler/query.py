@@ -311,6 +311,22 @@ class Query:
                 function_parameters=trailer< '(' function_arguments=any* ')' >
                 any*
             >
+        |
+            function_import=import_from<
+                'from' module_name=any
+                'import' ['(']
+                (
+                    import_as_names<
+                        any*
+                        function_name='{name}'
+                        any*
+                    >
+                |
+                    any*
+                    function_name='{name}'
+                    any*
+                )
+            [')'] >
         )
 
     """
