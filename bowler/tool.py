@@ -275,9 +275,11 @@ class BowlerTool(RefactoringTool):
                     self.log_debug(f"result = {result}")
 
                     if result == "q":
+                        self.apply_hunks(accepted_hunks, filename)
                         raise BowlerQuit()
                     elif result == "d":
-                        break  # skip all remaining hunks
+                        self.apply_hunks(accepted_hunks, filename)
+                        return  # skip all remaining hunks
                     elif result == "n":
                         continue
                     elif result == "a":
@@ -289,8 +291,11 @@ class BowlerTool(RefactoringTool):
             if result == "y" or self.write:
                 accepted_hunks += "\n".join(hunk[2:]) + "\n"
 
+        self.apply_hunks(accepted_hunks, filename)
+
+    def apply_hunks(self, accepted_hunks, filename):
         if accepted_hunks:
-            accepted_hunks = f"--- {filename}\n+++ {filename}\n" + accepted_hunks
+            accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
             args = ["patch", "-u", filename]
             self.log_debug(f"running {args}")
             try:
@@ -305,7 +310,6 @@ class BowlerTool(RefactoringTool):
                         log.exception(f"hunks failed to apply, rejects saved to{err}")
                         return
                 log.exception(f"failed to apply patch hunk: {err}")
-                return
 
     def run(self, paths: Sequence[str]) -> int:
         if not self.errors:
