@@ -247,6 +247,7 @@ class BowlerTool(RefactoringTool):
     def process_hunks(self, filename: Filename, hunks: List[Hunk]) -> None:
         auto_yes = False
         result = ""
+        accepted_hunks = ""
         for hunk in hunks:
             if self.hunk_processor(filename, hunk) is False:
                 continue
@@ -274,9 +275,11 @@ class BowlerTool(RefactoringTool):
                     self.log_debug(f"result = {result}")
 
                     if result == "q":
+                        self.apply_hunks(accepted_hunks, filename)
                         raise BowlerQuit()
                     elif result == "d":
-                        break  # skip all remaining hunks
+                        self.apply_hunks(accepted_hunks, filename)
+                        return  # skip all remaining hunks
                     elif result == "n":
                         continue
                     elif result == "a":
@@ -286,14 +289,27 @@ class BowlerTool(RefactoringTool):
                         raise ValueError("unknown response")
 
             if result == "y" or self.write:
-                patch = ("\n".join(hunk) + "\n").encode("utf-8")
-                args = ["patch", "-u", filename]
-                self.log_debug(f"running {args}")
-                try:
-                    sh.patch("-u", filename, _in=patch)  # type: ignore
-                except sh.ErrorReturnCode:
-                    log.exception("failed to apply patch hunk")
-                    return  # TODO: better response?
+                accepted_hunks += "\n".join(hunk[2:]) + "\n"
+
+        self.apply_hunks(accepted_hunks, filename)
+
+    def apply_hunks(self, accepted_hunks, filename):
+        if accepted_hunks:
+            accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
+            args = ["patch", "-u", filename]
+            self.log_debug(f"running {args}")
+            try:
+                sh.patch(*args[1:], _in=accepted_hunks.encode("utf-8"))  # type: ignore
+            except sh.ErrorReturnCode as e:
+                if e.stderr:
+                    err = e.stderr.strip().decode("utf-8")
+                else:
+                    err = e.stdout.strip().decode("utf-8")
+                    if "saving rejects to file" in err:
+                        err = err.split("saving rejects to file")[1]
+                        log.exception(f"hunks failed to apply, rejects saved to{err}")
+                        return
+                log.exception(f"failed to apply patch hunk: {err}")
 
     def run(self, paths: Sequence[str]) -> int:
         if not self.errors:

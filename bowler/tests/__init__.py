@@ -7,3 +7,4 @@
 
 from .query import QueryTest
 from .smoke import SmokeTest
+from .tool import ToolTest
