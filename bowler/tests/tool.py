@@ -118,7 +118,6 @@ class ToolTest(TestCase):
     @mock.patch("bowler.tool.prompt_user")
     @mock.patch("bowler.tool.sh.patch")
     def test_process_hunks_after_auto_yes(self, mock_patch, mock_prompt):
-        self.maxDiff = None
         tool = BowlerTool(Query().compile(), silent=False)
         mock_prompt.side_effect = ["a"]
         tool.process_hunks(target, hunks)
@@ -129,7 +128,6 @@ class ToolTest(TestCase):
     @mock.patch("bowler.tool.prompt_user")
     @mock.patch("bowler.tool.sh.patch")
     def test_process_hunks_after_no_then_yes(self, mock_patch, mock_prompt):
-        self.maxDiff = None
         tool = BowlerTool(Query().compile(), silent=False)
         mock_prompt.side_effect = ["n", "y"]
         tool.process_hunks(target, hunks)
@@ -140,7 +138,6 @@ class ToolTest(TestCase):
     @mock.patch("bowler.tool.prompt_user")
     @mock.patch("bowler.tool.sh.patch")
     def test_process_hunks_after_only_no(self, mock_patch, mock_prompt):
-        self.maxDiff = None
         tool = BowlerTool(Query().compile(), silent=False)
         mock_prompt.side_effect = ["n", "n"]
         tool.process_hunks(target, hunks)
