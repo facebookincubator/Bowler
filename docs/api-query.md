@@ -105,7 +105,7 @@ query.filter(callback: Callback)
 
 Modify matched elements using a custom function.
 For a full list of predefined modifiers, as well as details on defining custom
-modifiers, see the [Modifiers reference](/docs/api-filters).
+modifiers, see the [Modifiers reference](/docs/api-modifiers).
 
 ```python
 query.modify(callback: Callback)
