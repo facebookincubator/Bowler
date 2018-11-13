@@ -52,19 +52,18 @@ def dump(paths: List[str]) -> None:
 def do(interactive: bool, query: str, paths: List[str]) -> None:
     """Execute a query or enter interactive mode."""
     if not query or query == "-":
+
+        namespace = {"Query": Query, "START": START, "SYMBOL": SYMBOL, "TOKEN": TOKEN}
+
         try:
             import IPython
 
-            namespace = {
-                "Query": Query,
-                "START": START,
-                "SYMBOL": SYMBOL,
-                "TOKEN": TOKEN,
-            }
             IPython.start_ipython(argv=[], user_ns=namespace)
 
         except ImportError:
-            pass
+            import code as _code
+
+            _code.interact(local=namespace)
 
         finally:
             return
