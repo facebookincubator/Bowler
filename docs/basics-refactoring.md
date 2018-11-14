@@ -166,7 +166,7 @@ of the existing string literal as the only argument.
 
 > Note: take care to ensure that matched and captured elements still meet the
 > expectations of your modifier function.  They may have already been transformed
-> (or entirely removed or replaced) by previous modifiers.o
+> (or entirely removed or replaced) by previous modifiers.
 
 ### Processors
 
