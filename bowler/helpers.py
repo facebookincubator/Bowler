@@ -10,6 +10,7 @@ from typing import List, Optional
 
 import click
 from fissix.pytree import Leaf, Node, type_repr
+from fissix.pgen2.token import tok_name
 
 from .types import LN, SYMBOL, Capture, Filename
 
@@ -32,13 +33,14 @@ def print_tree(
         click.echo(
             click.style(tab, fg="black", bold=True)
             + click.style(
-                f'[{type_repr(node.type)}] "{node.prefix}" "{node.value}"', fg="yellow"
+                f"[{tok_name[node.type]}] {repr(node.prefix)} {repr(node.value)}",
+                fg="yellow",
             )
         )
     else:
         click.echo(
             click.style(tab, fg="black", bold=True)
-            + click.style(f'[{type_repr(node.type)}] "{node.prefix}"', fg="blue")
+            + click.style(f"[{type_repr(node.type)}] {repr(node.prefix)}", fg="blue")
         )
 
     if node.children:
@@ -57,10 +59,10 @@ def print_tree(
 
         value = results[key]
         if isinstance(value, (Leaf, Node)):
-            click.secho(f'results["{key}"] =', fg="red")
+            click.secho(f"results[{repr(key)}] =", fg="red")
             print_tree(value, indent=1, recurse=1)
         else:
-            click.secho(f'results["{key}"] = {value}', fg="red")
+            click.secho(f"results[{repr(key)}] = {value}", fg="red")
 
 
 def dotted_parts(name: str) -> List[str]:
