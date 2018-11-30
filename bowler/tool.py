@@ -7,6 +7,7 @@
 
 import difflib
 import logging
+
 import multiprocessing
 import os
 import time
@@ -136,8 +137,8 @@ class BowlerTool(RefactoringTool):
             if input is None:
                 # Reading the file failed.
                 return hunks
-        except OSError:
-            self.log_debug("Failed to read %s, skipping", filename)
+        except (OSError, UnicodeDecodeError) as e:
+            log.error(f"Skipping {filename}: failed to read because {e}")
             return hunks
 
         try:
@@ -146,7 +147,7 @@ class BowlerTool(RefactoringTool):
             tree = self.refactor_string(input, filename)
             hunks = self.processed_file(str(tree), filename, input)
         except ParseError:
-            self.log_debug("Failed to parse %s, skipping", filename)
+            log.error(f"Skipping {filename}: failed to parse")
 
         return hunks
 
@@ -185,7 +186,10 @@ class BowlerTool(RefactoringTool):
                 self.log_debug(f"Retrying {filename} later...")
                 self.queue.put(filename)
             except BowlerException as e:
-                self.log_debug(f"Bowler exception during transform: {e}")
+                log.error(f"Bowler exception during transform of {filename}: {e}")
+                self.results.put((filename, []))
+            except Exception as e:
+                log.error(f"Skipping {filename}: failed to transform because {e}")
                 self.results.put((filename, []))
 
             finally:
