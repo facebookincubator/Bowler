@@ -169,3 +169,13 @@ class Once:
         else:
             self.done = True
             return True
+
+
+def filename_endswith(ext):
+    if isinstance(ext, str):
+        ext = [ext]
+
+    def inner(filename):
+        return any(filename.endswith(e) for e in ext)
+
+    return inner

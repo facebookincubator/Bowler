@@ -11,7 +11,7 @@ import multiprocessing
 import os
 import time
 from queue import Empty
-from typing import Iterator, List, Sequence, Tuple
+from typing import Callable, Iterator, List, Sequence, Tuple
 
 import click
 import sh
@@ -85,6 +85,7 @@ class BowlerTool(RefactoringTool):
         write: bool = False,
         silent: bool = False,
         hunk_processor: Processor = None,
+        filename_matcher: Callable[[str], bool] = None,
         **kwargs,
     ) -> None:
         options = kwargs.pop("options", {})
@@ -101,6 +102,10 @@ class BowlerTool(RefactoringTool):
             self.hunk_processor = hunk_processor
         else:
             self.hunk_processor = lambda f, h: True
+        if filename_matcher is not None:
+            self.filename_matcher = filename_matcher
+        else:
+            self.filename_matcher = lambda fn: fn.endswith(".py")
 
     def get_fixers(self) -> Tuple[Fixers, Fixers]:
         fixers = [f(self.options, self.fixer_log) for f in self.fixers]
@@ -153,17 +158,17 @@ class BowlerTool(RefactoringTool):
     def refactor_dir(self, dir_name: str, *a, **k) -> None:
         """Descends down a directory and refactor every Python file found.
 
-        Python files are assumed to have a .py extension.
+        Python files are those for which `self.filename_matcher(filename)`
+        returns true, to allow for custom extensions.
 
         Files and subdirectories starting with '.' are skipped.
         """
-        py_ext = os.extsep + "py"
         for dirpath, dirnames, filenames in os.walk(dir_name):
             self.log_debug("Descending into %s", dirpath)
             dirnames.sort()
             filenames.sort()
             for name in filenames:
-                if not name.startswith(".") and os.path.splitext(name)[1] == py_ext:
+                if not name.startswith(".") and self.filename_matcher(name):
                     fullname = os.path.join(dirpath, name)
                     self.queue_work(Filename(fullname))
             # Modify dirnames in-place to remove subdirs with leading dots
