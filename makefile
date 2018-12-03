@@ -14,8 +14,9 @@ release: lint test clean
 	python3 -m twine upload dist/*
 
 format:
+	isort --recursive --multi-line=3 --trailing-comma --force-grid-wrap=0 \
+	  --combine-as --line-width=88 -y bowler setup.py
 	black bowler setup.py
-	isort
 
 lint:
 	black --check bowler setup.py
