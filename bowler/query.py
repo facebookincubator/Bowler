@@ -39,6 +39,7 @@ from .types import (
     Callback,
     Capture,
     Filename,
+    FilenameMatcher,
     Filter,
     Hunk,
     Processor,
@@ -85,7 +86,7 @@ class Query:
     def __init__(
         self,
         *paths: Union[str, List[str]],
-        filename_matcher: Callable[[str], bool] = None,
+        filename_matcher: Optional[FilenameMatcher] = None,
     ) -> None:
         self.paths: List[str] = []
         self.transforms: List[Transform] = []

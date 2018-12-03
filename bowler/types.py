@@ -42,6 +42,7 @@ ARG_ELEMS = {
 LN = Union[Leaf, Node]
 Stringish = Union[str, object]
 Filename = NewType("Filename", str)
+FilenameMatcher = Callable[[Filename], bool]
 Capture = Dict[str, Any]
 Callback = Callable[[Node, Capture, Filename], Any]
 Filter = Callable[[Node, Capture, Filename], bool]

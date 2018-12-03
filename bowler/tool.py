@@ -11,17 +11,19 @@ import multiprocessing
 import os
 import time
 from queue import Empty
-from typing import Callable, Iterator, List, Sequence, Tuple
+from typing import Callable, Iterator, List, Sequence, Tuple, Optional
 
 import click
 import sh
 from fissix.pgen2.parse import ParseError
 from fissix.refactor import RefactoringTool
 
+from .helpers import filename_endswith
 from .types import (
     BowlerException,
     BowlerQuit,
     Filename,
+    FilenameMatcher,
     Fixers,
     Hunk,
     Processor,
@@ -85,7 +87,7 @@ class BowlerTool(RefactoringTool):
         write: bool = False,
         silent: bool = False,
         hunk_processor: Processor = None,
-        filename_matcher: Callable[[str], bool] = None,
+        filename_matcher: Optional[FilenameMatcher] = None,
         **kwargs,
     ) -> None:
         options = kwargs.pop("options", {})
@@ -102,10 +104,7 @@ class BowlerTool(RefactoringTool):
             self.hunk_processor = hunk_processor
         else:
             self.hunk_processor = lambda f, h: True
-        if filename_matcher is not None:
-            self.filename_matcher = filename_matcher
-        else:
-            self.filename_matcher = lambda fn: fn.endswith(".py")
+        self.filename_matcher = filename_matcher or filename_endswith(".py")
 
     def get_fixers(self) -> Tuple[Fixers, Fixers]:
         fixers = [f(self.options, self.fixer_log) for f in self.fixers]
@@ -168,7 +167,7 @@ class BowlerTool(RefactoringTool):
             dirnames.sort()
             filenames.sort()
             for name in filenames:
-                if not name.startswith(".") and self.filename_matcher(name):
+                if not name.startswith(".") and self.filename_matcher(Filename(name)):
                     fullname = os.path.join(dirpath, name)
                     self.queue_work(Filename(fullname))
             # Modify dirnames in-place to remove subdirs with leading dots

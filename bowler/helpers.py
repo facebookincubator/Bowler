@@ -6,12 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
-from typing import List, Optional
+from typing import List, Optional, Sequence, Union
 
 import click
 from fissix.pytree import Leaf, Node, type_repr
 
-from .types import LN, SYMBOL, Capture, Filename
+from .types import LN, SYMBOL, Capture, Filename, FilenameMatcher
 
 log = logging.getLogger(__name__)
 
@@ -171,11 +171,11 @@ class Once:
             return True
 
 
-def filename_endswith(ext):
+def filename_endswith(ext: Union[Sequence, str]) -> FilenameMatcher:
     if isinstance(ext, str):
         ext = [ext]
 
-    def inner(filename):
+    def inner(filename: Filename) -> bool:
         return any(filename.endswith(e) for e in ext)
 
     return inner
