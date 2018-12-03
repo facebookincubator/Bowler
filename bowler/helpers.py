@@ -17,6 +17,21 @@ from .types import LN, SYMBOL, Capture, Filename
 log = logging.getLogger(__name__)
 
 
+def print_match(node: LN, results: Capture = None, filename: Filename = None):
+    if isinstance(node, Leaf):
+        click.echo(repr(node.value) + " ", nl=False)
+    else:
+        click.echo(f"{type_repr(node.type)} ", nl=False)
+        if node.children:
+            click.echo("< ", nl=False)
+            for child in node.children:
+                print_match(child)
+            click.echo("> ", nl=False)
+
+    if results:
+        click.echo()
+
+
 def print_tree(
     node: LN,
     results: Capture = None,
