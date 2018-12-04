@@ -45,12 +45,17 @@ clarity and brevity.
 Create a new query object to process the given set of files or directories.
 
 ```python
-Query(*paths: Union[str, List[str]])
+Query(*paths: Union[str, List[str]], filename_matcher: FilenameMatcher)
 ```
 
 * `*paths` - Accepts either individual file or directory paths (relative to the current
   working directory), or lists of paths, for any positional argument given.
   Defaults to the current working directory if no arguments given.
+
+* `*filename_matcher*` - A callback which returns whether a given filename is
+  eligible for refactoring.  Defaults to only matching files that end with
+  `.py`.
+
 
 ### `.select()`
 

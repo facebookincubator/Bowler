@@ -40,6 +40,7 @@ from .types import (
     Callback,
     Capture,
     Filename,
+    FilenameMatcher,
     Filter,
     Hunk,
     Processor,
@@ -83,11 +84,16 @@ def selector(pattern: str) -> Callable[[QM], QM]:
 
 
 class Query:
-    def __init__(self, *paths: Union[str, List[str]]) -> None:
+    def __init__(
+        self,
+        *paths: Union[str, List[str]],
+        filename_matcher: Optional[FilenameMatcher] = None,
+    ) -> None:
         self.paths: List[str] = []
         self.transforms: List[Transform] = []
         self.processors: List[Processor] = []
         self.retcode: Optional[int] = None
+        self.filename_matcher = filename_matcher
 
         for path in paths:
             if isinstance(path, str):
@@ -937,6 +943,8 @@ class Query:
                 return apply
 
             kwargs["hunk_processor"] = processor
+
+        kwargs.setdefault("filename_matcher", self.filename_matcher)
         self.retcode = BowlerTool(fixers, **kwargs).run(self.paths)
         return self
 
