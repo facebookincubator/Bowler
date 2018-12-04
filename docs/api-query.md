@@ -45,7 +45,7 @@ clarity and brevity.
 Create a new query object to process the given set of files or directories.
 
 ```python
-Query(*paths: Union[str, List[str]], filename_matcher: Callable[[str], bool])
+Query(*paths: Union[str, List[str]], filename_matcher: FilenameMatcher)
 ```
 
 * `*paths` - Accepts either individual file or directory paths (relative to the current
