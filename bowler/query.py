@@ -911,7 +911,7 @@ class Query:
             PATTERN = pattern  # type: ignore
             BM_compatible = bm_compat
 
-            def transform(self, node: LN, capture: Capture) -> LN[Node]:
+            def transform(self, node: LN, capture: Capture) -> Optional[LN]:
                 filename = cast(Filename, self.filename)
                 returned_node = None
                 if not filters or all(f(node, capture, filename) for f in filters):
