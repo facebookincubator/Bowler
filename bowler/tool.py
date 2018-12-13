@@ -7,12 +7,11 @@
 
 import difflib
 import logging
-
 import multiprocessing
 import os
 import time
 from queue import Empty
-from typing import Callable, Iterator, List, Sequence, Tuple, Optional
+from typing import Callable, Iterator, List, Optional, Sequence, Tuple
 
 import click
 import sh
@@ -87,6 +86,7 @@ class BowlerTool(RefactoringTool):
         interactive: bool = True,
         write: bool = False,
         silent: bool = False,
+        in_process: bool = False,
         hunk_processor: Processor = None,
         filename_matcher: Optional[FilenameMatcher] = None,
         **kwargs,
@@ -101,6 +101,7 @@ class BowlerTool(RefactoringTool):
         self.interactive = interactive
         self.write = write
         self.silent = silent
+        self.in_process = in_process
         if hunk_processor is not None:
             self.hunk_processor = hunk_processor
         else:
@@ -207,14 +208,17 @@ class BowlerTool(RefactoringTool):
     def refactor(self, items: Sequence[str], *a, **k) -> None:
         """Refactor a list of files and directories."""
 
-        child_count = max(1, min(self.NUM_PROCESSES, len(items)))
-        self.log_debug(f"starting {child_count} processes")
-        children = [
-            multiprocessing.Process(target=self.refactor_queue)
-            for i in range(child_count)
-        ]
-        for child in children:
-            child.start()
+        if not self.in_process:
+            child_count = max(1, min(self.NUM_PROCESSES, len(items)))
+            self.log_debug(f"starting {child_count} processes")
+            children = [
+                multiprocessing.Process(target=self.refactor_queue)
+                for i in range(child_count)
+            ]
+            for child in children:
+                child.start()
+        else:
+            children = [None]
 
         for dir_or_file in sorted(items):
             if os.path.isdir(dir_or_file):
@@ -224,6 +228,9 @@ class BowlerTool(RefactoringTool):
 
         for _child in children:
             self.queue.put(None)
+
+        if self.in_process:
+            self.refactor_queue()
 
         results_count = 0
 
@@ -237,6 +244,9 @@ class BowlerTool(RefactoringTool):
             except Empty:
                 if self.queue.empty() and results_count == self.queue_count:
                     break
+
+                elif self.in_process:
+                    time.sleep(0.05)
 
                 elif not any(child.is_alive() for child in children):
                     self.log_debug(f"child processes stopped without consuming work")

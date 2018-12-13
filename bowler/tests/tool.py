@@ -9,10 +9,9 @@ import os
 from pathlib import Path
 from unittest import TestCase, mock
 
+from ..query import Query
 from ..tool import BowlerTool, log
 from ..types import BowlerQuit
-from ..query import Query
-
 
 target = Path(__file__).parent / "smoke-target.py"
 hunks = [
