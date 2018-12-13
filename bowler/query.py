@@ -918,15 +918,13 @@ class Query:
                     if transform.fixer:
                         returned_node = transform.fixer().transform(node, capture)
                     for callback in callbacks:
-                        callback_return = callback(node, capture, filename)
-                        # If the modifier returns a node
-                        if callback_return is not None:
-                            if returned_node and not (returned_node is callback_return):
-                                raise BowlerException(
-                                    "Multiple modifier functions used, "
-                                    "each returned a different node."
-                                )
-                            returned_node = callback_return
+                        if returned_node and returned_node is not node:
+                            raise BowlerException(
+                                "Only the last fixer/callback may return "
+                                "a different node.  See "
+                                "https://pybowler.io/docs/api-modifiers"
+                            )
+                        returned_node = callback(node, capture, filename)
                 return returned_node
 
         return Fixer
