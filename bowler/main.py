@@ -39,11 +39,11 @@ def main(ctx: click.Context, debug: bool, version: bool) -> None:
 
 
 @main.command()
-@click.option("--match", is_flag=True)
+@click.option("--selector-pattern", is_flag=True)
 @click.argument("paths", type=click.Path(exists=True), nargs=-1, required=False)
-def dump(match: bool, paths: List[str]) -> None:
+def dump(selector_pattern: bool, paths: List[str]) -> None:
     """Dump the CST representation of each file in <paths>."""
-    return Query(paths).select_root().dump(match).retcode
+    return Query(paths).select_root().dump(selector_pattern).retcode
 
 
 @main.command()
