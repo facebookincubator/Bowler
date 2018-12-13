@@ -218,7 +218,7 @@ class BowlerTool(RefactoringTool):
             for child in children:
                 child.start()
         else:
-            children = [None]
+            children = []
 
         for dir_or_file in sorted(items):
             if os.path.isdir(dir_or_file):
@@ -226,11 +226,12 @@ class BowlerTool(RefactoringTool):
             else:
                 self.queue_work(Filename(dir_or_file))
 
-        for _child in children:
-            self.queue.put(None)
-
         if self.in_process:
+            self.queue.put(None)
             self.refactor_queue()
+        else:
+            for _child in children:
+                self.queue.put(None)
 
         results_count = 0
 
