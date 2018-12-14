@@ -246,10 +246,9 @@ class BowlerTool(RefactoringTool):
                 if self.queue.empty() and results_count == self.queue_count:
                     break
 
-                elif self.in_process:
-                    time.sleep(0.05)
-
-                elif not any(child.is_alive() for child in children):
+                elif not self.in_process and not any(
+                    child.is_alive() for child in children
+                ):
                     self.log_debug(f"child processes stopped without consuming work")
                     break
 
