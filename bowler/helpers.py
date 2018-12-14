@@ -9,27 +9,36 @@ import logging
 from typing import List, Optional, Sequence, Union
 
 import click
-from fissix.pytree import Leaf, Node, type_repr
 from fissix.pgen2.token import tok_name
+from fissix.pytree import Leaf, Node, type_repr
 
 from .types import LN, SYMBOL, Capture, Filename, FilenameMatcher
 
 log = logging.getLogger(__name__)
 
+INDENT_STR = ".  "
 
-def print_match(node: LN, results: Capture = None, filename: Filename = None):
+
+def print_selector_pattern(
+    node: LN, results: Capture = None, filename: Filename = None
+):
+    key = ""
+    if results:
+        for k, v in results.items():
+            if node == v:
+                key = k + "="
+            elif isinstance(v, list) and node in v:  # v is a list?
+                key = k + "="
+
     if isinstance(node, Leaf):
-        click.echo(repr(node.value) + " ", nl=False)
+        click.echo(f"{key}{repr(node.value)} ", nl=False)
     else:
-        click.echo(f"{type_repr(node.type)} ", nl=False)
+        click.echo(f"{key}{type_repr(node.type)} ", nl=False)
         if node.children:
             click.echo("< ", nl=False)
             for child in node.children:
-                print_match(child)
+                print_selector_pattern(child, results, filename)
             click.echo("> ", nl=False)
-
-    if results:
-        click.echo()
 
 
 def print_tree(
@@ -40,7 +49,7 @@ def print_tree(
     recurse: int = -1,
 ):
     filename = filename or Filename("")
-    tab = ".  " * indent
+    tab = INDENT_STR * indent
     if filename and indent == 0:
         click.secho(filename, fg="red", bold=True)
 
@@ -61,9 +70,11 @@ def print_tree(
     if node.children:
         if recurse:
             for child in node.children:
+                # N.b. do not pass results here since we print them once
+                # at the end.
                 print_tree(child, indent=indent + 1, recurse=recurse - 1)
         else:
-            click.echo(tab + "...")
+            click.echo(INDENT_STR * (indent + 1) + "...")
 
     if results is None:
         return
@@ -77,6 +88,8 @@ def print_tree(
             click.secho(f"results[{repr(key)}] =", fg="red")
             print_tree(value, indent=1, recurse=1)
         else:
+            # TODO: Improve display of multi-match here, see
+            # test_print_tree_captures test.
             click.secho(f"results[{repr(key)}] = {value}", fg="red")
 
 

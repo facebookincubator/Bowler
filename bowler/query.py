@@ -25,7 +25,7 @@ from .helpers import (
     find_previous,
     get_class,
     power_parts,
-    print_match,
+    print_selector_pattern,
     print_tree,
     quoted_parts,
 )
@@ -948,13 +948,13 @@ class Query:
         self.retcode = BowlerTool(fixers, **kwargs).run(self.paths)
         return self
 
-    def dump(self, match_form=False) -> "Query":
-        if not match_form:
+    def dump(self, selector_pattern=False) -> "Query":
+        if not selector_pattern:
             for transform in self.transforms:
                 transform.callbacks.append(print_tree)
         else:
             for transform in self.transforms:
-                transform.callbacks.append(print_match)
+                transform.callbacks.append(print_selector_pattern)
         return self.execute(write=False)
 
     def diff(self, interactive: bool = False, **kwargs) -> "Query":
