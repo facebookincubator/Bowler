@@ -7,10 +7,8 @@ from io import StringIO
 from fissix import pygram, pytree
 from fissix.pgen2.driver import Driver
 
-from bowler import SYMBOL, TOKEN
-
 from ..type_inference import OP_MIN_TYPE, InferredType, numeric_expr_type
-from ..types import LN
+from ..types import LN, SYMBOL, TOKEN
 
 BINARY_OPERATORS = ["+", "-", "*", "**", "<<", ">>", "|", "&", "^", "%", "<"]
 

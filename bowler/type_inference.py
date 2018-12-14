@@ -30,12 +30,10 @@ from fissix import pygram, pytree
 from fissix.pgen2 import token
 from fissix.pgen2.driver import Driver
 
-from bowler.types import LN, SYMBOL, TOKEN
+from .types import LN, SYMBOL, TOKEN
+from .helpers import is_call_to
 
-# test_driver = Driver(pygram.python_grammar_no_print_statement, convert=pytree.convert)
-# return test_driver.parse_string
-
-__all__ = ["InferredType", "is_call_to", "numeric_expr_type"]
+__all__ = ["InferredType", "numeric_expr_type"]
 
 
 class InferredType(enum.IntEnum):
@@ -71,15 +69,6 @@ OP_MIN_TYPE: Dict = {
     TOKEN.AMPER: InferredType.BOOL,
     TOKEN.LESS: InferredType.BOOL,
 }
-
-
-def is_call_to(node: LN, func_name: str) -> bool:
-    """Returns whether the node represents a call to the named function."""
-    return (
-        node.type == SYMBOL.power
-        and node.children[0].type == TOKEN.NAME
-        and node.children[0].value == func_name
-    )
 
 
 def numeric_expr_type(
