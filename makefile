@@ -27,7 +27,7 @@ lint:
 	    die "Missing #! in $$filename"; \
 	  done < <( git ls-tree -r --name-only HEAD | grep ".py$$" )'
 	black --check bowler setup.py
-	mypy --ignore-missing-imports --python-version 3.6 .
+	mypy --ignore-missing-imports .
 
 test:
 	python3 -m unittest -v bowler.tests
