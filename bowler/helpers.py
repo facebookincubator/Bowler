@@ -12,7 +12,7 @@ import click
 from fissix.pgen2.token import tok_name
 from fissix.pytree import Leaf, Node, type_repr
 
-from .types import LN, SYMBOL, Capture, Filename, FilenameMatcher
+from .types import LN, SYMBOL, TOKEN, Capture, Filename, FilenameMatcher
 
 log = logging.getLogger(__name__)
 
@@ -132,6 +132,15 @@ def is_method(node: LN) -> bool:
         and node.parent.type == SYMBOL.suite
         and node.parent.parent is not None
         and node.parent.parent.type == SYMBOL.classdef
+    )
+
+
+def is_call_to(node: LN, func_name: str) -> bool:
+    """Returns whether the node represents a call to the named function."""
+    return (
+        node.type == SYMBOL.power
+        and node.children[0].type == TOKEN.NAME
+        and node.children[0].value == func_name
     )
 
 
