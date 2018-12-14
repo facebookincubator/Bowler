@@ -37,6 +37,7 @@ from .types import (
     START,
     SYMBOL,
     TOKEN,
+    BowlerException,
     Callback,
     Capture,
     Filename,
@@ -910,13 +911,21 @@ class Query:
             PATTERN = pattern  # type: ignore
             BM_compatible = bm_compat
 
-            def transform(self, node: Node, capture: Capture) -> None:
+            def transform(self, node: LN, capture: Capture) -> Optional[LN]:
                 filename = cast(Filename, self.filename)
+                returned_node = None
                 if not filters or all(f(node, capture, filename) for f in filters):
                     if transform.fixer:
-                        transform.fixer().transform(node, capture)
+                        returned_node = transform.fixer().transform(node, capture)
                     for callback in callbacks:
-                        callback(node, capture, filename)
+                        if returned_node and returned_node is not node:
+                            raise BowlerException(
+                                "Only the last fixer/callback may return "
+                                "a different node.  See "
+                                "https://pybowler.io/docs/api-modifiers"
+                            )
+                        returned_node = callback(node, capture, filename)
+                return returned_node
 
         return Fixer
 

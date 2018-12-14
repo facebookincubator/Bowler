@@ -71,7 +71,7 @@ class BowlerTestCase(unittest.TestCase):
         def local_modifier(node, capture, filename):
             # When in_process=False, this runs in another process.  See notes below.
             try:
-                modifier(node, capture, filename)
+                return modifier(node, capture, filename)
             except Exception as e:
                 exception_queue.put(e)
 
