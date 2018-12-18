@@ -8,7 +8,7 @@
 """Safe code refactoring for modern Python projects."""
 
 __author__ = "John Reese, Facebook"
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 
 from .imr import FunctionArgument, FunctionSpec
 from .tool import BowlerTool
