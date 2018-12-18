@@ -37,8 +37,8 @@ from fissix import pygram, pytree
 from fissix.pgen2 import token
 from fissix.pgen2.driver import Driver
 
-from .types import LN, SYMBOL, TOKEN
 from .helpers import is_call_to
+from .types import LN, SYMBOL, TOKEN
 
 __all__ = ["InferredType", "numeric_expr_type"]
 
