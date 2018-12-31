@@ -180,7 +180,7 @@ function_name | Method name | `def foo(self):` | `foo`
 Select specified functions when imported, defined, or called.
 
 ```python
-query.select_class(name: str)
+query.select_function(name: str)
 ```
 
 Capture | Description | Example | Match
