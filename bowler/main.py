@@ -32,6 +32,7 @@ def main(ctx: click.Context, debug: bool, version: bool) -> None:
 
     if debug:
         BowlerTool.NUM_PROCESSES = 1
+        BowlerTool.IN_PROCESS = True
     logging.basicConfig(level=(logging.DEBUG if debug else logging.WARNING))
 
     if ctx.invoked_subcommand is None:

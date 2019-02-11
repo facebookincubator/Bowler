@@ -78,6 +78,7 @@ def prompt_user(question: str, options: str, default: str = "") -> str:
 
 class BowlerTool(RefactoringTool):
     NUM_PROCESSES = os.cpu_count() or 1
+    IN_PROCESS = False  # set when run DEBUG mode from command line
 
     def __init__(
         self,
@@ -101,7 +102,8 @@ class BowlerTool(RefactoringTool):
         self.interactive = interactive
         self.write = write
         self.silent = silent
-        self.in_process = in_process
+        # pick the most restrictive of flags
+        self.in_process = in_process or self.IN_PROCESS
         if hunk_processor is not None:
             self.hunk_processor = hunk_processor
         else:
