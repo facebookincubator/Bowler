@@ -50,6 +50,9 @@ enabling long term benefits from the initial effort.
 For example, if we have a simple refactoring script named `rename_func.py`:
 
 ```python
+from bowler import Query
+
+
 old_name, new_name = sys.argv[1:]
 (
     Query(".")
