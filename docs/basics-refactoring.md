@@ -112,7 +112,7 @@ def print_string(node: LN, capture: Capture, filename: Filename) -> bool:
 
     # args will be a list because we captured `any*`
     if args:
-        return len(args) == 1 and args[0].type == Token.STRING:
+        return len(args) == 1 and args[0].type == TOKEN.STRING:
 
     return False
 
@@ -144,7 +144,7 @@ def translate_string(node: LN, capture: Capture, filename: Filename) -> None:
     args = capture.get("print_args")
 
     # make sure the arguments haven't already been modified
-    if args and args[0].type == Token.STRING:
+    if args and args[0].type == TOKEN.STRING:
         args[0].replace(
             Call(
                 Name("tr"),
