@@ -5,9 +5,11 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import unittest
+
 from fissix.pytree import Leaf, Node
 
-from ..helpers import print_selector_pattern, print_tree
+from ..helpers import dotted_parts, power_parts, print_selector_pattern, print_tree
 from .lib import BowlerTestCase
 
 
@@ -80,3 +82,20 @@ arith_expr < 'x' op='+' '1' > """
 arith_expr < 'x' rest='+' rest='1' > """
         print_selector_pattern(node, {"rest": node.children[1:]})
         self.assertMultiLineEqual(expected, self.buffer.getvalue())
+
+
+class PowerPartsTest(unittest.TestCase):
+    def test_power_parts_include_trailer(self):
+        self.assertEqual(["'Model'"], power_parts("Model"))
+        self.assertEqual(
+            ["'models'", "trailer<", "'.'", "'Model'", ">"], power_parts("models.Model")
+        )
+
+
+class DottedPartsTest(unittest.TestCase):
+    def test_dotted_parts(self):
+        self.assertEqual(["Model"], dotted_parts("Model"))
+        self.assertEqual(["models", ".", "Model"], dotted_parts("models.Model"))
+        self.assertEqual(
+            ["models", ".", "utils", ".", "Model"], dotted_parts("models.utils.Model")
+        )
