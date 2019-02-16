@@ -74,6 +74,25 @@ class FooBar(Foo):
     pass"""
         self.assertMultiLineEqual(expected, output)
 
+    def test_rename_subclass(self):
+        input = """\
+class Bar(Foo):
+    pass"""
+
+        def selector(arg):
+            return Query(arg).select_subclass("Foo")
+
+        def modifier(q):
+            return q.rename("somepackage.Foo")
+
+        output = self.run_bowler_modifier(
+            input, selector_func=selector, modifier_func=modifier
+        )
+        expected = """\
+class Bar(somepackage.Foo):
+    pass"""
+        self.assertMultiLineEqual(expected, output)
+
     def test_add_argument(self):
         input = """\
 def f(x): pass
