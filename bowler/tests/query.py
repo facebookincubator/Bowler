@@ -55,6 +55,25 @@ def g(x): pass
 [foo(), g()]"""
         self.assertMultiLineEqual(expected, output)
 
+    def test_rename_async_func(self):
+        input = """\
+async def f(x): await f(x)
+async def g(x): await g(x)"""
+
+        def selector(arg):
+            return Query(arg).select_function("f")
+
+        def modifier(q):
+            return q.rename("foo")
+
+        output = self.run_bowler_modifier(
+            input, selector_func=selector, modifier_func=modifier
+        )
+        expected = """\
+async def foo(x): await foo(x)
+async def g(x): await g(x)"""
+        self.assertMultiLineEqual(expected, output)
+
     def test_rename_class(self):
         input = """\
 class Bar(Foo):

@@ -158,7 +158,7 @@ class Query:
              [')'] >
         |
             module_name=power<
-                [TOKEN]
+                ['async']
                 {power_name}
                 module_access=trailer< any* >*
             >
