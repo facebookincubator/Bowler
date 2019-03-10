@@ -651,9 +651,11 @@ class Query:
                         break
                 elif isinstance(value, Node):
                     if type_repr(value.type) == "dotted_name":
+                        dp_old = dotted_parts(old_name)
+                        dp_new = dotted_parts(new_name)
                         parts = zip(
-                            dotted_parts(old_name),
-                            dotted_parts(new_name),
+                            dp_old,
+                            dp_new,
                             value.children,
                         )
                         for old, new, leaf in parts:
@@ -661,6 +663,16 @@ class Query:
                                 break
                             if old != new:
                                 leaf.replace(Name(new, prefix=leaf.prefix))
+
+                        if len(dp_new) < len(dp_old):
+                            # if new path is shorter, remove excess children
+                            value.children = value.children[:len(dp_new)]
+                        elif len(dp_new) > len(dp_old):
+                            # if new path is longer, add new children
+                            for new in dp_new[len(dp_old):]:
+                                value.children.append(Name(new))
+
+
                     elif type_repr(value.type) == "power":
                         pows = zip(dotted_parts(old_name), dotted_parts(new_name))
                         it = iter(value.children)
