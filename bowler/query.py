@@ -662,11 +662,13 @@ class Query:
 
                         if len(dp_new) < len(dp_old):
                             # if new path is shorter, remove excess children
-                            del value.children[len(dp_new):len(dp_old)]
+                            del value.children[len(dp_new) : len(dp_old)]
                         elif len(dp_new) > len(dp_old):
                             # if new path is longer, add new children
-                            children = [ Name(new) for new in dp_new[len(dp_old) : len(dp_new)] ]
-                            value.children[len(dp_old):len(dp_old)] = children
+                            children = [
+                                Name(new) for new in dp_new[len(dp_old) : len(dp_new)]
+                            ]
+                            value.children[len(dp_old) : len(dp_old)] = children
 
                     elif type_repr(value.type) == "power":
                         pows = zip(dotted_parts(old_name), dotted_parts(new_name))
