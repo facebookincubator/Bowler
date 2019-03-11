@@ -76,19 +76,19 @@ class FooBar(Foo):
 
     def test_rename_module(self):
         input = """\
-from a.b.c import D"""
+from a.b.c.d import E"""
 
         def selector(arg):
             return Query(arg).select_module("a.b.c")
 
         def modifier(q):
-            return q.rename("a.e")
+            return q.rename("a.f")
 
         output = self.run_bowler_modifier(
             input, selector_func=selector, modifier_func=modifier
         )
         expected = """\
-from a.e import D"""
+from a.f.d import E"""
         self.assertMultiLineEqual(expected, output)
 
     def test_rename_subclass(self):
