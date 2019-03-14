@@ -116,3 +116,6 @@ ENV/
 
 # IDEA based IDEs
 .idea
+
+# VSCode
+.vscode/
