@@ -96,6 +96,7 @@ class Query:
         self.processors: List[Processor] = []
         self.retcode: Optional[int] = None
         self.filename_matcher = filename_matcher
+        self.exceptions: List[BowlerException] = []
 
         for path in paths:
             if isinstance(path, str):
