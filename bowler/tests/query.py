@@ -35,61 +35,30 @@ class QueryTest(BowlerTestCase):
         self.assertEqual(fixers[0].PATTERN, SELECTORS["root"].strip())
 
     def test_rename_func(self):
-        input = """\
-def f(x): pass
-def g(x): pass
-[f(), g()]"""
+        def query_func(arg):
+            return Query(arg).select_function("f").rename("foo")
 
-        def selector(arg):
-            return Query(arg).select_function("f")
-
-        def modifier(q):
-            return q.rename("foo")
-
-        output = self.run_bowler_modifier(
-            input, selector_func=selector, modifier_func=modifier
+        self.run_bowler_modifiers(
+            [
+                ("def f(x): pass", "def foo(x): pass"),
+                ("def g(x): pass", "def g(x): pass"),
+                ("f()", "foo()"),
+                ("g()", "g()"),
+            ],
+            query_func=query_func,
         )
-        expected = """\
-def foo(x): pass
-def g(x): pass
-[foo(), g()]"""
-        self.assertMultiLineEqual(expected, output)
 
     def test_rename_class(self):
-        input = """\
-class Bar(Foo):
-    pass"""
-
-        def selector(arg):
-            return Query(arg).select_class("Bar")
-
-        def modifier(q):
-            return q.rename("FooBar")
-
-        output = self.run_bowler_modifier(
-            input, selector_func=selector, modifier_func=modifier
+        self.run_bowler_modifiers(
+            [("class Bar(Foo):\n  pass", "class FooBar(Foo):\n  pass")],
+            query_func=lambda x: Query(x).select_class("Bar").rename("FooBar"),
         )
-        expected = """\
-class FooBar(Foo):
-    pass"""
-        self.assertMultiLineEqual(expected, output)
 
     def test_rename_module(self):
-        input = """\
-from a.b.c.d import E"""
-
-        def selector(arg):
-            return Query(arg).select_module("a.b.c")
-
-        def modifier(q):
-            return q.rename("a.f")
-
-        output = self.run_bowler_modifier(
-            input, selector_func=selector, modifier_func=modifier
+        self.run_bowler_modifiers(
+            [("from a.b.c.d import E", "from a.f.d import E")],
+            query_func=lambda x: Query(x).select_module("a.b.c").rename("a.f"),
         )
-        expected = """\
-from a.f.d import E"""
-        self.assertMultiLineEqual(expected, output)
 
     def test_rename_module_callsites(self):
         input = """\
@@ -145,44 +114,27 @@ x.y.z.bar()"""
         self.assertMultiLineEqual(expected, output)
 
     def test_rename_subclass(self):
-        input = """\
-class Bar(Foo):
-    pass"""
+        def query_func(x):
+            return Query(x).select_subclass("Foo").rename("somepackage.Foo")
 
-        def selector(arg):
-            return Query(arg).select_subclass("Foo")
-
-        def modifier(q):
-            return q.rename("somepackage.Foo")
-
-        output = self.run_bowler_modifier(
-            input, selector_func=selector, modifier_func=modifier
+        self.run_bowler_modifiers(
+            [("class Bar(Foo):\n  pass", "class Bar(somepackage.Foo):\n  pass")],
+            query_func=query_func,
         )
-        expected = """\
-class Bar(somepackage.Foo):
-    pass"""
-        self.assertMultiLineEqual(expected, output)
 
     def test_add_argument(self):
-        input = """\
-def f(x): pass
-def g(x): pass
-[f(), g()]"""
+        def query_func(x):
+            return Query(x).select_function("f").add_argument("y", "5")
 
-        def selector(arg):
-            return Query(arg).select_function("f")
-
-        def add_modifier(q):
-            return q.add_argument("y", "5")
-
-        output = self.run_bowler_modifier(
-            input, selector_func=selector, modifier_func=add_modifier
+        self.run_bowler_modifiers(
+            [
+                ("def f(x): pass", "def f(x, y=5): pass"),
+                ("def g(x): pass", "def g(x): pass"),
+                # ("f()", "???"),
+                ("g()", "g()"),
+            ],
+            query_func=query_func,
         )
-        expected = """\
-def f(x, y=5): pass
-def g(x): pass
-[f(), g()]"""
-        self.assertMultiLineEqual(expected, output)
 
     def test_modifier_return_value(self):
         input = "a+b"
