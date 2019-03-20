@@ -14,6 +14,7 @@ from fissix.pgen2.driver import Driver
 
 from ..type_inference import OP_MIN_TYPE, InferredType, numeric_expr_type
 from ..types import LN, SYMBOL, TOKEN
+from .lib import BowlerTestCase
 
 BINARY_OPERATORS = ["+", "-", "*", "**", "<<", ">>", "|", "&", "^", "%", "<"]
 
@@ -92,7 +93,7 @@ def map_type(o):
         return InferredType.INT
 
 
-class OpMinTypeTest(unittest.TestCase):
+class OpMinTypeTest(BowlerTestCase):
     """
     Verifies that the generated OP_MIN_TYPE matches that of the current Python
     interpreter, and that `numeric_expr_type` agrees.
@@ -176,7 +177,7 @@ class OpMinTypeTest(unittest.TestCase):
         _produce_test(locals(), gen_test_min_type_unary, (op,))
 
 
-class ExpressionTest(unittest.TestCase):
+class ExpressionTest(BowlerTestCase):
     def gen_test_expression(expression_str, expected_type, use_py2_division=False):
         def test_expression(self):
             expr = tree(expression_str).children[0].children[0]
