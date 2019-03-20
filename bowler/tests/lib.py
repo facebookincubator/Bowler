@@ -5,6 +5,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import functools
 import multiprocessing
 import sys
 import tempfile
@@ -58,22 +59,43 @@ class BowlerTestCase(unittest.TestCase):
         selector_func=None,
         modifier_func=None,
         in_process=True,
+        query_func=None,
     ):
         """Returns the modified text."""
 
-        if not (selector or selector_func):
+        if not (selector or selector_func or query_func):
             raise ValueError("Pass selector")
-        if not (modifier or modifier_func):
+        if not (modifier or modifier_func or query_func):
             raise ValueError("Pass modifier")
 
         exception_queue = multiprocessing.Queue()
 
-        def local_modifier(node, capture, filename):
-            # When in_process=False, this runs in another process.  See notes below.
-            try:
-                return modifier(node, capture, filename)
-            except Exception as e:
-                exception_queue.put(e)
+        def store_exceptions_on(func):
+            @functools.wraps(func)
+            def inner(node, capture, filename):
+                # When in_process=False, this runs in another process.  See notes below.
+                try:
+                    return func(node, capture, filename)
+                except Exception as e:
+                    exception_queue.put(e)
+
+            return inner
+
+        def default_query_func(files):
+            if selector_func:
+                q = selector_func(files)
+            else:
+                q = Query(files).select(selector)
+
+            if modifier_func:
+                q = modifier_func(q)
+            else:
+                q = q.modify(modifier)
+
+            return q
+
+        if query_func is None:
+            query_func = default_query_func
 
         with tempfile.NamedTemporaryFile(suffix=".py") as f:
             # TODO: I'm almost certain this will not work on Windows, since
@@ -82,16 +104,15 @@ class BowlerTestCase(unittest.TestCase):
             with open(f.name, "w") as fw:
                 fw.write(input_text + "\n")
 
-            if selector_func:
-                query = selector_func([f.name])
-            else:
-                query = Query([f.name]).select(selector)
+            query = query_func([f.name])
+            assert query is not None, "Remember to return the Query"
+            assert query.retcode is None, "Return before calling .execute"
+            assert len(query.transforms) == 1, "TODO: Support multiple"
 
-            if modifier_func:
-                # N.b. exceptions may not work
-                query = modifier_func(query)
-            else:
-                query = query.modify(local_modifier)
+            for i in range(len(query.current.callbacks)):
+                query.current.callbacks[i] = store_exceptions_on(
+                    query.current.callbacks[i]
+                )
 
             # We require the in_process parameter in order to record coverage properly,
             # but it also helps in bubbling exceptions and letting tests read state set
@@ -102,19 +123,25 @@ class BowlerTestCase(unittest.TestCase):
 
             # In the case of in_process=False (mirroring normal use of the tool) we use
             # the queue to ship back exceptions from local_process, which can actually
-            # fail the test.  Normally exceptions in modifiers are not printed unless
-            # you pass --debug.
+            # fail the test.  Normally exceptions in modifiers are not printed
+            # at all unless you pass --debug, and even then you don't get the
+            # traceback.
+            # See https://github.com/facebookincubator/Bowler/issues/63
             if not exception_queue.empty():
                 raise AssertionError from exception_queue.get()
 
             with open(f.name, "r") as fr:
                 return fr.read().rstrip()
 
-    def run_bowler_modifiers(self, cases, selector=None, modifier=None):
+    def run_bowler_modifiers(
+        self, cases, selector=None, modifier=None, query_func=None
+    ):
         for input, expected in cases:
             with self.subTest(input):
-                output = self.run_bowler_modifier(input, selector, modifier)
-                self.assertEqual(expected, output)
+                output = self.run_bowler_modifier(
+                    input, selector, modifier, query_func=query_func
+                )
+                self.assertMultiLineEqual(expected, output)
 
     def parse_line(self, source: str) -> LN:
         grammar = pygram.python_grammar_no_print_statement
@@ -151,6 +178,41 @@ class BowlerTestCaseTest(BowlerTestCase):
         selector = "any"
         output = self.run_bowler_modifier(input, selector, lambda *args: None)
         self.assertFalse("None" in output)
+
+    def test_run_bowler_modifier_query_func(self):
+        input = "x=a*b"
+
+        selector = "term< any op='*' any >"
+
+        def modifier(node, capture, filename):
+            capture["op"].value = "/"
+            capture["op"].changed()
+
+        def query_func(arg):
+            return Query(arg).select(selector).modify(modifier)
+
+        output = self.run_bowler_modifier(input, query_func=query_func)
+        self.assertEqual("x=a/b", output)
+
+    def test_run_bowler_modifier_modifier_func(self):
+        input = "x=a*b"
+
+        selector = "term< any op='*' any >"
+
+        def selector_func(arg):
+            return Query(arg).select(selector)
+
+        def modifier(node, capture, filename):
+            capture["op"].value = "/"
+            capture["op"].changed()
+
+        def modifier_func(q):
+            return q.modify(modifier)
+
+        output = self.run_bowler_modifier(
+            input, selector_func=selector_func, modifier_func=modifier_func
+        )
+        self.assertEqual("x=a/b", output)
 
     def test_run_bowler_modifier_ferries_exception(self):
         input = "x=a*b"
