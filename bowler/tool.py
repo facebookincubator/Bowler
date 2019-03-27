@@ -210,18 +210,6 @@ class BowlerTool(RefactoringTool):
     def refactor(self, items: Sequence[str], *a, **k) -> None:
         """Refactor a list of files and directories."""
 
-        if not self.in_process:
-            child_count = max(1, min(self.NUM_PROCESSES, len(items)))
-            self.log_debug(f"starting {child_count} processes")
-            children = [
-                multiprocessing.Process(target=self.refactor_queue)
-                for i in range(child_count)
-            ]
-            for child in children:
-                child.start()
-        else:
-            children = []
-
         for dir_or_file in sorted(items):
             if os.path.isdir(dir_or_file):
                 self.refactor_dir(dir_or_file)
@@ -231,8 +219,16 @@ class BowlerTool(RefactoringTool):
         if self.in_process:
             self.queue.put(None)
             self.refactor_queue()
+            children = []
         else:
-            for _child in children:
+            child_count = max(1, min(self.NUM_PROCESSES, self.queue_count))
+            self.log_debug(f"starting {child_count} processes")
+            children = [
+                multiprocessing.Process(target=self.refactor_queue)
+                for i in range(child_count)
+            ]
+            for child in children:
+                child.start()
                 self.queue.put(None)
 
         results_count = 0
