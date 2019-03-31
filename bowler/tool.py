@@ -216,19 +216,17 @@ class BowlerTool(RefactoringTool):
             else:
                 self.queue_work(Filename(dir_or_file))
 
+        children: List[multiprocessing.Process] = []
         if self.in_process:
             self.queue.put(None)
             self.refactor_queue()
-            children = []
         else:
             child_count = max(1, min(self.NUM_PROCESSES, self.queue_count))
             self.log_debug(f"starting {child_count} processes")
-            children = [
-                multiprocessing.Process(target=self.refactor_queue)
-                for i in range(child_count)
-            ]
-            for child in children:
+            for i in range(child_count):
+                child = multiprocessing.Process(target=self.refactor_queue)
                 child.start()
+                children.append(child)
                 self.queue.put(None)
 
         results_count = 0
