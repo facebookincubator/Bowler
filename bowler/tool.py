@@ -258,13 +258,13 @@ class BowlerTool(RefactoringTool):
                 filename, hunks, exc = self.results.get_nowait()
                 results_count += 1
 
-                if isinstance(exc, BowlerException):
+                if exc:
                     self.log_error(f"{type(exc).__name__}: {exc}")
                     if exc.__cause__:
                         self.log_error(
                             f"  {type(exc.__cause__).__name__}: {exc.__cause__}"
                         )
-                    if exc.hunks:
+                    if isinstance(exc, BowlerException) and exc.hunks:
                         diff = "\n".join("\n".join(hunk) for hunk in exc.hunks)
                         self.log_error(f"Generated transform:\n{diff}")
                     self.exceptions.append(exc)
