@@ -39,6 +39,7 @@ setup(
     license="MIT",
     packages=["bowler", "bowler.tests"],
     test_suite="bowler.tests",
+    python_requires=">=3.6",
     setup_requires=["setuptools>=38.6.0"],
     install_requires=requires,
     entry_points={"console_scripts": ["bowler = bowler.main:main"]},
