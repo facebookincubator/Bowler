@@ -2,11 +2,12 @@ venv:
 	python3 -m venv .venv
 	@echo 'run `source .venv/bin/activate` to use virtualenv'
 
-setup: venv
-	source .venv/bin/activate && pip3 install -Ur requirements.txt
-	source .venv/bin/activate && pip3 install -Ur requirements-dev.txt
+setup:
+	python3 -m pip install -Ur requirements.txt
+	python3 -m pip install -Ur requirements-dev.txt
 
-dev: setup
+dev: venv
+	source .venv/bin/activate && make setup
 	source .venv/bin/activate && python3 setup.py develop
 	@echo 'run `source .venv/bin/activate` to develop bowler'
 

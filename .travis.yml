@@ -3,18 +3,14 @@ dist: xenial
 sudo: required
 env:
 python:
+    - "3.6"
     - "3.7"
-    - "3.7-dev"
+    - "3.8-dev"
 install:
-    - "pip install -U black mypy pylint isort"
+    - "make setup"
     - "pip install -U ."
 script:
-    - "make test"
+    - "make lint test"
 matrix:
     allow_failures:
-        - python: "3.7-dev"
-    include:
-        - python: "3.6"
-          env: LINTING=true
-          script:
-              - "make lint test"
+        - python: "3.8-dev"
