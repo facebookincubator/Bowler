@@ -11,6 +11,8 @@ install:
     - "pip install -U ."
 script:
     - "make lint test"
+after_success:
+    - "coveralls"
 matrix:
     allow_failures:
         - python: "3.8-dev"

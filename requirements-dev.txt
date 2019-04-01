@@ -2,5 +2,6 @@ black
 coverage
 isort
 mypy-mypyc
+python-coveralls
 twine
 wheel
