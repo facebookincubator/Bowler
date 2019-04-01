@@ -30,7 +30,8 @@ lint:
 	mypy -m bowler
 
 test:
-	python3 -m unittest -v bowler.tests
+	python3 -m coverage run -m bowler.tests
+	python3 -m coverage report
 
 clean:
 	rm -rf build dist README MANIFEST *.egg-info
