@@ -91,6 +91,59 @@ from a.b.c.d import E"""
 from a.f.d import E"""
         self.assertMultiLineEqual(expected, output)
 
+    def test_rename_module_callsites(self):
+        input = """\
+a.b.c.d.f()
+w.bar()"""
+
+        def selector(pattern):
+            def _selector(arg):
+                return Query(arg).select_module(pattern)
+
+            return _selector
+
+        def modifier(pattern):
+            def _modifier(q):
+                return q.rename(pattern)
+
+            return _modifier
+
+        # Same length
+        output = self.run_bowler_modifier(
+            input, selector_func=selector("a.b.c"), modifier_func=modifier("x.y.z")
+        )
+        expected = """\
+x.y.z.d.f()
+w.bar()"""
+        self.assertMultiLineEqual(expected, output)
+
+        # Shorter replacement
+        output = self.run_bowler_modifier(
+            input, selector_func=selector("a.b.c"), modifier_func=modifier("x.y")
+        )
+        expected = """\
+x.y.d.f()
+w.bar()"""
+        self.assertMultiLineEqual(expected, output)
+
+        # Longer replacement
+        output = self.run_bowler_modifier(
+            input, selector_func=selector("a.b.c"), modifier_func=modifier("w.x.y.z")
+        )
+        expected = """\
+w.x.y.z.d.f()
+w.bar()"""
+        self.assertMultiLineEqual(expected, output)
+
+        # Single character replacements replacement
+        output = self.run_bowler_modifier(
+            input, selector_func=selector("w"), modifier_func=modifier("x.y.z")
+        )
+        expected = """\
+a.b.c.d.f()
+x.y.z.bar()"""
+        self.assertMultiLineEqual(expected, output)
+
     def test_rename_subclass(self):
         input = """\
 class Bar(Foo):

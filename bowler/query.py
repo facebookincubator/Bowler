@@ -643,8 +643,15 @@ class Query:
 
         def rename_transform(node: LN, capture: Capture, filename: Filename) -> None:
             log.debug(f"{filename} [{list(capture)}]: {node}")
+
+            # If two keys reference the same underlying object, do not modify it twice
+            visited: List[LN] = []
             for _key, value in capture.items():
                 log.debug(f"{_key}: {value}")
+                if value in visited:
+                    continue
+                visited.append(value)
+
                 if isinstance(value, Leaf) and value.type == TOKEN.NAME:
                     if value.value == old_name and value.parent is not None:
                         value.replace(Name(new_name, prefix=value.prefix))
@@ -671,21 +678,28 @@ class Query:
                             value.children[len(dp_old) : len(dp_old)] = children
 
                     elif type_repr(value.type) == "power":
-                        pows = zip(dotted_parts(old_name), dotted_parts(new_name))
-                        it = iter(value.children)
-                        leaf = next(it)
-                        for old, new in pows:
-                            if old == ".":
-                                leaf = leaf.children[1]
-                                continue
+                        # We don't actually need the '.' so just skip it
+                        dp_old = old_name.split(".")
+                        dp_new = new_name.split(".")
 
-                            if old != leaf.value:
+                        for old, new, leaf in zip(dp_old, dp_new, value.children):
+                            if isinstance(leaf, Node):
+                                name_leaf = leaf.children[1]
+                            else:
+                                name_leaf = leaf
+                            if old != name_leaf.value:
                                 break
+                            name_leaf.replace(Name(new, prefix=name_leaf.prefix))
 
-                            if old == leaf.value and old != new:
-                                leaf.replace(Name(new, prefix=leaf.prefix))
-
-                            leaf = next(it)
+                        if len(dp_new) < len(dp_old):
+                            # if new path is shorter, remove excess children
+                            del value.children[len(dp_new) : len(dp_old)]
+                        elif len(dp_new) > len(dp_old):
+                            # if new path is longer, add new trailers in the middle
+                            for i in range(len(dp_old), len(dp_new)):
+                                value.insert_child(
+                                    i, Node(SYMBOL.trailer, [Dot(), Name(dp_new[i])])
+                                )
 
         transform.callbacks.append(rename_transform)
         return self
