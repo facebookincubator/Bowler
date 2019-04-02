@@ -59,7 +59,10 @@ fixers in a single Python file, ready to be imported and executed by Bowler.  Th
 allows the user to run these predefined or parameterized refactors on future code,
 enabling long term benefits from the initial effort.</p>
 <p>For example, if we have a simple refactoring script named <code>rename_func.py</code>:</p>
-<pre><code class="hljs css languages- python">old_name<span class="token punctuation">,</span> new_name <span class="token operator">=</span> sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<pre><code class="hljs css languages- python"><span class="token keyword">from</span> bowler <span class="token keyword">import</span> Query
+
+
+old_name<span class="token punctuation">,</span> new_name <span class="token operator">=</span> sys<span class="token punctuation">.</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
 <span class="token punctuation">(</span>
     Query<span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span>select_function<span class="token punctuation">(</span>old_name<span class="token punctuation">)</span>

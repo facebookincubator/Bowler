@@ -114,7 +114,7 @@ to the print function with string literal arguments:</p>
 
     <span class="token comment"># args will be a list because we captured `any*`</span>
     <span class="token keyword">if</span> args<span class="token punctuation">:</span>
-        <span class="token keyword">return</span> <span class="token builtin">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> Token<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token builtin">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
 
     <span class="token keyword">return</span> <span class="token boolean">False</span>
 
@@ -140,7 +140,7 @@ translation function (<code>tr</code>):</p>
     args <span class="token operator">=</span> capture<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"print_args"</span><span class="token punctuation">)</span>
 
     <span class="token comment"># make sure the arguments haven't already been modified</span>
-    <span class="token keyword">if</span> args <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> Token<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> args <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
         args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span>
             Call<span class="token punctuation">(</span>
                 Name<span class="token punctuation">(</span><span class="token string">"tr"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
