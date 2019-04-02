@@ -17,7 +17,7 @@ third party dependencies, like [click][], for common components.
 ## Why lib2to3
 
 **lib2to3** provides a concrete syntax tree (CST) implementation that recognizes and
-supports the grammar of all Python versions back to 2.x.  By nature of being a CST,
+supports the grammar of all Python versions back to 2.6.  By nature of being a CST,
 **lib2to3** enables modifications to the syntax tree while maintaining all formatting and
 comments, preventing modifications from destroying valuable information.
 

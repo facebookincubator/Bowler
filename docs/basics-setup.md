@@ -5,8 +5,9 @@ title: Setup
 
 ## Installing Bowler
 
-Bowler supports modifications to code from any version of Python 2 or 3, but it
-requires Python 3.6 or higher to run. Bowler can be easily installed using most common
+Bowler supports modifications to code from any version of Python 3, as well as
+Python 2.6+ with use of print functions from `__future__`, but it requires
+Python 3.6 or higher to run. Bowler can be easily installed using most common
 Python packaging tools. We recommend installing the latest stable release from
 [PyPI][] with `pip`:
 

@@ -13,7 +13,10 @@
 Overview
 --------
 
-Bowler is a refactoring tool for manipulating Python at the syntax tree level. It enables safe, large scale code modifications while guaranteeing that the resulting code compiles and runs. It provides both a simple command line interface and a fluent API in Python for generating complex code modifications in code.
+Bowler is a refactoring tool for manipulating Python at the syntax tree level. It enables
+safe, large scale code modifications while guaranteeing that the resulting code compiles
+and runs. It provides both a simple command line interface and a fluent API in Python for
+generating complex code modifications in code.
 
 Bowler uses a "fluent" `Query` API to build refactoring scripts through a series
 of selectors, filters, and modifiers.  Many simple modifications are already possible
