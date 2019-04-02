@@ -5,17 +5,25 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import io
 import logging
 from pathlib import Path
 from unittest import TestCase
+from unittest.mock import Mock
 
 from fissix.fixer_util import Call, Name
 
 from ..query import Query
-from ..types import TOKEN
+from ..types import TOKEN, BadTransform
+
+STDERR = io.StringIO()
 
 
 class SmokeTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        logging.basicConfig(stream=STDERR)
+
     def test_tr(self):
         target = Path(__file__).parent / "smoke-target.py"
 
@@ -60,3 +68,17 @@ class SmokeTest(TestCase):
         self.assertEqual(hunks_processed, 1)
         self.assertEqual(len(files_processed), 1)
         self.assertIn("smoke-target.py", files_processed[0])
+
+    def test_check_ast(self):
+        target = Path(__file__).parent / "smoke-target.py"
+        mock_processor = Mock()
+
+        query = (
+            Query(str(target))
+            .select_function("foo")
+            .rename("foo/")
+            .process(mock_processor)
+            .silent()
+        )
+        self.assertTrue(any(isinstance(e, BadTransform) for e in query.exceptions))
+        mock_processor.assert_not_called()

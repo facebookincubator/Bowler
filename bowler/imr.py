@@ -8,8 +8,9 @@
 import logging
 from typing import Any, List, Optional
 
-from attr import dataclass
 from fissix.fixer_util import LParen, Name
+
+from attr import dataclass
 
 from .helpers import find_last
 from .types import (
