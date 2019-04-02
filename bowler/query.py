@@ -311,6 +311,22 @@ class Query:
                 function_parameters=trailer< '(' function_arguments=any* ')' >
                 any*
             >
+        |
+            function_import=import_from<
+                'from' module_name=any
+                'import' ['(']
+                (
+                    import_as_names<
+                        any*
+                        function_name='{name}'
+                        any*
+                    >
+                |
+                    any*
+                    function_name='{name}'
+                    any*
+                )
+            [')'] >
         )
 
     """
@@ -739,6 +755,9 @@ class Query:
         def add_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
             done = False
             value_leaf = Name(value)
@@ -807,6 +826,9 @@ class Query:
         def modify_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
 
             for argument in spec.arguments:
@@ -854,6 +876,9 @@ class Query:
         def remove_argument_transform(
             node: Node, capture: Capture, filename: Filename
         ) -> None:
+            if "function_def" not in capture and "function_call" not in capture:
+                return
+
             spec = FunctionSpec.build(node, capture)
 
             if spec.is_def or not positional:
