@@ -1,3 +1,27 @@
+## v0.7.0
+
+* Validate transformed AST before generating diff or writing changes (#26)
+* Improve function argument modifiers to not require filters (#29)
+* Better support for renaming dotted module names (#61, #72)
+* Materialize file list before deciding how many processes to create (#70)
+* Multiple documentation and site fixes (#50, #54, #55)
+* Debug mode now runs in a single process (#53)
+* More test cases for helpers (#57)
+* Build wheel distributions during release (#67, #71)
+* Start tracking code coverage and upload results to coveralls.io (#71)
+* Mark Bowler as requiring Python >= 3.6 (#71)
+
+```bash
+$ git shortlog -sn v0.6.0...
+    26  John Reese
+     5  Bojan Mihelac
+     5  Leopold Talirz
+     2  Tim Hatch
+     1  Guru
+     1  Philip Jameson
+     1  peng weikang
+```
+
 ## v0.6.0
 
 * Fix matching for functions with more than one decorators (#10)
