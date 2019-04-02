@@ -11,26 +11,26 @@ __author__ = "John Reese, Facebook"
 __version__ = "0.6.0"
 
 from .imr import FunctionArgument, FunctionSpec
+from .query import Query
 from .tool import BowlerTool
 from .types import (
-    BowlerException,
-    IMRError,
-    TOKEN,
-    SYMBOL,
-    START,
-    DROP,
-    STARS,
+    ARG_ELEMS,
     ARG_END,
     ARG_LISTS,
-    ARG_ELEMS,
+    DROP,
     LN,
-    Stringish,
-    Filename,
-    Capture,
+    STARS,
+    START,
+    SYMBOL,
+    TOKEN,
+    BowlerException,
     Callback,
+    Capture,
+    Filename,
     Filter,
     Fixers,
     Hunk,
+    IMRError,
     Processor,
+    Stringish,
 )
-from .query import Query

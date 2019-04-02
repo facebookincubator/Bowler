@@ -10,4 +10,4 @@ from .lib import BowlerTestCaseTest
 from .query import QueryTest
 from .smoke import SmokeTest
 from .tool import ToolTest
-from .type_inference import OpMinTypeTest, ExpressionTest
+from .type_inference import ExpressionTest, OpMinTypeTest
