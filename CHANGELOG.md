@@ -4,7 +4,7 @@
 * Improve function argument modifiers to not require filters (#29)
 * Better support for renaming dotted module names (#61, #72)
 * Materialize file list before deciding how many processes to create (#70)
-* Multiple documentation and site fixes (#50, #54, #55)
+* Multiple documentation and site fixes (#50, #54, #55, #60)
 * Debug mode now runs in a single process (#53)
 * More test cases for helpers (#57)
 * Build wheel distributions during release (#67, #71)
