@@ -146,6 +146,12 @@ class BowlerTestCaseTest(BowlerTestCase):
         output = self.run_bowler_modifier(input, selector, modifier)
         self.assertEqual("x=a/b", output)
 
+    def test_run_bowler_modifier_parse_error(self):
+        input = "    if x:\n bad"
+        selector = "any"
+        output = self.run_bowler_modifier(input, selector, lambda *args: None)
+        self.assertFalse("None" in output)
+
     def test_run_bowler_modifier_ferries_exception(self):
         input = "x=a*b"
 
