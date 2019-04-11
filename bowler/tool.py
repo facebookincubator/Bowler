@@ -170,8 +170,8 @@ class BowlerTool(RefactoringTool):
             tree = self.refactor_string(input, filename)
             if tree:
                 hunks = self.processed_file(str(tree), filename, input)
-        except ParseError:
-            log.error(f"Skipping {filename}: failed to parse")
+        except ParseError as e:
+            log.exception("Skipping {filename}: failed to parse ({e})")
 
         return hunks
 
