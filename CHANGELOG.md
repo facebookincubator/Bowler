@@ -1,3 +1,14 @@
+## v0.7.1
+
+* Bug fix: skip writing files if they fail to parse after transform (#76)
+* Improved debug logging for parse failures (#75)
+
+```bash
+$ git shortlog -sn v0.7.0...
+     4  John Reese
+     1  Tim Hatch
+```
+
 ## v0.7.0
 
 * Validate transformed AST before generating diff or writing changes (#26)
