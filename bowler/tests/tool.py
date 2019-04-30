@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest import TestCase, mock
 
 from ..query import Query
-from ..tool import BowlerTool, log
+from ..tool import BadTransform, BowlerTool, log
 from ..types import BowlerQuit
 
 target = Path(__file__).parent / "smoke-target.py"
@@ -146,3 +146,20 @@ class ToolTest(TestCase):
         mock_prompt.side_effect = ["n", "n"]
         tool.process_hunks(target, hunks)
         mock_patch.assert_not_called()
+
+    def test_validate_print(self):
+        tool = BowlerTool(Query().compile(), silent=False)
+        # Passes
+        tool.processed_file(
+            new_text="print('str')", filename="foo.py", old_text="print('str')"
+        )
+        # Fails
+        with self.assertRaises(BadTransform):
+            tool.processed_file(
+                new_text="print 'str'", filename="foo.py", old_text="print('str')"
+            )
+
+    def test_validate_completely_invalid(self):
+        tool = BowlerTool(Query().compile(), silent=False)
+        with self.assertRaises(BadTransform):
+            tool.processed_file(new_text="x=1///2", filename="foo.py", old_text="x=1/2")

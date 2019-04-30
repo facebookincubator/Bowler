@@ -1,3 +1,8 @@
+## v0.7.2
+
+* Bug fix: reverify using fissix instead of ast to preserve the ability to modify code
+  that is incompatible with the host version of python (#78)
+
 ## v0.7.1
 
 * Bug fix: skip writing files if they fail to parse after transform (#76)
