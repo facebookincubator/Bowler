@@ -188,8 +188,10 @@ class BowlerTool(RefactoringTool):
             dirnames.sort()
             filenames.sort()
             for name in filenames:
-                if not name.startswith(".") and self.filename_matcher(Filename(name)):
-                    fullname = os.path.join(dirpath, name)
+                fullname = os.path.join(dirpath, name)
+                if not name.startswith(".") and self.filename_matcher(
+                    Filename(fullname)
+                ):
                     self.queue_work(Filename(fullname))
             # Modify dirnames in-place to remove subdirs with leading dots
             dirnames[:] = [dn for dn in dirnames if not dn.startswith(".")]
