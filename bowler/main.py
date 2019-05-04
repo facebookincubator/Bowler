@@ -138,5 +138,17 @@ def run(codemod: str, argv: List[str]) -> None:
         sys.argv[1:] = original_argv
 
 
+@main.command()
+@click.argument("codemod", required=True, type=str)
+def test(codemod: str) -> None:
+    """
+    Run the tests in the codemod file 
+        """
+    import unittest
+
+    codemod_module = codemod.replace('.py', '')
+    unittest.main(module=codemod_module, exit=False)
+
+
 if __name__ == "__main__":
     main()
