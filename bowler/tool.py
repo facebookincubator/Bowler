@@ -32,7 +32,6 @@ from .types import (
     Processor,
     RetryFile,
 )
-from pathlib import Path
 
 PROMPT_HELP = {
     "y": "apply this hunk",
