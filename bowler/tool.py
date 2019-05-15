@@ -213,10 +213,10 @@ class BowlerTool(RefactoringTool):
                 self.log_debug(f"Retrying {filename} later...")
                 self.queue.put(filename)
             except BowlerException as e:
-                log.error(f"Bowler exception during transform of {filename}: {e}")
+                log.exception(f"Bowler exception during transform of {filename}: {e}")
                 self.results.put((filename, e.hunks, e))
             except Exception as e:
-                log.error(f"Skipping {filename}: failed to transform because {e}")
+                log.exception(f"Skipping {filename}: failed to transform because {e}")
                 self.results.put((filename, [], e))
 
             finally:
