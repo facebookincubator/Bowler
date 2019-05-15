@@ -5,7 +5,6 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import ast
 import difflib
 import logging
 import multiprocessing
@@ -143,10 +142,12 @@ class BowlerTool(RefactoringTool):
                 hunks.append([a, b, *hunk])
 
             try:
-                ast.parse(new_text, filename)
+                new_tree = self.driver.parse_string(new_text)
+                if new_tree is None:
+                    raise AssertionError("Re-parsed CST is None")
             except Exception as e:
                 raise BadTransform(
-                    f"Transforms generated invalid AST for {filename}",
+                    f"Transforms generated invalid CST for {filename}",
                     filename=filename,
                     hunks=hunks,
                 ) from e
