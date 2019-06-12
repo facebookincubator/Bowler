@@ -465,20 +465,6 @@ class Query:
         self.current.filters.append(filter_in_class)
         return self
 
-    def move(self, new_module: str, filename: str = None) -> "Query":
-        transform = self.current
-        if transform.selector not in ("class", "function"):
-            raise ValueError("move requires select_function or select_class")
-
-        if not filename:
-            filename = new_module.replace(".", "/") + ".py"
-
-        def transform_move(node: LN, capture: Capture, filename: Filename) -> None:
-            pass
-
-        transform.callbacks.append(transform_move)
-        return self
-
     def encapsulate(self, internal_name: str = "") -> "Query":
         transform = self.current
         if transform.selector not in ("attribute"):
