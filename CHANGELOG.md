@@ -1,7 +1,22 @@
-## v0.7.2
+## v0.8.0
 
 * Bug fix: reverify using fissix instead of ast to preserve the ability to modify code
   that is incompatible with the host version of python (#78)
+* Log full traceback of errors during `bowler run` (#86)
+* Adds a maintainers guide (#83)
+* Changes `filename_matcher` to receive a full path, in case it needs to read
+  the file separately (#81)
+* Adds `query_func` to BowlerTestCase making it easier to test the provided
+  helpers, and improve exception capture in tests.
+
+```bash
+$ git shortlog -sn v0.7.1...
+     6  Tim Hatch
+     5  John Reese
+     1  Andy Freeland
+     1  Mariatta
+     1  Mariatta Wijaya
+```
 
 ## v0.7.1
 
