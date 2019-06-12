@@ -9,7 +9,13 @@ import unittest
 
 from fissix.pytree import Leaf, Node
 
-from ..helpers import dotted_parts, power_parts, print_selector_pattern, print_tree
+from ..helpers import (
+    dotted_parts,
+    filename_endswith,
+    power_parts,
+    print_selector_pattern,
+    print_tree,
+)
 from .lib import BowlerTestCase
 
 
@@ -99,3 +105,21 @@ class DottedPartsTest(unittest.TestCase):
         self.assertEqual(
             ["models", ".", "utils", ".", "Model"], dotted_parts("models.utils.Model")
         )
+
+
+class FilenameEndswithTest(unittest.TestCase):
+    def test_single_string(self):
+        py = filename_endswith(".py")
+        self.assertTrue(py("foo.py"))
+        self.assertTrue(py("foo/foo.py"))
+        self.assertFalse(py("foo.txt"))
+        self.assertFalse(py("foo/foo.txt"))
+
+    def test_sequence(self):
+        py = filename_endswith([".py", ".pyi"])
+        self.assertTrue(py("foo.py"))
+        self.assertTrue(py("foo/foo.py"))
+        self.assertTrue(py("foo.pyi"))
+        self.assertTrue(py("foo/foo.pyi"))
+        self.assertFalse(py("foo.txt"))
+        self.assertFalse(py("foo/foo.txt"))

@@ -122,6 +122,56 @@ x.y.z.bar()"""
             query_func=query_func,
         )
 
+    def test_filter_in_class(self):
+        def query_func_bar(x):
+            return Query(x).select_function("f").in_class("Bar", False).rename("g")
+
+        def query_func_foo(x):
+            return Query(x).select_function("f").in_class("Foo", False).rename("g")
+
+        def query_func_foo_subclasses(x):
+            return Query(x).select_function("f").in_class("Foo", True).rename("g")
+
+        # Does not have subclasses enabled
+        self.run_bowler_modifiers(
+            [
+                (
+                    "class Bar(Foo):\n  def f(self): pass",
+                    "class Bar(Foo):\n  def f(self): pass",
+                )
+            ],
+            query_func=query_func_foo,
+        )
+        # Does
+        self.run_bowler_modifiers(
+            [
+                (
+                    "class Bar(Foo):\n  def f(self2): pass",
+                    "class Bar(Foo):\n  def g(self2): pass",
+                ),
+                (
+                    "class Bar(Baz):\n  def f(self2): pass",
+                    "class Bar(Baz):\n  def f(self2): pass",
+                ),
+            ],
+            query_func=query_func_foo_subclasses,
+        )
+        # Operates directly on class
+        self.run_bowler_modifiers(
+            [
+                (
+                    "class Bar(Foo):\n  def f(self3): pass",
+                    "class Bar(Foo):\n  def g(self3): pass",
+                )
+            ],
+            [("class Bar:\n  def f(self3): pass", "class Bar:\n  def g(self3): pass")],
+            query_func=query_func_bar,
+        )
+        # Works on functions too, not just methods
+        self.run_bowler_modifiers(
+            [("def f(): pass", "def f(): pass")], query_func=query_func_bar
+        )
+
     def test_add_argument(self):
         def query_func(x):
             return Query(x).select_function("f").add_argument("y", "5")
