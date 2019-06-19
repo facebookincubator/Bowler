@@ -1013,4 +1013,4 @@ class Query:
         return self.execute(silent=True, **kwargs)
 
     def write(self, **kwargs) -> "Query":
-        return self.execute(write=True, **kwargs)
+        return self.execute(write=True, silent=True, interactive=False, **kwargs)
