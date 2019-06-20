@@ -168,7 +168,7 @@ Alias for `.execute(interactive=True, write=False)`
 
 ### `.write()`
 
-Alias for `.execute(interactive=False, write=True)`
+Alias for `.execute(interactive=False, write=True, silent=True)`
 
 ### `.dump()`
 
