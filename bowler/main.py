@@ -87,7 +87,7 @@ def do(interactive: bool, query: str, paths: List[str]) -> None:
     result = eval(code)  # noqa eval() - developer tool, hopefully they're not dumb
 
     if isinstance(result, Query):
-        if result.retcode is not None:
+        if result.retcode:
             exc = click.ClickException("query failed")
             exc.exit_code = result.retcode
             raise exc
