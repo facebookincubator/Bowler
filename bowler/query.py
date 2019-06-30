@@ -9,7 +9,7 @@ import inspect
 import logging
 import pathlib
 import re
-from functools import wraps
+from functools import partial, wraps
 from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, cast
 
 from attr import Factory, dataclass
@@ -19,6 +19,8 @@ from fissix.pytree import Leaf, Node, type_repr
 
 from .helpers import (
     Once,
+    callsite_contains_parameter,
+    definition_contains_parameter,
     dotted_parts,
     find_first,
     find_last,
@@ -438,6 +440,42 @@ class Query:
         self.current.filters.append(filter_is_call)
         return self
 
+    def filter_contains_parameter(
+        self, param_name: str, node: LN, capture: Capture, filename: Filename
+    ) -> bool:
+        transform = self.current
+        if transform.selector not in ("function", "method"):
+            raise ValueError(
+                "parameter presence filter must follow select_function/select_method"
+            )
+        if "source" not in transform.kwargs:
+            raise ValueError(
+                "Determining if parameter is present requires passing original function"
+            )
+
+        if "function_def" in capture or "class_def" in capture:
+            spec = FunctionSpec.build(node, capture)
+            return definition_contains_parameter(param_name, spec)
+        if "function_call" in capture or "class_call" in capture:
+            spec = FunctionSpec.build(node, capture)
+            sig = inspect.signature(transform.kwargs["source"])
+            return callsite_contains_parameter(param_name, spec, sig)
+
+        return False
+
+    def contains_parameter(self, name: str) -> "Query":
+        self.current.filters.append(partial(self.filter_contains_parameter, name))
+        return self
+
+    def missing_parameter(self, name: str) -> "Query":
+        def filter_missing_parameter(
+            node: LN, capture: Capture, filename: Filename
+        ) -> bool:
+            return not self.filter_contains_parameter(name, node, capture, filename)
+
+        self.current.filters.append(filter_missing_parameter)
+        return self
+
     def is_def(self) -> "Query":
         def filter_is_def(node: LN, capture: Capture, filename: Filename) -> bool:
             return bool("function_def" in capture or "class_def" in capture)
@@ -748,6 +786,10 @@ class Query:
             value_leaf = Name(value)
 
             if spec.is_def:
+                if definition_contains_parameter(name, spec):
+                    raise ValueError(
+                        f"{name} is already present in the definition of {spec.name}"
+                    )
                 new_arg = FunctionArgument(
                     name,
                     value_leaf if keyword else None,
@@ -772,6 +814,12 @@ class Query:
                     spec.arguments.append(new_arg)
 
             elif positional:
+                if after not in (SENTINEL, START):
+                    sig = inspect.signature(transform.kwargs["source"])
+                    if callsite_contains_parameter(name, spec, sig):
+                        raise ValueError(
+                            f"{name} is already present in the callsite of {spec.name}"
+                        )
                 new_arg = FunctionArgument(value=value_leaf)
                 for index, argument in enumerate(spec.arguments):
                     if argument.star and argument.star.type == TOKEN.STAR:
@@ -790,6 +838,29 @@ class Query:
                         break
 
                 if not done:
+                    spec.arguments.append(new_arg)
+
+            else:
+                if "source" not in transform.kwargs:
+                    raise ValueError(
+                        "Adding a positional arg to a callsite requires passing "
+                        "original function"
+                    )
+
+                sig = inspect.signature(transform.kwargs["source"])
+                if callsite_contains_parameter(name, spec, sig):
+                    raise ValueError(
+                        f"{name} is already present in the callsite of {spec.name}"
+                    )
+
+                # Drop kwarg at end of call to avoid breaking positional args
+                new_arg = FunctionArgument(name=name, value=value_leaf)
+
+                # Double star should only ever be present at the end of a call
+                star_arg = spec.arguments[-1].star if spec.arguments else None
+                if star_arg and star_arg.type == TOKEN.DOUBLESTAR:
+                    spec.arguments.insert(-1, new_arg)
+                else:
                     spec.arguments.append(new_arg)
 
             spec.explode()
