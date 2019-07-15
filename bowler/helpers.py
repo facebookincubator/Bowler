@@ -5,8 +5,8 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import inspect
 import logging
+from inspect import Signature
 from typing import TYPE_CHECKING, List, Optional, Sequence, Union
 
 import click
@@ -157,7 +157,7 @@ def definition_contains_parameter(param_name: str, spec: "FunctionSpec") -> bool
 
 
 def callsite_contains_parameter(
-    param_name: str, spec: "FunctionSpec", function_sig: inspect.Signature
+    param_name: str, spec: "FunctionSpec", function_sig: Signature
 ) -> bool:
     # Handle kwargs
     if spec_contains_parameter_name(param_name, spec):
