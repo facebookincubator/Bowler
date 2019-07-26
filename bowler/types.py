@@ -35,7 +35,7 @@ ARG_LISTS = {SYMBOL.typedargslist, SYMBOL.arglist}  # function def, function cal
 ARG_ELEMS = {
     TOKEN.NAME,  # single argument
     SYMBOL.tname,  # type annotated
-    SYMBOL.argument,  # keyword argument
+    SYMBOL.argument,  # positional or keyword argument
     SYMBOL.star_expr,  # vararg
 } | STARS
 
