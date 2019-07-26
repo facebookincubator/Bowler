@@ -16,7 +16,7 @@ the grammar element, optionally followed by angle brackets containing nested mat
 expressions. The `any` keyword can be used to match grammar elements, regardless of
 their type, while `*` denotes elements that repeat zero or more times. 
 
-Make sure to include necessary string literal tokens when using nested expressions, 
+Make sure to include _necessary_ string literal tokens when using nested expressions, 
 and `any*` to match remaining _grammar_ elements.
 
 ```python
