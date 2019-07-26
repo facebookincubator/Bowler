@@ -14,9 +14,19 @@ Selector patterns follow a very simple syntax, as defined in the **lib2to3**
 [pattern grammar][]. Matching elements of the [Python grammar][] is done by listing
 the grammar element, optionally followed by angle brackets containing nested match
 expressions. The `any` keyword can be used to match grammar elements, regardless of
-their type, while `*` denotes elements that repeat zero or more times. Make sure to
-include necessary string literal tokens when using nested expressions, and `any*` to
-match remaining grammar elements.
+their type, while `*` denotes elements that repeat zero or more times. 
+
+Make sure to include _necessary_ string literal tokens when using nested expressions, 
+and `any*` to match remaining _grammar_ elements.
+
+```python
+# any* does not capture the '=' string literal
+expr_stmt<
+    attr_name='{name}' attr_value=any*
+>
+# but declare '(' and ')' string literals to differentiate from '[' and ']'
+trailer< '(' function_arguments=any* ')' >
+```
 
 Example pattern to match class definitions that contain a function definition (the
 "suite" denotes the body of the class definition):
