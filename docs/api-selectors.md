@@ -24,7 +24,7 @@ and `any*` to match remaining _grammar_ elements.
 expr_stmt<
     attr_name='{name}' attr_value=any*
 >
-# but declare '(' and ')' string literals
+# but declare '(' and ')' string literals to differentiate from '[' and ']'
 trailer< '(' function_arguments=any* ')' >
 ```
 
