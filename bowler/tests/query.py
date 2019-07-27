@@ -172,16 +172,33 @@ x.y.z.bar()"""
             [("def f(): pass", "def f(): pass")], query_func=query_func_bar
         )
 
-    def test_add_argument(self):
+    def test_add_keyword_argument(self):
         def query_func(x):
             return Query(x).select_function("f").add_argument("y", "5")
 
         self.run_bowler_modifiers(
             [
                 ("def f(x): pass", "def f(x, y=5): pass"),
+                ("def f(x, **a): pass", "def f(x, y=5, **a): pass"),
                 ("def g(x): pass", "def g(x): pass"),
                 # ("f()", "???"),
                 ("g()", "g()"),
+            ],
+            query_func=query_func,
+        )
+
+    def test_add_positional_agument(self):
+        def f(x, y, z):
+            pass
+
+        def query_func(x):
+            return Query(x).select_function(f).add_argument("y", "5", True, "x")
+
+        self.run_bowler_modifiers(
+            [
+                ("def f(x): pass", "def f(x, y): pass"),
+                ("def g(x): pass", "def g(x): pass"),
+                ("f(3)", "f(3, 5)"),
             ],
             query_func=query_func,
         )
