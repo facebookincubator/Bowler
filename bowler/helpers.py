@@ -39,6 +39,7 @@ def print_selector_pattern(
             for child in node.children:
                 print_selector_pattern(child, results, filename)
             click.echo("> ", nl=False)
+    click.echo()
 
 
 def print_tree(
