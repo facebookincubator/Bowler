@@ -70,14 +70,14 @@ class PrintSelectorPatternTest(BowlerTestCase):
     def test_print_selector_pattern(self):
         node = self.parse_line("x + 1")
         expected = """\
-arith_expr < 'x' '+' '1' > """
+arith_expr < 'x' '+' '1' > \n"""
         print_selector_pattern(node)
         self.assertMultiLineEqual(expected, self.buffer.getvalue())
 
     def test_print_selector_pattern_capture(self):
         node = self.parse_line("x + 1")
         expected = """\
-arith_expr < 'x' op='+' '1' > """
+arith_expr < 'x' op='+' '1' > \n"""
         print_selector_pattern(node, {"op": node.children[1]})
         self.assertMultiLineEqual(expected, self.buffer.getvalue())
 
@@ -85,7 +85,7 @@ arith_expr < 'x' op='+' '1' > """
         node = self.parse_line("x + 1")
         # This is not ideal, but hard to infer a good pattern
         expected = """\
-arith_expr < 'x' rest='+' rest='1' > """
+arith_expr < 'x' rest='+' rest='1' > \n"""
         print_selector_pattern(node, {"rest": node.children[1:]})
         self.assertMultiLineEqual(expected, self.buffer.getvalue())
 
