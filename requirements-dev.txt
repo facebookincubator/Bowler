@@ -1,4 +1,5 @@
 black
+codecov
 coverage
 isort
 mypy-mypyc
