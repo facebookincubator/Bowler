@@ -2,7 +2,7 @@
 
 **Safe code refactoring for modern Python projects.**
 
-[![build status](https://travis-ci.com/facebookincubator/Bowler.svg?branch=master)](https://travis-ci.com/facebookincubator/Bowler)
+[![build status](https://github.com/facebookincubator/Bowler/workflows/Build/badge.svg)](https://github.com/facebookincubator/Bowler/actions)
 [![code coverage](https://img.shields.io/codecov/c/github/facebookincubator/Bowler)](https://codecov.io/gh/facebookincubator/Bowler)
 [![version](https://img.shields.io/pypi/v/bowler.svg)](https://pypi.org/project/bowler)
 [![changelog](https://img.shields.io/badge/change-log-blue.svg)](https://github.com/facebookincubator/bowler/blob/master/CHANGELOG.md)
