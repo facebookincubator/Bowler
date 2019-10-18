@@ -1,19 +1,19 @@
 venv:
-	python3 -m venv .venv
+	python -m venv .venv
 	@echo 'run `source .venv/bin/activate` to use virtualenv'
 
 setup:
-	python3 -m pip install -Ur requirements.txt
-	python3 -m pip install -Ur requirements-dev.txt
+	python -m pip install -Ur requirements.txt
+	python -m pip install -Ur requirements-dev.txt
 
 dev: venv
 	source .venv/bin/activate && make setup
-	source .venv/bin/activate && python3 setup.py develop
+	source .venv/bin/activate && python setup.py develop
 	@echo 'run `source .venv/bin/activate` to develop bowler'
 
 release: lint test clean
-	python3 setup.py sdist bdist_wheel
-	python3 -m twine upload dist/*
+	python setup.py sdist bdist_wheel
+	python -m twine upload dist/*
 
 format:
 	isort --recursive -y bowler setup.py
@@ -31,8 +31,8 @@ lint:
 	mypy -m bowler
 
 test:
-	python3 -m coverage run -m bowler.tests
-	python3 -m coverage report
+	python -m coverage run -m bowler.tests
+	python -m coverage report
 
 clean:
 	rm -rf build dist README MANIFEST *.egg-info
