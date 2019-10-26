@@ -1,0 +1,16 @@
+{
+  "id": "basics-refactoring",
+  "title": "Refactoring",
+  "description": "Bowler builds on top of the Concrete Syntax Tree (CST) provided by **lib2to3** in the",
+  "source": "@site/../docs/basics-refactoring.md",
+  "permalink": "/docs/basics-refactoring",
+  "sidebar": "docs",
+  "next": {
+    "title": "Setup",
+    "permalink": "/docs/basics-setup"
+  },
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/basics-intro"
+  }
+}

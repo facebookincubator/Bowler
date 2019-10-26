@@ -1,0 +1,16 @@
+{
+  "id": "api-query",
+  "title": "Queries",
+  "description": "Bowler provides a \"fluent\" `Query` API for building and executing refactoring scripts.",
+  "source": "@site/../docs/api-query.md",
+  "permalink": "/docs/api-query",
+  "sidebar": "docs",
+  "next": {
+    "title": "Selectors",
+    "permalink": "/docs/api-selectors"
+  },
+  "previous": {
+    "title": "Usage",
+    "permalink": "/docs/basics-usage"
+  }
+}
