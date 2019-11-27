@@ -32,6 +32,10 @@
     align-items: center;
     justify-content: center;
   }
+
+  .buttons a:first-child {
+    margin-right: 20px;
+  }
   
   .features {
     display: flex;

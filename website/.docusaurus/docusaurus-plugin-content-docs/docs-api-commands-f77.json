@@ -1,0 +1,16 @@
+{
+  "id": "api-commands",
+  "title": "CLI Commands",
+  "description": "Bowler provides a command line tool to simplify the process of testing and",
+  "source": "@site/../docs/api-commands.md",
+  "permalink": "/docs/api-commands",
+  "sidebar": "docs",
+  "next": {
+    "title": "Developing Bowler",
+    "permalink": "/docs/dev-intro"
+  },
+  "previous": {
+    "title": "Modifiers",
+    "permalink": "/docs/api-modifiers"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "api-filters",
+  "title": "Filters",
+  "description": "Filters in Bowler are intermediate functions that optionally restrict the set of",
+  "source": "@site/../docs/api-filters.md",
+  "permalink": "/docs/api-filters",
+  "sidebar": "docs",
+  "next": {
+    "title": "Modifiers",
+    "permalink": "/docs/api-modifiers"
+  },
+  "previous": {
+    "title": "Selectors",
+    "permalink": "/docs/api-selectors"
+  }
+}

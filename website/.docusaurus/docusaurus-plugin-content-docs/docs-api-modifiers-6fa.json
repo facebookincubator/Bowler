@@ -1,0 +1,16 @@
+{
+  "id": "api-modifiers",
+  "title": "Modifiers",
+  "description": "Modifiers in Bowler are functions that modify, add, remove, or replace syntax tree",
+  "source": "@site/../docs/api-modifiers.md",
+  "permalink": "/docs/api-modifiers",
+  "sidebar": "docs",
+  "next": {
+    "title": "CLI Commands",
+    "permalink": "/docs/api-commands"
+  },
+  "previous": {
+    "title": "Filters",
+    "permalink": "/docs/api-filters"
+  }
+}
