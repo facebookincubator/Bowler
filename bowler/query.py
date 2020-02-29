@@ -10,9 +10,8 @@ import logging
 import pathlib
 import re
 from functools import wraps
-from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import Callable, List, Optional, Type, TypeVar, Union, cast
 
-from attr import Factory, dataclass
 from fissix.fixer_base import BaseFix
 from fissix.fixer_util import Attr, Comma, Dot, LParen, Name, Newline, RParen
 from fissix.pytree import Leaf, Node, type_repr
@@ -88,6 +87,7 @@ class Query:
     def __init__(
         self,
         *paths: Union[str, List[str]],
+        python_version: int = 3,
         filename_matcher: Optional[FilenameMatcher] = None,
     ) -> None:
         self.paths: List[str] = []
@@ -95,6 +95,7 @@ class Query:
         self.processors: List[Processor] = []
         self.retcode: Optional[int] = None
         self.filename_matcher = filename_matcher
+        self.python_version = python_version
         self.exceptions: List[BowlerException] = []
 
         for path in paths:
@@ -995,6 +996,8 @@ class Query:
             kwargs["hunk_processor"] = processor
 
         kwargs.setdefault("filename_matcher", self.filename_matcher)
+        if self.python_version == 3:
+            kwargs.setdefault("options", {})["print_function"] = True
         tool = BowlerTool(fixers, **kwargs)
         self.retcode = tool.run(self.paths)
         self.exceptions = tool.exceptions

@@ -12,11 +12,13 @@ import os
 import sys
 import time
 from queue import Empty
-from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple
+from typing import Any, Iterator, List, Optional, Sequence, Tuple
 
 import click
+import sh
+from fissix import pygram
 from fissix.pgen2.parse import ParseError
-from fissix.refactor import RefactoringTool
+from fissix.refactor import RefactoringTool, _detect_future_features
 
 from moreorless.patch import PatchException, apply_single_file
 
@@ -29,7 +31,6 @@ from .types import (
     FilenameMatcher,
     Fixers,
     Hunk,
-    Node,
     Processor,
     RetryFile,
 )
@@ -97,7 +98,6 @@ class BowlerTool(RefactoringTool):
         **kwargs,
     ) -> None:
         options = kwargs.pop("options", {})
-        options["print_function"] = True
         super().__init__(fixers, *args, options=options, **kwargs)
         self.queue_count = 0
         self.queue = multiprocessing.JoinableQueue()  # type: ignore
@@ -148,6 +148,9 @@ class BowlerTool(RefactoringTool):
             if hunk:
                 hunks.append([a, b, *hunk])
 
+            features = _detect_future_features(new_text)
+            if "print_function" in features:
+                self.driver.grammar = pygram.python_grammar_no_print_statement
             try:
                 new_tree = self.driver.parse_string(new_text)
                 if new_tree is None:
