@@ -7,6 +7,8 @@
 
 import io
 import logging
+import subprocess
+import sys
 from pathlib import Path
 from unittest import TestCase
 from unittest.mock import Mock
@@ -82,3 +84,13 @@ class SmokeTest(TestCase):
         )
         self.assertTrue(any(isinstance(e, BadTransform) for e in query.exceptions))
         mock_processor.assert_not_called()
+
+    def test_click_test(self):
+        proc = subprocess.run(
+            [sys.executable, "-m", "bowler", "test", "bowler/tests/smoke-selftest.py"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="utf-8",
+        )
+        self.assertIn("Ran 2 tests", proc.stderr)
+        self.assertEqual(1, proc.returncode)
