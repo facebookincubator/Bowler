@@ -9,6 +9,7 @@ import difflib
 import logging
 import multiprocessing
 import os
+import sys
 import time
 from queue import Empty
 from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple
@@ -90,7 +91,7 @@ class BowlerTool(RefactoringTool):
         interactive: bool = True,
         write: bool = False,
         silent: bool = False,
-        in_process: bool = False,
+        in_process: Optional[bool] = None,
         hunk_processor: Processor = None,
         filename_matcher: Optional[FilenameMatcher] = None,
         **kwargs,
@@ -105,8 +106,13 @@ class BowlerTool(RefactoringTool):
         self.interactive = interactive
         self.write = write
         self.silent = silent
-        # pick the most restrictive of flags
-        self.in_process = in_process or self.IN_PROCESS
+        if in_process is None:
+            in_process = self.IN_PROCESS
+        # pick the most restrictive of flags; we can pickle fixers when
+        # using spawn.
+        if sys.platform == "win32" or sys.version_info > (3, 7):
+            in_process = True
+        self.in_process = in_process
         self.exceptions: List[BowlerException] = []
         if hunk_processor is not None:
             self.hunk_processor = hunk_processor
