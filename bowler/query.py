@@ -506,6 +506,7 @@ class Query:
                             Node(
                                 SYMBOL.decorator,
                                 [
+                                    Leaf(TOKEN.INDENT, indent),
                                     Leaf(TOKEN.AT, "@"),
                                     Name("property"),
                                     Leaf(TOKEN.NEWLINE, "\n"),
@@ -525,7 +526,7 @@ class Query:
                                         SYMBOL.suite,
                                         [
                                             Newline(),
-                                            Leaf(TOKEN.INDENT, indent.value + "    "),
+                                            Leaf(TOKEN.INDENT, indent + "    "),
                                             Node(
                                                 SYMBOL.simple_stmt,
                                                 [
@@ -633,9 +634,10 @@ class Query:
 
                     prev = find_previous(getter, TOKEN.DEDENT, recursive=True)
                     curr = find_last(setter, TOKEN.DEDENT, recursive=True)
-                    assert isinstance(prev, Leaf) and isinstance(curr, Leaf)
-                    prev.prefix, curr.prefix = curr.prefix, prev.prefix
-                    prev.value, curr.value = curr.value, prev.value
+                    if prev and curr:
+                        assert isinstance(prev, Leaf) and isinstance(curr, Leaf)
+                        prev.prefix, curr.prefix = curr.prefix, prev.prefix
+                        prev.value, curr.value = curr.value, prev.value
 
         transform.callbacks.append(encapsulate_transform)
         return self
