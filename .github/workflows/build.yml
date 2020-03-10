@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - tmp-*
     tags:
       - v*
   pull_request:
@@ -13,8 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6, 3.7]
-        os: [macOS-latest, ubuntu-latest]
+        python-version: [3.6, 3.7, 3.8]
+        os: [macOS-latest, ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v1
