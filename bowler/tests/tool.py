@@ -50,32 +50,27 @@ hunks = [
 
 class ToolTest(TestCase):
     def setUp(self):
-        self.orig_file = Path(__file__).parent / "smoke-target.py.orig"
-        self.rej_file = Path(__file__).parent / "smoke-target.py.rej"
         echo_patcher = mock.patch("bowler.tool.click.echo")
         secho_patcher = mock.patch("bowler.tool.click.secho")
         self.addCleanup(echo_patcher.stop)
         self.addCleanup(secho_patcher.stop)
         self.mock_echo = echo_patcher.start()
         self.mock_secho = secho_patcher.start()
-        self.addCleanup(self.cleanup_files)
 
-    def cleanup_files(self):
-        if os.path.isfile(self.orig_file):
-            os.rename(self.orig_file, target)
-        if os.path.isfile(self.rej_file):
-            os.remove(self.rej_file)
-
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_patch_called_correctly(self, mock_patch):
         tool = BowlerTool(Query().compile(), write=True, interactive=False, silent=True)
+        mock_patch.side_effect = lambda f, _: f
 
         tool.process_hunks(target, hunks)
         string_hunks = ""
         for hunk in hunks:
             string_hunks += "\n".join(hunk[2:]) + "\n"
         string_hunks = f"--- {target}\n+++ {target}\n" + string_hunks
-        mock_patch.assert_called_with("-u", target, _in=string_hunks.encode("utf-8"))
+        with open(target) as f:
+            input = f.read()
+
+        mock_patch.assert_called_with(input, string_hunks)
 
     @mock.patch.object(log, "exception")
     def test_process_hunks_invalid_hunks(self, mock_log):
@@ -83,66 +78,63 @@ class ToolTest(TestCase):
 
         tool.process_hunks(target, hunks)
         mock_log.assert_called_with(
-            f"hunks failed to apply, rejects saved to {target}.rej"
+            f"failed to apply patch hunk: context error 4: start before range_start"
         )
-        self.assertTrue(os.path.isfile(self.rej_file))
-        self.assertTrue(os.path.isfile(self.orig_file))
 
     @mock.patch.object(log, "exception")
     def test_process_hunks_no_hunks(self, mock_log):
         tool = BowlerTool(Query().compile(), write=True, interactive=False)
         empty_hunks = [[]]
         tool.process_hunks(target, empty_hunks)
-        patch_stderr = "/usr/bin/patch: **** Only garbage was found in the patch input."
+        patch_stderr = "Lines without hunk header at '\\n'"
         mock_log.assert_called_with(f"failed to apply patch hunk: {patch_stderr}")
 
     @mock.patch("bowler.tool.prompt_user")
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_after_skip_rest(self, mock_patch, mock_prompt):
         # Test that we apply the hunks that have been 'yessed' and nothing more
         tool = BowlerTool(Query().compile(), silent=False)
+        mock_patch.side_effect = lambda f, _: f
         mock_prompt.side_effect = ["y", "d"]
         tool.process_hunks(target, hunks)
-        mock_patch.assert_called_once_with(
-            "-u", target, _in="\n".join(hunks[0]).encode("utf-8") + b"\n"
-        )
+        mock_patch.assert_called_once_with(mock.ANY, "\n".join(hunks[0]) + "\n")
 
     @mock.patch("bowler.tool.prompt_user")
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_after_quit(self, mock_patch, mock_prompt):
         # Test that we apply the hunks that have been 'yessed' and nothing more
         tool = BowlerTool(Query().compile(), silent=False)
+        mock_patch.side_effect = lambda f, _: f
         mock_prompt.side_effect = ["y", "q"]
         with self.assertRaises(BowlerQuit):
             tool.process_hunks(target, hunks)
-        mock_patch.assert_called_once_with(
-            "-u", target, _in="\n".join(hunks[0]).encode("utf-8") + b"\n"
-        )
+        mock_patch.assert_called_once_with(mock.ANY, "\n".join(hunks[0]) + "\n")
 
     @mock.patch("bowler.tool.prompt_user")
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_after_auto_yes(self, mock_patch, mock_prompt):
         tool = BowlerTool(Query().compile(), silent=False)
+        mock_patch.side_effect = lambda f, _: f
         mock_prompt.side_effect = ["a"]
         tool.process_hunks(target, hunks)
         joined_hunks = "".join(["\n".join(hunk[2:]) + "\n" for hunk in hunks])
-        encoded_hunks = f"--- {target}\n+++ {target}\n{joined_hunks}".encode("utf-8")
-        mock_patch.assert_called_once_with("-u", target, _in=encoded_hunks)
+        encoded_hunks = f"--- {target}\n+++ {target}\n{joined_hunks}"
+        mock_patch.assert_called_once_with(mock.ANY, encoded_hunks)
 
     @mock.patch("bowler.tool.prompt_user")
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_after_no_then_yes(self, mock_patch, mock_prompt):
         tool = BowlerTool(Query().compile(), silent=False)
+        mock_patch.side_effect = lambda f, _: f
         mock_prompt.side_effect = ["n", "y"]
         tool.process_hunks(target, hunks)
-        mock_patch.assert_called_once_with(
-            "-u", target, _in="\n".join(hunks[1]).encode("utf-8") + b"\n"
-        )
+        mock_patch.assert_called_once_with(mock.ANY, "\n".join(hunks[1]) + "\n")
 
     @mock.patch("bowler.tool.prompt_user")
-    @mock.patch("bowler.tool.sh.patch")
+    @mock.patch("bowler.tool.apply_single_file")
     def test_process_hunks_after_only_no(self, mock_patch, mock_prompt):
         tool = BowlerTool(Query().compile(), silent=False)
+        mock_patch.side_effect = lambda f, _: f
         mock_prompt.side_effect = ["n", "n"]
         tool.process_hunks(target, hunks)
         mock_patch.assert_not_called()

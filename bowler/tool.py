@@ -14,9 +14,10 @@ from queue import Empty
 from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple
 
 import click
-import sh
 from fissix.pgen2.parse import ParseError
 from fissix.refactor import RefactoringTool
+
+from moreorless.patch import PatchException, apply_single_file
 
 from .helpers import filename_endswith
 from .types import (
@@ -341,21 +342,18 @@ class BowlerTool(RefactoringTool):
 
     def apply_hunks(self, accepted_hunks, filename):
         if accepted_hunks:
-            accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
-            args = ["patch", "-u", filename]
-            self.log_debug(f"running {args}")
+            with open(filename) as f:
+                data = f.read()
+
             try:
-                sh.patch(*args[1:], _in=accepted_hunks.encode("utf-8"))  # type: ignore
-            except sh.ErrorReturnCode as e:
-                if e.stderr:
-                    err = e.stderr.strip().decode("utf-8")
-                else:
-                    err = e.stdout.strip().decode("utf-8")
-                    if "saving rejects to file" in err:
-                        err = err.split("saving rejects to file")[1]
-                        log.exception(f"hunks failed to apply, rejects saved to{err}")
-                        return
+                accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
+                new_data = apply_single_file(data, accepted_hunks)
+            except PatchException as err:
                 log.exception(f"failed to apply patch hunk: {err}")
+                return
+
+            with open(filename, "w") as f:
+                f.write(new_data)
 
     def run(self, paths: Sequence[str]) -> int:
         if not self.errors:

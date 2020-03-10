@@ -1,4 +1,4 @@
 attrs
 click
 fissix
-sh
+moreorless>=0.2.0
