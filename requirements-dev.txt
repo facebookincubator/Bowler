@@ -5,5 +5,4 @@ isort
 mypy
 python-coveralls
 twine
-volatile
 wheel
