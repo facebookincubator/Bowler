@@ -6,13 +6,17 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
-from typing import List, Optional, Sequence, Union
+from inspect import Signature
+from typing import TYPE_CHECKING, List, Optional, Sequence, Union
 
 import click
 from fissix.pgen2.token import tok_name
 from fissix.pytree import Leaf, Node, type_repr
 
 from .types import LN, SYMBOL, TOKEN, Capture, Filename, FilenameMatcher
+
+if TYPE_CHECKING:
+    from .imr import FunctionSpec
 
 log = logging.getLogger(__name__)
 
@@ -142,6 +146,38 @@ def is_call_to(node: LN, func_name: str) -> bool:
         and node.children[0].type == TOKEN.NAME
         and node.children[0].value == func_name
     )
+
+
+def spec_contains_parameter_name(param_name: str, spec: "FunctionSpec") -> bool:
+    return param_name in (arg.name for arg in spec.arguments)
+
+
+def definition_contains_parameter(param_name: str, spec: "FunctionSpec") -> bool:
+    return spec_contains_parameter_name(param_name, spec)
+
+
+def callsite_contains_parameter(
+    param_name: str, spec: "FunctionSpec", function_sig: Signature
+) -> bool:
+    # Handle kwargs
+    if spec_contains_parameter_name(param_name, spec):
+        return True
+
+    # Handle positional args
+    if param_name not in function_sig.parameters:
+        raise ValueError(
+            f"Function signature must contain parameter we are looking for"
+        )
+
+    names = list(function_sig.parameters)
+    position = names.index(param_name)
+    if names[0] in ("self", "cls", "meta"):
+        position -= 1
+
+    if len(spec.arguments) <= position:
+        return False
+
+    return all(not arg.name and not arg.star for arg in spec.arguments[: position + 1])
 
 
 def find_first(node: LN, target: int, recursive: bool = False) -> Optional[LN]:

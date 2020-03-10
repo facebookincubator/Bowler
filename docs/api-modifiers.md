@@ -70,9 +70,7 @@ new_name | New name for element.
 
 ### `.add_argument()`
 
-Add an argument to a function or method, as well as callers. For positional arguments,
-the default value will be used to update all callers; for keyword arguments, it will
-be used in the function definition.
+Add an argument to a function or method, as well as callers.
 
 Requires use of [`.select_function`](api-selectors#select-function) or
 [`.select_method`](api-selectors#select-method).

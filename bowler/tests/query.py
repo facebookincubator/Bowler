@@ -122,6 +122,57 @@ x.y.z.bar()"""
             query_func=query_func,
         )
 
+    def test_filter_contains_parameter(self):
+        def f(x, y):
+            pass
+
+        def query_func(x):
+            return Query(x).select_function(f).contains_parameter("y").rename("g")
+
+        self.run_bowler_modifiers(
+            [
+                ("def f(x, y):\n   pass", "def g(x, y):\n   pass"),
+                ("def f(x, y, z):\n   pass", "def g(x, y, z):\n   pass"),
+                ("def f(x):\n   pass", "def f(x):\n   pass"),
+                ("def x(y):\n   pass", "def x(y):\n   pass"),
+                ("def f(*_):\n   pass", "def f(*_):\n   pass"),
+                ("def f(**_):\n   pass", "def f(**_):\n   pass"),
+                ("f(1, y=2)", "g(1, y=2)"),
+                ("f(1, 2)", "g(1, 2)"),
+                ("f(1, 2, z=3)", "g(1, 2, z=3)"),
+                ("f(y=2)", "g(y=2)"),
+                ("f(x=2, **a)", "f(x=2, **a)"),
+                ("f(*a, **a)", "f(*a, **a)"),
+                ("f(*_)", "f(*_)"),
+                ("f(**_)", "f(**_)"),
+                ("f(x=1)", "f(x=1)"),
+                ("f(1)", "f(1)"),
+                ("f(1, x=2)", "f(1, x=2)"),
+            ],
+            query_func=query_func,
+        )
+
+    def test_filter_missing_parameter(self):
+        def f(x, y):
+            pass
+
+        def query_func(x):
+            return Query(x).select_function(f).missing_parameter("y").rename("g")
+
+        self.run_bowler_modifiers(
+            [
+                ("def f(x, z):\n   pass", "def g(x, z):\n   pass"),
+                ("def f(x, y, z):\n   pass", "def f(x, y, z):\n   pass"),
+                ("f(1, z=2)", "g(1, z=2)"),
+                ("f(1)", "g(1)"),
+                ("f(x=2, **a)", "g(x=2, **a)"),
+                ("f(*a, **a)", "g(*a, **a)"),
+                ("f(1, 2, z=3)", "f(1, 2, z=3)"),
+                ("f(y=2)", "f(y=2)"),
+            ],
+            query_func=query_func,
+        )
+
     def test_filter_in_class(self):
         def query_func_bar(x):
             return Query(x).select_function("f").in_class("Bar", False).rename("g")
@@ -172,19 +223,92 @@ x.y.z.bar()"""
             [("def f(): pass", "def f(): pass")], query_func=query_func_bar
         )
 
-    def test_add_argument(self):
+    def test_add_keyword_argument(self):
+        def f(z, x):
+            pass
+
+        def def_query_func(x):
+            return Query(x).select_function(f).is_def().add_argument("y", "5")
+
+        def call_query_func(x):
+            return Query(x).select_function(f).is_call().add_argument("x", "5")
+
+        def conditional_call_query_func(x):
+            return (
+                Query(x)
+                .select_function(f)
+                .is_call()
+                .missing_parameter("x")
+                .add_argument("x", "5")
+            )
+
+        # Definition kwarg tests
+        self.run_bowler_modifiers(
+            [
+                ("def f(z, x): pass", "def f(z, x, y=5): pass"),
+                ("def g(x): pass", "def g(x): pass"),
+            ],
+            query_func=def_query_func,
+        )
+        with self.assertRaises(AssertionError):
+            self.run_bowler_modifier("def f(z, x, y): pass", query_func=def_query_func)
+
+        # Callsite kwarg tests
+        self.run_bowler_modifiers(
+            [
+                ("f(1)", "f(1, x=5)"),
+                ("f(z=1)", "f(z=1, x=5)"),
+                ("f(z=1, **a)", "f(z=1, x=5, **a)"),
+                ("g()", "g()"),
+            ],
+            query_func=call_query_func,
+        )
+        with self.assertRaises(AssertionError):
+            self.run_bowler_modifier("f(1, 2)", query_func=call_query_func)
+
+        # Conditional callsite kwarg tests
+        self.run_bowler_modifiers(
+            [
+                ("f(1)", "f(1, x=5)"),
+                ("f(1, 2)", "f(1, 2)"),
+                ("f(z=1)", "f(z=1, x=5)"),
+                ("f(z=1, x=2)", "f(z=1, x=2)"),
+                ("f(z=1, **a)", "f(z=1, x=5, **a)"),
+                ("f(z=1, x=2)", "f(z=1, x=2)"),
+                ("f(z=1, **a)", "f(z=1, x=5, **a)"),
+                ("g()", "g()"),
+            ],
+            query_func=conditional_call_query_func,
+        )
+
+    def test_add_positional_argument(self):
         def query_func(x):
-            return Query(x).select_function("f").add_argument("y", "5")
+            return Query(x).select_function("f").add_argument("y", "5", True)
 
         self.run_bowler_modifiers(
             [
-                ("def f(x): pass", "def f(x, y=5): pass"),
+                ("def f(x): pass", "def f(x, y): pass"),
                 ("def g(x): pass", "def g(x): pass"),
-                # ("f()", "???"),
+                ("f()", "f(5)"),
                 ("g()", "g()"),
+            ],
+            query_func=conditional_call_query_func,
+        )
+
+    def test_add_positional_argument(self):
+        def query_func(x):
+            return Query(x).select_function("f").add_argument("y", "5", True)
+
+        self.run_bowler_modifiers(
+            [
+                ("def f(x): pass", "def f(x, y): pass"),
+                ("def g(x): pass", "def g(x): pass"),
+                ("f()", "f(5)"),
             ],
             query_func=query_func,
         )
+        with self.assertRaises(AssertionError):
+            self.run_bowler_modifier("def f(x, y): pass", query_func=query_func)
 
     def test_modifier_return_value(self):
         input = "a+b"
