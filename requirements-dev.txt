@@ -2,7 +2,7 @@ black
 codecov
 coverage
 isort
-mypy-mypyc
+mypy
 python-coveralls
 twine
 wheel

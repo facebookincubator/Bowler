@@ -20,13 +20,7 @@ format:
 	black bowler setup.py
 
 lint:
-	@/bin/bash -c 'die() { echo "$$1"; exit 1; }; \
-	  while read filename; do \
-	  grep -q "Copyright (c) Facebook" "$$filename" || \
-	    die "Missing copyright in $$filename"; \
-	  grep -q "#!/usr/bin/env python3" "$$filename" || \
-	    die "Missing #! in $$filename"; \
-	  done < <( git ls-tree -r --name-only HEAD | grep ".py$$" )'
+	/bin/bash scripts/check_copyright.sh
 	black --check bowler setup.py
 	mypy -m bowler
 

@@ -14,6 +14,7 @@ from contextlib import contextmanager
 from io import StringIO
 
 import click
+import volatile
 from fissix import pygram, pytree
 from fissix.pgen2.driver import Driver
 
@@ -97,12 +98,12 @@ class BowlerTestCase(unittest.TestCase):
         if query_func is None:
             query_func = default_query_func
 
-        with tempfile.NamedTemporaryFile(suffix=".py") as f:
+        with volatile.file(mode="w", suffix=".py") as f:
             # TODO: I'm almost certain this will not work on Windows, since
             # NamedTemporaryFile has it already open for writing.  Consider
             # using mktemp directly?
-            with open(f.name, "w") as fw:
-                fw.write(input_text + "\n")
+            f.write(input_text + "\n")
+            f.close()
 
             query = query_func([f.name])
             assert query is not None, "Remember to return the Query"

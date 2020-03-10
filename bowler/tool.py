@@ -9,14 +9,16 @@ import difflib
 import logging
 import multiprocessing
 import os
+import sys
 import time
 from queue import Empty
 from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple
 
 import click
-import sh
 from fissix.pgen2.parse import ParseError
 from fissix.refactor import RefactoringTool
+
+from moreorless.patch import PatchException, apply_single_file
 
 from .helpers import filename_endswith
 from .types import (
@@ -89,7 +91,7 @@ class BowlerTool(RefactoringTool):
         interactive: bool = True,
         write: bool = False,
         silent: bool = False,
-        in_process: bool = False,
+        in_process: Optional[bool] = None,
         hunk_processor: Processor = None,
         filename_matcher: Optional[FilenameMatcher] = None,
         **kwargs,
@@ -104,8 +106,13 @@ class BowlerTool(RefactoringTool):
         self.interactive = interactive
         self.write = write
         self.silent = silent
-        # pick the most restrictive of flags
-        self.in_process = in_process or self.IN_PROCESS
+        if in_process is None:
+            in_process = self.IN_PROCESS
+        # pick the most restrictive of flags; we can pickle fixers when
+        # using spawn.
+        if sys.platform == "win32" or sys.version_info > (3, 7):
+            in_process = True
+        self.in_process = in_process
         self.exceptions: List[BowlerException] = []
         if hunk_processor is not None:
             self.hunk_processor = hunk_processor
@@ -341,21 +348,18 @@ class BowlerTool(RefactoringTool):
 
     def apply_hunks(self, accepted_hunks, filename):
         if accepted_hunks:
-            accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
-            args = ["patch", "-u", filename]
-            self.log_debug(f"running {args}")
+            with open(filename) as f:
+                data = f.read()
+
             try:
-                sh.patch(*args[1:], _in=accepted_hunks.encode("utf-8"))  # type: ignore
-            except sh.ErrorReturnCode as e:
-                if e.stderr:
-                    err = e.stderr.strip().decode("utf-8")
-                else:
-                    err = e.stdout.strip().decode("utf-8")
-                    if "saving rejects to file" in err:
-                        err = err.split("saving rejects to file")[1]
-                        log.exception(f"hunks failed to apply, rejects saved to{err}")
-                        return
+                accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
+                new_data = apply_single_file(data, accepted_hunks)
+            except PatchException as err:
                 log.exception(f"failed to apply patch hunk: {err}")
+                return
+
+            with open(filename, "w") as f:
+                f.write(new_data)
 
     def run(self, paths: Sequence[str]) -> int:
         if not self.errors:
