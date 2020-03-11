@@ -6,8 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 
 import importlib
+import importlib.util
 import logging
+import os.path
 import sys
+import unittest
 from pathlib import Path
 from typing import List
 
@@ -136,6 +139,24 @@ def run(codemod: str, argv: List[str]) -> None:
 
     finally:
         sys.argv[1:] = original_argv
+
+
+@main.command()
+@click.argument("codemod", required=True, type=str)
+def test(codemod: str) -> None:
+    """
+    Run the tests in the codemod file 
+    """
+
+    # TODO: Unify the import code between 'run' and 'test'
+    module_name_from_codemod = os.path.basename(codemod).replace(".py", "")
+    spec = importlib.util.spec_from_file_location(module_name_from_codemod, codemod)
+    foo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(foo)
+    suite = unittest.TestLoader().loadTestsFromModule(foo)
+
+    result = unittest.TextTestRunner().run(suite)
+    sys.exit(not result.wasSuccessful())
 
 
 if __name__ == "__main__":
