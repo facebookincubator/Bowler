@@ -756,9 +756,13 @@ class Query:
                     cast(str, type_annotation) if type_annotation != SENTINEL else "",
                 )
                 for index, argument in enumerate(spec.arguments):
+                    if after == argument.name:
+                        spec.arguments.insert(index + 1, new_arg)
+                        done = True
+                        break
+
                     if (
                         after == START
-                        or after == argument.name
                         or (positional and (argument.value or argument.star))
                         or (
                             keyword
@@ -781,12 +785,12 @@ class Query:
                         done = True
                         break
 
-                    if (
-                        after == START
-                        or index == stop_at
-                        or argument.name
-                        or argument.star
-                    ):
+                    if index == stop_at:
+                        spec.arguments.insert(index + 1, new_arg)
+                        done = True
+                        break
+
+                    if after == START or argument.name or argument.star:
                         spec.arguments.insert(index, new_arg)
                         done = True
                         break
