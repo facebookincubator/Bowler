@@ -172,6 +172,30 @@ x.y.z.bar()"""
             [("def f(): pass", "def f(): pass")], query_func=query_func_bar
         )
 
+    def test_encapsulate(self):
+        input = """\
+class Bar:
+    f = '42'
+"""
+
+        def query_bar_f(x):
+            return Query(x).select_attribute("f").in_class("Bar").encapsulate("_f")
+
+        expected = """\
+class Bar:
+    _f = '42'
+    @property
+    def f(self):
+        return self._f
+
+    @f.setter
+    def f(self, value):
+        self._f = value"""
+        output = self.run_bowler_modifier(
+            input, query_func=query_bar_f, in_process=True
+        )
+        self.assertMultiLineEqual(expected, output)
+
     def test_add_keyword_argument(self):
         def query_func(x):
             return Query(x).select_function("f").add_argument("y", "5")
