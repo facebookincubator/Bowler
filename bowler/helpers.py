@@ -20,7 +20,7 @@ INDENT_STR = ".  "
 
 
 def print_selector_pattern(
-    node: LN, results: Capture = None, filename: Filename = None
+    node: LN, results: Capture = None, filename: Filename = None, first: bool = True,
 ):
     key = ""
     if results:
@@ -37,8 +37,11 @@ def print_selector_pattern(
         if node.children:
             click.echo("< ", nl=False)
             for child in node.children:
-                print_selector_pattern(child, results, filename)
+                print_selector_pattern(child, results, filename, first=False)
             click.echo("> ", nl=False)
+
+    if first:
+        click.echo()
 
 
 def print_tree(
