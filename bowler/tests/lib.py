@@ -8,9 +8,7 @@
 import functools
 import multiprocessing
 import sys
-import tempfile
 import unittest
-from contextlib import contextmanager
 from io import StringIO
 
 import click

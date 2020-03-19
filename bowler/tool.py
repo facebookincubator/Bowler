@@ -15,7 +15,6 @@ from queue import Empty
 from typing import Any, Iterator, List, Optional, Sequence, Tuple
 
 import click
-import sh
 from fissix import pygram
 from fissix.pgen2.parse import ParseError
 from fissix.refactor import RefactoringTool, _detect_future_features
