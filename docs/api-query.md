@@ -56,14 +56,14 @@ Query(
   working directory), or lists of paths, for any positional argument given.
   Defaults to the current working directory if no arguments given.
 
+* `*filename_matcher*` - A callback which returns whether a given filename is
+  eligible for refactoring.  Defaults to only matching files that end with
+  `.py`.
+
 * `python_version` - The 'major' python version of the files to be refactored, i.e. `2`
   or `3`. This allows the parser to handle `print` statement vs function correctly. This
   includes detecting use of `from __future__ import print_function` when
   `python_version=2`. Default is `3`.
-
-* `filename_matcher` - A callback which returns whether a given filename is
-  eligible for refactoring.  Defaults to only matching files that end with
-  `.py`.
 
 
 ### `.select()`

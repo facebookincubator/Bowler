@@ -147,8 +147,8 @@ class BowlerTool(RefactoringTool):
             if hunk:
                 hunks.append([a, b, *hunk])
 
-            features = _detect_future_features(new_text)
-            if "print_function" in features:
+            original_grammar = self.driver.grammar
+            if "print_function" in _detect_future_features(new_text):
                 self.driver.grammar = pygram.python_grammar_no_print_statement
             try:
                 new_tree = self.driver.parse_string(new_text)
@@ -160,6 +160,8 @@ class BowlerTool(RefactoringTool):
                     filename=filename,
                     hunks=hunks,
                 ) from e
+            finally:
+                self.driver.grammar = original_grammar
 
         return hunks
 

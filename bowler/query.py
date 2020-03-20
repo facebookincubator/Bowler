@@ -87,8 +87,8 @@ class Query:
     def __init__(
         self,
         *paths: Union[str, List[str]],
-        python_version: int = 3,
         filename_matcher: Optional[FilenameMatcher] = None,
+        python_version: int = 3,
     ) -> None:
         self.paths: List[str] = []
         self.transforms: List[Transform] = []
