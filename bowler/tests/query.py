@@ -51,27 +51,23 @@ class QueryTest(BowlerTestCase):
     def test_parse_print_func_py3(self):
         # Py 3 mode is the default
         def select_print_func(arg):
-            return (
-                Query(arg)
-                .select_var("bar")
-                .rename("baz")
-            )
+            return Query(arg).select_var("bar").rename("baz")
 
         template = """{} = 1; {}"""
         self.run_bowler_modifiers(
             [
                 (
                     # ParseError prevents rename succeeding
-                    template.format("bar", "print \"hello world\""),
-                    template.format("bar", "print \"hello world\"")
+                    template.format("bar", 'print "hello world"'),
+                    template.format("bar", 'print "hello world"'),
                 ),
                 (
-                    template.format("bar", "print(\"hello world\")"),
-                    template.format("baz", "print(\"hello world\")")
+                    template.format("bar", 'print("hello world")'),
+                    template.format("baz", 'print("hello world")'),
                 ),
                 (
-                    template.format("bar", "print(\"hello world\", end=\"\")"),
-                    template.format("baz", "print(\"hello world\", end=\"\")")
+                    template.format("bar", 'print("hello world", end="")'),
+                    template.format("baz", 'print("hello world", end="")'),
                 ),
             ],
             query_func=select_print_func,
@@ -79,28 +75,24 @@ class QueryTest(BowlerTestCase):
 
     def test_parse_print_func_py2(self):
         def select_print_func(arg):
-            return (
-                Query(arg, python_version=2)
-                .select_var("bar")
-                .rename("baz")
-            )
+            return Query(arg, python_version=2).select_var("bar").rename("baz")
 
         template = """{} = 1; {}"""
         self.run_bowler_modifiers(
             [
                 (
-                    template.format("bar", "print \"hello world\""),
-                    template.format("baz", "print \"hello world\"")
+                    template.format("bar", 'print "hello world"'),
+                    template.format("baz", 'print "hello world"'),
                 ),
                 (
                     # not a print function call, just parenthesised statement
-                    template.format("bar", "print(\"hello world\")"),
-                    template.format("baz", "print(\"hello world\")")
+                    template.format("bar", 'print("hello world")'),
+                    template.format("baz", 'print("hello world")'),
                 ),
                 (
                     # ParseError prevents rename succeeding
-                    template.format("bar", "print(\"hello world\", end=\"\")"),
-                    template.format("bar", "print(\"hello world\", end=\"\")")
+                    template.format("bar", 'print("hello world", end="")'),
+                    template.format("bar", 'print("hello world", end="")'),
                 ),
             ],
             query_func=select_print_func,
@@ -108,11 +100,7 @@ class QueryTest(BowlerTestCase):
 
     def test_parse_print_func_py2_future_print(self):
         def select_print_func(arg):
-            return (
-                Query(arg, python_version=2)
-                .select_var("bar")
-                .rename("baz")
-            )
+            return Query(arg, python_version=2).select_var("bar").rename("baz")
 
         template = """\
 from __future__ import print_function
@@ -121,16 +109,16 @@ from __future__ import print_function
             [
                 (
                     # ParseError prevents rename succeeding
-                    template.format("bar", "print \"hello world\""),
-                    template.format("bar", "print \"hello world\"")
+                    template.format("bar", 'print "hello world"'),
+                    template.format("bar", 'print "hello world"'),
                 ),
                 (
-                    template.format("bar", "print(\"hello world\")"),
-                    template.format("baz", "print(\"hello world\")")
+                    template.format("bar", 'print("hello world")'),
+                    template.format("baz", 'print("hello world")'),
                 ),
                 (
-                    template.format("bar", "print(\"hello world\", end=\"\")"),
-                    template.format("baz", "print(\"hello world\", end=\"\")")
+                    template.format("bar", 'print("hello world", end="")'),
+                    template.format("baz", 'print("hello world", end="")'),
                 ),
             ],
             query_func=select_print_func,
