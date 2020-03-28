@@ -22,7 +22,7 @@ format:
 lint:
 	/bin/bash scripts/check_copyright.sh
 	black --check bowler setup.py
-	mypy -m bowler
+	mypy -p bowler
 
 test:
 	python -m coverage run -m bowler.tests

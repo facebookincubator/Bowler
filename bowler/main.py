@@ -11,8 +11,9 @@ import logging
 import os.path
 import sys
 import unittest
+from importlib.abc import Loader
 from pathlib import Path
-from typing import List
+from typing import cast, List
 
 import click
 
@@ -152,7 +153,7 @@ def test(codemod: str) -> None:
     module_name_from_codemod = os.path.basename(codemod).replace(".py", "")
     spec = importlib.util.spec_from_file_location(module_name_from_codemod, codemod)
     foo = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(foo)
+    cast(Loader, spec.loader).exec_module(foo)
     suite = unittest.TestLoader().loadTestsFromModule(foo)
 
     result = unittest.TextTestRunner().run(suite)
