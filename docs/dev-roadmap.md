@@ -23,6 +23,8 @@ that are just waiting on someone to have the spare cycles to implement.
 
 * Better documentation for those unfamiliar with code refactoring.
 
+* Move from lib2to3/fissix to using LibCST instead.
+
 If you're interested in working on these features, please read the [contributors][]
 guide and open an issue on the Github repo to discuss it in more detail.
 
