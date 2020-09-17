@@ -10,6 +10,18 @@
 * Marked package as typed for PEP 561 support (#124)
 * Improved documentation (#100)
 
+```bash
+$ git shortlog -sn v0.8.0...
+    13  John Reese
+    12  Tim Hatch
+     5  Anentropic
+     5  David Arnold
+     3  Marion
+     2  Mohit Solanki
+     2  ajberchek
+     1  Kamil Breguła
+```
+
 ## v0.8.0
 
 * Bug fix: reverify using fissix instead of ast to preserve the ability to modify code
