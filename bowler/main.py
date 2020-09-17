@@ -13,7 +13,7 @@ import sys
 import unittest
 from importlib.abc import Loader
 from pathlib import Path
-from typing import cast, List
+from typing import List, cast
 
 import click
 
@@ -146,7 +146,7 @@ def run(codemod: str, argv: List[str]) -> None:
 @click.argument("codemod", required=True, type=str)
 def test(codemod: str) -> None:
     """
-    Run the tests in the codemod file 
+    Run the tests in the codemod file
     """
 
     # TODO: Unify the import code between 'run' and 'test'

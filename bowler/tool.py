@@ -18,7 +18,6 @@ import click
 from fissix import pygram
 from fissix.pgen2.parse import ParseError
 from fissix.refactor import RefactoringTool, _detect_future_features
-
 from moreorless.patch import PatchException, apply_single_file
 
 from .helpers import filename_endswith

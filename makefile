@@ -16,11 +16,12 @@ release: lint test clean
 	python -m twine upload dist/*
 
 format:
-	isort --recursive -y bowler setup.py
+	isort bowler setup.py
 	black bowler setup.py
 
 lint:
 	/bin/bash scripts/check_copyright.sh
+	isort --check bowler setup.py
 	black --check bowler setup.py
 	mypy -p bowler
 

@@ -20,7 +20,10 @@ INDENT_STR = ".  "
 
 
 def print_selector_pattern(
-    node: LN, results: Capture = None, filename: Filename = None, first: bool = True,
+    node: LN,
+    results: Capture = None,
+    filename: Filename = None,
+    first: bool = True,
 ):
     key = ""
     if results:
