@@ -1,3 +1,15 @@
+## v0.9.0
+
+* Added `bowler test` command for testing codemod scripts (#82)
+* Added `python_version` option to load files with Python 2 print statement (#123)
+* Implemented `Query.encapsulate()` to generate `@property` wrappers (#113)
+* Improvements to `Query.add_argument()` and positional arguments (#104)
+* No longer depends on shelling-out to `patch` command for applying diffs (#120)
+* Fix `Query.write()` to be non-interactive and silent (#88)
+* Fix unexpected error code after successful queries (#89)
+* Marked package as typed for PEP 561 support (#124)
+* Improved documentation (#100)
+
 ## v0.8.0
 
 * Bug fix: reverify using fissix instead of ast to preserve the ability to modify code
