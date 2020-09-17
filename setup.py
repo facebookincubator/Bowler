@@ -7,9 +7,6 @@
 
 from setuptools import find_packages, setup
 
-with open("README.md") as f:
-    readme = f.read()
-
 with open("bowler/__init__.py") as f:
     for line in f:
         if line.startswith("__version__"):
@@ -19,7 +16,6 @@ with open("requirements.txt") as f:
     requires = f.read().strip().splitlines()
 
 setup(
-    long_description=readme,
     version=version,
     install_requires=requires,
 )
