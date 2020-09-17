@@ -7,15 +7,10 @@
 
 from setuptools import find_packages, setup
 
-with open("bowler/__init__.py") as f:
-    for line in f:
-        if line.startswith("__version__"):
-            version = line.split('"')[1]
-
 with open("requirements.txt") as f:
     requires = f.read().strip().splitlines()
 
 setup(
-    version=version,
     install_requires=requires,
+    use_scm_version={"write_to": "bowler/version.py"},
 )
