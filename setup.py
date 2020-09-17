@@ -19,28 +19,7 @@ with open("requirements.txt") as f:
     requires = f.read().strip().splitlines()
 
 setup(
-    name="bowler",
-    description="Safe code refactoring for modern Python projects",
     long_description=readme,
-    long_description_content_type="text/markdown",
     version=version,
-    author="John Reese, Facebook",
-    author_email="jreese@fb.com",
-    url="https://github.com/facebookincubator/bowler",
-    classifiers=[
-        "Development Status :: 1 - Planning",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-    ],
-    license="MIT",
-    packages=["bowler", "bowler.tests"],
-    test_suite="bowler.tests",
-    python_requires=">=3.6",
-    setup_requires=["setuptools>=38.6.0"],
     install_requires=requires,
-    entry_points={"console_scripts": ["bowler = bowler.main:main"]},
 )
