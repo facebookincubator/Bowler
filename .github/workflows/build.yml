@@ -35,3 +35,5 @@ jobs:
     - name: Coverage
       run: codecov --token ${{ secrets.CODECOV_TOKEN }} --branch ${{ github.ref }}
       continue-on-error: true
+    - name: Pessimist
+      run: python -m pessimist --fast .
