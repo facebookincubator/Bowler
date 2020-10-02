@@ -1,5 +1,5 @@
-attrs
-click
-fissix
+attrs>=17.3.0
+click>=6.0
+fissix>=20.5.1
 moreorless>=0.2.0
 volatile
