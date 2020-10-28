@@ -351,17 +351,19 @@ class BowlerTool(RefactoringTool):
 
     def apply_hunks(self, accepted_hunks, filename):
         if accepted_hunks:
-            with open(filename) as f:
-                data = f.read()
+            input, encoding = self._read_python_source(filename)
+
+            if not input.endswith("\n"):
+                input += "\n"
 
             try:
                 accepted_hunks = f"--- {filename}\n+++ {filename}\n{accepted_hunks}"
-                new_data = apply_single_file(data, accepted_hunks)
+                new_data = apply_single_file(input, accepted_hunks)
             except PatchException as err:
                 log.exception(f"failed to apply patch hunk: {err}")
                 return
 
-            with open(filename, "w") as f:
+            with open(filename, "w", encoding=encoding) as f:
                 f.write(new_data)
 
     def run(self, paths: Sequence[str]) -> int:

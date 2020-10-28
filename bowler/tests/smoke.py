@@ -13,6 +13,7 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import Mock
 
+import volatile
 from fissix.fixer_util import Call, Name
 
 from ..query import Query
@@ -94,3 +95,26 @@ class SmokeTest(TestCase):
         )
         self.assertIn("Ran 2 tests", proc.stderr)
         self.assertEqual(1, proc.returncode)
+
+    def test_no_trailing_newline(self):
+        with volatile.file(mode="w", suffix=".py") as f:
+            f.write("import foo")  # no newline
+            f.close()
+
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "bowler",
+                    "do",
+                    f"Query([{f.name!r}]).select_module('foo').rename('bar').write()",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                encoding="utf-8",
+            )
+            self.assertEqual(0, proc.returncode)
+
+            with open(f.name, "r") as fr:
+                data = fr.read()
+            self.assertEqual("import bar\n", data)
