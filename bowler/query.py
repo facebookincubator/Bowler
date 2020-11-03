@@ -898,15 +898,15 @@ class Query:
         self.transforms.append(Transform(fixer=fx))
         return self
 
-    def filter(self, callback: Union[str, Callback]) -> "Query":
-        if isinstance(callback, str):
-            code = compile(callback, "<string>", "eval")
+    def filter(self, filter_callback: Union[str, Filter]) -> "Query":
+        if isinstance(filter_callback, str):
+            code = compile(filter_callback, "<string>", "eval")
 
             def callback(node: Node, capture: Capture, filename: Filename) -> bool:
                 return bool(eval(code))  # noqa: developer tool
 
-        callback = cast(Callback, callback)
-        self.current.filters.append(callback)
+        filter_callback = cast(Filter, filter_callback)
+        self.current.filters.append(filter_callback)
         return self
 
     def modify(self, callback: Union[str, Callback]) -> "Query":
