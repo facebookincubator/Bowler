@@ -4,7 +4,7 @@ title: Usage
 ---
 
 Bowler provides two primary mechanisms for refactoring.  It provides a
-[fluent API](fixers) for standalone applications to import and use, and it also
+[fluent API](api-query#fixer) for standalone applications to import and use, and it also
 provides a simple command line tool for executing one or more refactoring scripts
 on a given set of directories or files.
 
