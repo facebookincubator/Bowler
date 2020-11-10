@@ -1,0 +1,92 @@
+{
+  "docsSidebars": {
+    "docs": [
+      {
+        "type": "category",
+        "label": "Basics",
+        "items": [
+          {
+            "type": "link",
+            "label": "Introduction",
+            "href": "/docs/basics-intro"
+          },
+          {
+            "type": "link",
+            "label": "Refactoring",
+            "href": "/docs/basics-refactoring"
+          },
+          {
+            "type": "link",
+            "label": "Setup",
+            "href": "/docs/basics-setup"
+          },
+          {
+            "type": "link",
+            "label": "Usage",
+            "href": "/docs/basics-usage"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "API Reference",
+        "items": [
+          {
+            "type": "link",
+            "label": "Queries",
+            "href": "/docs/api-query"
+          },
+          {
+            "type": "link",
+            "label": "Selectors",
+            "href": "/docs/api-selectors"
+          },
+          {
+            "type": "link",
+            "label": "Filters",
+            "href": "/docs/api-filters"
+          },
+          {
+            "type": "link",
+            "label": "Modifiers",
+            "href": "/docs/api-modifiers"
+          },
+          {
+            "type": "link",
+            "label": "CLI Commands",
+            "href": "/docs/api-commands"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Contributing",
+        "items": [
+          {
+            "type": "link",
+            "label": "Developing Bowler",
+            "href": "/docs/dev-intro"
+          },
+          {
+            "type": "link",
+            "label": "Roadmap to the Future",
+            "href": "/docs/dev-roadmap"
+          }
+        ]
+      }
+    ]
+  },
+  "permalinkToSidebar": {
+    "/docs/api-commands": "docs",
+    "/docs/api-filters": "docs",
+    "/docs/api-modifiers": "docs",
+    "/docs/api-query": "docs",
+    "/docs/api-selectors": "docs",
+    "/docs/basics-intro": "docs",
+    "/docs/basics-refactoring": "docs",
+    "/docs/basics-setup": "docs",
+    "/docs/basics-usage": "docs",
+    "/docs/dev-intro": "docs",
+    "/docs/dev-roadmap": "docs"
+  }
+}

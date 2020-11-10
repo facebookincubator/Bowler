@@ -1,0 +1,12 @@
+{
+  "id": "basics-intro",
+  "title": "Introduction",
+  "description": "## What is Bowler?",
+  "source": "@site/../docs/basics-intro.md",
+  "permalink": "/docs/basics-intro",
+  "sidebar": "docs",
+  "next": {
+    "title": "Refactoring",
+    "permalink": "/docs/basics-refactoring"
+  }
+}

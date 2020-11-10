@@ -1,0 +1,12 @@
+{
+  "id": "dev-roadmap",
+  "title": "Roadmap to the Future",
+  "description": "Bowler is still a very young project. There are many ways in which it could improve and",
+  "source": "@site/../docs/dev-roadmap.md",
+  "permalink": "/docs/dev-roadmap",
+  "sidebar": "docs",
+  "previous": {
+    "title": "Developing Bowler",
+    "permalink": "/docs/dev-intro"
+  }
+}

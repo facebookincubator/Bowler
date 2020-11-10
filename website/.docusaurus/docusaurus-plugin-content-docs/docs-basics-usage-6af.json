@@ -1,0 +1,16 @@
+{
+  "id": "basics-usage",
+  "title": "Usage",
+  "description": "Bowler provides two primary mechanisms for refactoring.  It provides a",
+  "source": "@site/../docs/basics-usage.md",
+  "permalink": "/docs/basics-usage",
+  "sidebar": "docs",
+  "next": {
+    "title": "Queries",
+    "permalink": "/docs/api-query"
+  },
+  "previous": {
+    "title": "Setup",
+    "permalink": "/docs/basics-setup"
+  }
+}
