@@ -43,6 +43,7 @@ const siteConfig = {
     {doc: 'basics-intro', label: 'Getting Started'},
     {doc: 'api-query', label: 'API Reference'},
     {doc: 'dev-roadmap', label: 'Roadmap'},
+    {doc: 'dev-intro', label: 'Contribute'},
     {href: repoUrl, label: 'Github'},
     // {blog: true, label: 'Blog'},
   ],

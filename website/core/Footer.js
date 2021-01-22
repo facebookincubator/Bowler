@@ -41,6 +41,18 @@ class Footer extends React.Component {
               height="45"
             />
           </a>
+          <a
+            href="https://opensource.facebook.com/legal/privacy/"
+            target="_blank"
+            rel="noreferrer noopener">
+            Privacy
+          </a>
+          <a
+            href="https://opensource.facebook.com/legal/terms/"
+            target="_blank"
+            rel="noreferrer noopener">
+            Terms
+          </a>
           <a href={this.pageUrl('blog', language)}>
             News
           </a>
