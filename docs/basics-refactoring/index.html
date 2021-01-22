@@ -1,24 +1,57 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Refactoring · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Bowler builds on top of the Concrete Syntax Tree (CST) provided by **lib2to3** in the"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Refactoring · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/index.html"/><meta property="og:description" content="Bowler builds on top of the Concrete Syntax Tree (CST) provided by **lib2to3** in the"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
-        document.addEventListener("DOMContentLoaded", function(){
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Refactoring · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Bowler builds on top of the Concrete Syntax Tree (CST) provided by **lib2to3** in the"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Refactoring · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/"/><meta property="og:description" content="Bowler builds on top of the Concrete Syntax Tree (CST) provided by **lib2to3** in the"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
           addBackToTop(
             {"zIndex":100}
           )
         });
-        </script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Basics</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul><li class="navListItem"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+        </script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class="siteNavGroupActive"><a href="/docs/dev-intro" target="_self">Contribute</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Basics</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
               createToggler('#navToggler', '#docsNav', 'docsSliderActive');
               createToggler('#tocToggler', 'body', 'tocActive');
 
-              const headings = document.querySelector('.toc-headings');
+              var headings = document.querySelector('.toc-headings');
               headings && headings.addEventListener('click', function(event) {
-                if (event.target.tagName === 'A') {
-                  document.body.classList.remove('tocActive');
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
                 }
               }, false);
 
               function createToggler(togglerSelector, targetSelector, className) {
                 var toggler = document.querySelector(togglerSelector);
                 var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
 
                 toggler.onclick = function(event) {
                   event.preventDefault();
@@ -27,7 +60,7 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Refactoring</h1></header><article><div><span><p>Bowler builds on top of the Concrete Syntax Tree (CST) provided by <strong>lib2to3</strong> in the
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Refactoring</h1></header><article><div><span><p>Bowler builds on top of the Concrete Syntax Tree (CST) provided by <strong>lib2to3</strong> in the
 standard library.  This enables direct modifications to the tree, without losing
 formatting, comments, or whitespace, and without needing to directly support every
 new version of Python as they get released.</p>
@@ -62,7 +95,7 @@ within the interface. -- <a href="https://en.wikipedia.org/wiki/Fluent_interface
 <p>This allows you to chain method calls to the <code>Query</code> class one after the other, without
 needing to assign a query object to a variable or reference that variable for every
 method call.  In practice, that looks something like this:</p>
-<pre><code class="hljs css languages- python"><span class="token punctuation">(</span>
+<pre><code class="hljs css language-python"><span class="token punctuation">(</span>
     Query<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span>modify<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
@@ -85,7 +118,7 @@ given pattern, while capturing relevant child nodes or leaves when available.  B
 includes a set of common selectors that attempt to find all definitions or references
 of a specific type, and uses a consistent naming scheme for all captured elements.</p>
 <p>An example selector to find all uses of the <code>print</code> function might look like:</p>
-<pre><code class="hljs css languages- python">pattern <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+<pre><code class="hljs css language-python">pattern <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
     power&lt; "print"
         trailer&lt; "(" print_args=any* ")" >
     >
@@ -109,12 +142,12 @@ If an element fails one filter function, it will not be passed or considered for
 other filter functions.</p>
 <p>An example filter, to pair with the example selector above, that only matches calls
 to the print function with string literal arguments:</p>
-<pre><code class="hljs css languages- python"><span class="token keyword">def</span> <span class="token function">print_string</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
+<pre><code class="hljs css language-python"><span class="token keyword">def</span> <span class="token function">print_string</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
     args <span class="token operator">=</span> capture<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"print_args"</span><span class="token punctuation">)</span>
 
     <span class="token comment"># args will be a list because we captured `any*`</span>
     <span class="token keyword">if</span> args<span class="token punctuation">:</span>
-        <span class="token keyword">return</span> <span class="token builtin">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token builtin">len</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token keyword">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
 
     <span class="token keyword">return</span> <span class="token boolean">False</span>
 
@@ -136,11 +169,11 @@ nodes or leaves, removing or replacing elements, or inserting elements into the 
 <p>An example modifier, which builds the above selector and filter examples, transforms
 the string literal arguments of the print function to wrap them in a hypothetical
 translation function (<code>tr</code>):</p>
-<pre><code class="hljs css languages- python"><span class="token keyword">def</span> <span class="token function">translate_string</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+<pre><code class="hljs css language-python"><span class="token keyword">def</span> <span class="token function">translate_string</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token boolean">None</span><span class="token punctuation">:</span>
     args <span class="token operator">=</span> capture<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"print_args"</span><span class="token punctuation">)</span>
 
     <span class="token comment"># make sure the arguments haven't already been modified</span>
-    <span class="token keyword">if</span> args <span class="token operator">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> args <span class="token keyword">and</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> TOKEN<span class="token punctuation">.</span>STRING<span class="token punctuation">:</span>
         args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span>
             Call<span class="token punctuation">(</span>
                 Name<span class="token punctuation">(</span><span class="token string">"tr"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -172,7 +205,7 @@ decide whether that hunk should be applied or skipped.  This allows for behavior
 as extra logging, selective application of hunks based on conditions, record keeping
 for future queries, and much more.</p>
 <p>An example processor that keeps track of every file touched by the query:</p>
-<pre><code class="hljs css languages- python">MODIFIED<span class="token punctuation">:</span> Set<span class="token punctuation">[</span>Filename<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">MODIFIED<span class="token punctuation">:</span> Set<span class="token punctuation">[</span>Filename<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token keyword">def</span> <span class="token function">modified_files</span><span class="token punctuation">(</span>filename<span class="token punctuation">:</span> Filename<span class="token punctuation">,</span> hunk<span class="token punctuation">:</span> Hunk<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
     MODIFIED<span class="token punctuation">.</span>add<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
@@ -195,7 +228,7 @@ hunk.  This is the &quot;safest&quot; option, as the user can verify that each c
 and meets the expectations of the refactoring.  There are also options to just generate
 a diff without applying hunks, or to apply all hunks without asking, and there are
 shortcut methods for each of these options as well.</p>
-<pre><code class="hljs css languages- python"><span class="token punctuation">(</span>
+<pre><code class="hljs css language-python"><span class="token punctuation">(</span>
     Query<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
     <span class="token punctuation">.</span>execute<span class="token punctuation">(</span>
@@ -205,4 +238,4 @@ shortcut methods for each of these options as well.</p>
     <span class="token punctuation">)</span>
 <span class="token punctuation">)</span>
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/basics-intro">← Introduction</a><a class="docs-next button" href="/docs/basics-setup">Setup →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#fixers">Fixers</a></li><li><a href="#queries">Queries</a></li><li><a href="#transforms">Transforms</a><ul class="toc-headings"><li><a href="#selectors">Selectors</a></li><li><a href="#filters">Filters</a></li><li><a href="#modifiers">Modifiers</a></li><li><a href="#processors">Processors</a></li></ul></li><li><a href="#execution">Execution</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2019 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/basics-intro"><span class="arrow-prev">← </span><span>Introduction</span></a><a class="docs-next button" href="/docs/basics-setup"><span>Setup</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#fixers">Fixers</a></li><li><a href="#queries">Queries</a></li><li><a href="#transforms">Transforms</a><ul class="toc-headings"><li><a href="#selectors">Selectors</a></li><li><a href="#filters">Filters</a></li><li><a href="#modifiers">Modifiers</a></li><li><a href="#processors">Processors</a></li></ul></li><li><a href="#execution">Execution</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="https://opensource.facebook.com/legal/privacy/" target="_blank" rel="noreferrer noopener">Privacy</a><a href="https://opensource.facebook.com/legal/terms/" target="_blank" rel="noreferrer noopener">Terms</a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2021 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

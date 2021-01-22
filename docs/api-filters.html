@@ -1,24 +1,57 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Filters · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Filters in Bowler are intermediate functions that optionally restrict the set of"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Filters · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/index.html"/><meta property="og:description" content="Filters in Bowler are intermediate functions that optionally restrict the set of"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
-        document.addEventListener("DOMContentLoaded", function(){
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Filters · Bowler</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Filters in Bowler are intermediate functions that optionally restrict the set of"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Filters · Bowler"/><meta property="og:type" content="website"/><meta property="og:url" content="https://pybowler.io/"/><meta property="og:description" content="Filters in Bowler are intermediate functions that optionally restrict the set of"/><meta property="og:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://pybowler.io/img/logo/Bowler_FullColor_DarkText.png"/><link rel="shortcut icon" href="/img/favicon/Oddy.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
           addBackToTop(
             {"zIndex":100}
           )
         });
-        </script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>API Reference</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul><li class="navListItem"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+        </script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo/Bowler_Light.png" alt="Bowler"/><h2 class="headerTitleWithLogo">Bowler</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/basics-intro" target="_self">Getting Started</a></li><li class="siteNavGroupActive"><a href="/docs/api-query" target="_self">API Reference</a></li><li class="siteNavGroupActive"><a href="/docs/dev-roadmap" target="_self">Roadmap</a></li><li class="siteNavGroupActive"><a href="/docs/dev-intro" target="_self">Contribute</a></li><li class=""><a href="https://github.com/facebookincubator/bowler" target="_self">Github</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>API Reference</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Basics</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/basics-intro">Introduction</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-refactoring">Refactoring</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-setup">Setup</a></li><li class="navListItem"><a class="navItem" href="/docs/basics-usage">Usage</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API Reference</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/api-query">Queries</a></li><li class="navListItem"><a class="navItem" href="/docs/api-selectors">Selectors</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api-filters">Filters</a></li><li class="navListItem"><a class="navItem" href="/docs/api-modifiers">Modifiers</a></li><li class="navListItem"><a class="navItem" href="/docs/api-commands">CLI Commands</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Contributing</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/dev-intro">Developing Bowler</a></li><li class="navListItem"><a class="navItem" href="/docs/dev-roadmap">Roadmap to the Future</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
               createToggler('#navToggler', '#docsNav', 'docsSliderActive');
               createToggler('#tocToggler', 'body', 'tocActive');
 
-              const headings = document.querySelector('.toc-headings');
+              var headings = document.querySelector('.toc-headings');
               headings && headings.addEventListener('click', function(event) {
-                if (event.target.tagName === 'A') {
-                  document.body.classList.remove('tocActive');
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
                 }
               }, false);
 
               function createToggler(togglerSelector, targetSelector, className) {
                 var toggler = document.querySelector(togglerSelector);
                 var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
 
                 toggler.onclick = function(event) {
                   event.preventDefault();
@@ -27,12 +60,12 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Filters</h1></header><article><div><span><p>Filters in Bowler are intermediate functions that optionally restrict the set of
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Filters</h1></header><article><div><span><p>Filters in Bowler are intermediate functions that optionally restrict the set of
 syntax tree elements originally matched by <a href="api-selectors">selectors</a> before being
 modified. Matched elements must &quot;pass&quot; all filters to get modified – elements that fail
 a filter will be dropped immediately, and will not be tested by subsequent filters.</p>
 <p>All filter functions must match this signature:</p>
-<pre><code class="hljs css languages- python"><span class="token keyword">def</span> <span class="token function">some_filter</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
+<pre><code class="hljs css language-python"><span class="token keyword">def</span> <span class="token function">some_filter</span><span class="token punctuation">(</span>node<span class="token punctuation">:</span> LN<span class="token punctuation">,</span> capture<span class="token punctuation">:</span> Capture<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> Filename<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre>
 <table>
@@ -50,10 +83,10 @@ a filter will be dropped immediately, and will not be tested by subsequent filte
 <p>All filters are accessed as methods on the <a href="api-query"><code>Query</code></a> class:</p>
 <ul>
 <li><a href="#filter"><code>.filter()</code></a></li>
-<li><a href="#is-filename"><code>.is_filename()</code></a></li>
-<li><a href="#is-call"><code>.is_call()</code></a></li>
-<li><a href="#is-def"><code>.is_def()</code></a></li>
-<li><a href="#in-class"><code>.in_class()</code></a></li>
+<li><a href="#is_filename"><code>.is_filename()</code></a></li>
+<li><a href="#is_call"><code>.is_call()</code></a></li>
+<li><a href="#is_def"><code>.is_def()</code></a></li>
+<li><a href="#in_class"><code>.in_class()</code></a></li>
 </ul>
 <blockquote>
 <p>Note: Bowler's API is still in a &quot;provisional&quot; phase.  The core concepts will likely
@@ -62,7 +95,7 @@ gains new functionality.</p>
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="filter"></a><a href="#filter" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.filter()</code></h3>
 <p>Add a custom filter function to the query.</p>
-<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span>callback<span class="token punctuation">:</span> Callback<span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">query<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span>callback<span class="token punctuation">:</span> Callback<span class="token punctuation">)</span>
 </code></pre>
 <table>
 <thead>
@@ -72,10 +105,10 @@ gains new functionality.</p>
 <tr><td>callback</td><td>The custom filter function.</td></tr>
 </tbody>
 </table>
-<h3><a class="anchor" aria-hidden="true" id="is-filename"></a><a href="#is-filename" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_filename()</code></h3>
+<h3><a class="anchor" aria-hidden="true" id="is_filename"></a><a href="#is_filename" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_filename()</code></h3>
 <p>Restrict modifications to files matching the supplied regular expression[s].
 Supports both inclusive and exclusive matches. If both are given, then both must match.</p>
-<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>is_filename<span class="token punctuation">(</span>include<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">,</span> exclude<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">query<span class="token punctuation">.</span>is_filename<span class="token punctuation">(</span>include<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">,</span> exclude<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
 </code></pre>
 <table>
 <thead>
@@ -86,22 +119,22 @@ Supports both inclusive and exclusive matches. If both are given, then both must
 <tr><td>exclude</td><td>Only modify files that don't match the given pattern.</td></tr>
 </tbody>
 </table>
-<h3><a class="anchor" aria-hidden="true" id="is-call"></a><a href="#is-call" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_call()</code></h3>
+<h3><a class="anchor" aria-hidden="true" id="is_call"></a><a href="#is_call" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_call()</code></h3>
 <p>Only modify if the matched element is a class, function, or method call. Requires
 selector that captures <code>class_call</code> or <code>function_call</code> similar to
 <a href="api-selectors#select-function"><code>.select_function()</code></a>.</p>
-<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>is_call<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">query<span class="token punctuation">.</span>is_call<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="is-def"></a><a href="#is-def" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_def()</code></h3>
+<h3><a class="anchor" aria-hidden="true" id="is_def"></a><a href="#is_def" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.is_def()</code></h3>
 <p>Only modify if the matched element is a class, function, or method definition. Requires
 selector that captures <code>class_def</code> or <code>function_def</code> similar to
 <a href="api-selectors#select-function"><code>.select_function()</code></a>.</p>
-<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>is_def<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">query<span class="token punctuation">.</span>is_def<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<h3><a class="anchor" aria-hidden="true" id="in-class"></a><a href="#in-class" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.in_class()</code></h3>
+<h3><a class="anchor" aria-hidden="true" id="in_class"></a><a href="#in_class" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.in_class()</code></h3>
 <p>Only modify matched elements belonging to the given class, or to a subclass.
 Implies use of <code>.is_def()</code>.</p>
-<pre><code class="hljs css languages- python">query<span class="token punctuation">.</span>in_class<span class="token punctuation">(</span>class_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> include_subclasses<span class="token punctuation">:</span> <span class="token builtin">bool</span> <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
+<pre><code class="hljs css language-python">query<span class="token punctuation">.</span>in_class<span class="token punctuation">(</span>class_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> include_subclasses<span class="token punctuation">:</span> <span class="token builtin">bool</span> <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
 </code></pre>
 <table>
 <thead>
@@ -112,4 +145,4 @@ Implies use of <code>.is_def()</code>.</p>
 <tr><td>include_subclasses</td><td>When <code>False</code>, skips elements on subclasses of <code>class_name</code>.</td></tr>
 </tbody>
 </table>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api-selectors">← Selectors</a><a class="docs-next button" href="/docs/api-modifiers">Modifiers →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#filter-reference">Filter Reference</a><ul class="toc-headings"><li><a href="#filter"><code>.filter()</code></a></li><li><a href="#is-filename"><code>.is_filename()</code></a></li><li><a href="#is-call"><code>.is_call()</code></a></li><li><a href="#is-def"><code>.is_def()</code></a></li><li><a href="#in-class"><code>.in_class()</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2019 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api-selectors"><span class="arrow-prev">← </span><span>Selectors</span></a><a class="docs-next button" href="/docs/api-modifiers"><span>Modifiers</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#filter-reference">Filter Reference</a><ul class="toc-headings"><li><a href="#filter"><code>.filter()</code></a></li><li><a href="#is_filename"><code>.is_filename()</code></a></li><li><a href="#is_call"><code>.is_call()</code></a></li><li><a href="#is_def"><code>.is_def()</code></a></li><li><a href="#in_class"><code>.in_class()</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><a href="https://opensource.facebook.com/legal/privacy/" target="_blank" rel="noreferrer noopener">Privacy</a><a href="https://opensource.facebook.com/legal/terms/" target="_blank" rel="noreferrer noopener">Terms</a><a href="/en/blog">News</a><a href="https://twitter.com/fbOpenSource">Twitter</a><a href="https://github.com/facebookincubator/bowler">GitHub</a><a href="/docs/en/dev-intro">Contribute to Bowler</a><img src="/img/logo/Bowler_Light.svg" alt="Bowler" height="45"/></section><section class="copyright">Copyright © 2021 Facebook Inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

@@ -5,23 +5,20 @@
         <link>https://pybowler.io/blog</link>
         <description>The best place to stay up-to-date with the latest Bowler news and events.</description>
         <lastBuildDate>Fri, 24 Aug 2018 06:00:00 GMT</lastBuildDate>
-        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
-        <generator>Feed for Node.js</generator>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
         <image>
             <title>Bowler Blog</title>
             <url>https://pybowler.io/img/logo/Bowler_Light.png</url>
             <link>https://pybowler.io/blog</link>
         </image>
-        <copyright>Copyright © 2019 Facebook Inc.</copyright>
+        <copyright>Copyright © 2021 Facebook Inc.</copyright>
         <item>
             <title><![CDATA[Introducing Bowler]]></title>
             <link>https://pybowler.io/blog/2018/08/24/launch.html</link>
             <guid>https://pybowler.io/blog/2018/08/24/launch.html</guid>
             <pubDate>Fri, 24 Aug 2018 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>We are excited to announce Bowler, the safe refactoring tool for modern Python!
-We created Bowler as a tool for building powerful and reusable code mods for all of the
-Python services and utilities that we've created at Facebook.  This tool has alrea</p>
-]]></description>
+            <description><![CDATA[<p>We are excited to announce Bowler, the safe refactoring tool for modern Python! We created Bowler as a tool for building powerful and reusable code mods for all of the Python services and utilities that we've created at Facebook. This tool has alread...</p>]]></description>
         </item>
     </channel>
 </rss>
