@@ -29,7 +29,7 @@ When a PR has been accepted:
 
 ## Releasing New Versions
 
-1. Decide on the next version number, based on what has been added to `master`
+1. Decide on the next version number, based on what has been added to `main`
    since the previous release:
 
    * Major breaking changes should increment the first number and reset the other

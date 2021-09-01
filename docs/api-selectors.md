@@ -218,5 +218,5 @@ var_name | Variable name | `foo = 42` | `foo`
 var_value | Assignment value | `foo = 42` | `42`
 
 
-[pattern grammar]: https://github.com/python/cpython/blob/master/Lib/lib2to3/PatternGrammar.txt
-[python grammar]: https://github.com/python/cpython/blob/master/Lib/lib2to3/Grammar.txt
+[pattern grammar]: https://github.com/python/cpython/blob/main/Lib/lib2to3/PatternGrammar.txt
+[python grammar]: https://github.com/python/cpython/blob/main/Lib/lib2to3/Grammar.txt

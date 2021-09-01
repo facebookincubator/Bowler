@@ -1,12 +1,12 @@
-<a href="https://pybowler.io"><img alt="Bowler" height="96" src="https://github.com/facebookincubator/Bowler/raw/master/website/static/img/logo/Bowler_FullColor_DarkText.png" /></a>
+<a href="https://pybowler.io"><img alt="Bowler" height="96" src="https://github.com/facebookincubator/Bowler/raw/main/website/static/img/logo/Bowler_FullColor_DarkText.png" /></a>
 
 **Safe code refactoring for modern Python projects.**
 
 [![build status](https://github.com/facebookincubator/Bowler/workflows/Build/badge.svg)](https://github.com/facebookincubator/Bowler/actions)
 [![code coverage](https://img.shields.io/codecov/c/github/facebookincubator/Bowler)](https://codecov.io/gh/facebookincubator/Bowler)
 [![version](https://img.shields.io/pypi/v/bowler.svg)](https://pypi.org/project/bowler)
-[![changelog](https://img.shields.io/badge/change-log-blue.svg)](https://github.com/facebookincubator/bowler/blob/master/CHANGELOG.md)
-[![license](https://img.shields.io/pypi/l/bowler.svg)](https://github.com/facebookincubator/bowler/blob/master/LICENSE)
+[![changelog](https://img.shields.io/badge/change-log-blue.svg)](https://github.com/facebookincubator/bowler/blob/main/CHANGELOG.md)
+[![license](https://img.shields.io/pypi/l/bowler.svg)](https://github.com/facebookincubator/bowler/blob/main/LICENSE)
 [![code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 
