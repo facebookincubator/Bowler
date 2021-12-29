@@ -12,7 +12,7 @@ import unittest
 from io import StringIO
 
 import click
-import volatile
+import tempfile
 from fissix import pygram, pytree
 from fissix.pgen2.driver import Driver
 
@@ -96,7 +96,7 @@ class BowlerTestCase(unittest.TestCase):
         if query_func is None:
             query_func = default_query_func
 
-        with volatile.file(mode="w", suffix=".py") as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
             # TODO: I'm almost certain this will not work on Windows, since
             # NamedTemporaryFile has it already open for writing.  Consider
             # using mktemp directly?
