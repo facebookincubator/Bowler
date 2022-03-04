@@ -26,6 +26,20 @@ function pageUrl(page, language) {
   return siteConfig.baseUrl + (language ? language + '/' : '') + page;
 }
 
+function SocialBanner() {
+  return (
+    <div className="SocialBannerWrapper">
+      <div className="SocialBanner">
+        Support Ukraine 🇺🇦{' '}
+        <a href="https://opensource.facebook.com/support-ukraine">
+          Help Provide Humanitarian Aid to Ukraine
+        </a>
+        .
+      </div>
+    </div>
+  );
+}
+
 class Button extends React.Component {
   render() {
     return (
@@ -104,6 +118,7 @@ class Index extends React.Component {
 
     return (
       <div>
+        <SocialBanner />
         <HomeSplash language={language} />
         <div className="mainContainer">
           <Container padding={['bottom', 'top']} background="light">
