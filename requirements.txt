@@ -2,4 +2,3 @@ attrs
 click
 fissix
 moreorless>=0.2.0
-volatile
