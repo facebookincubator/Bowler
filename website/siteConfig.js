@@ -23,6 +23,10 @@ const users = [
 const repoUrl = 'https://github.com/facebookincubator/bowler';
 
 const siteConfig = {
+  algolia: {
+      apiKey: '54987596d168f804b64977e44742c4b7',
+      indexName: 'facebookincubator_bowler'
+  },
   title: 'Bowler' /* title for your website */,
   tagline: 'Safe code refactoring for modern Python',
   url: 'https://pybowler.io' /* your website url */,
