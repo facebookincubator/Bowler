@@ -1,0 +1,16 @@
+{
+  "id": "dev-intro",
+  "title": "Developing Bowler",
+  "description": "We want to make contributing to this project as easy and transparent as",
+  "source": "@site/../docs/dev-intro.md",
+  "permalink": "/docs/dev-intro",
+  "sidebar": "docs",
+  "next": {
+    "title": "Roadmap to the Future",
+    "permalink": "/docs/dev-roadmap"
+  },
+  "previous": {
+    "title": "CLI Commands",
+    "permalink": "/docs/api-commands"
+  }
+}

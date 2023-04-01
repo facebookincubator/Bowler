@@ -1,0 +1,16 @@
+{
+  "id": "api-selectors",
+  "title": "Selectors",
+  "description": "Selectors are defined using the **lib2to3** pattern syntax to search the syntax tree",
+  "source": "@site/../docs/api-selectors.md",
+  "permalink": "/docs/api-selectors",
+  "sidebar": "docs",
+  "next": {
+    "title": "Filters",
+    "permalink": "/docs/api-filters"
+  },
+  "previous": {
+    "title": "Queries",
+    "permalink": "/docs/api-query"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "basics-setup",
+  "title": "Setup",
+  "description": "## Installing Bowler",
+  "source": "@site/../docs/basics-setup.md",
+  "permalink": "/docs/basics-setup",
+  "sidebar": "docs",
+  "next": {
+    "title": "Usage",
+    "permalink": "/docs/basics-usage"
+  },
+  "previous": {
+    "title": "Refactoring",
+    "permalink": "/docs/basics-refactoring"
+  }
+}
