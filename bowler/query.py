@@ -660,8 +660,22 @@ class Query:
 
                 if isinstance(value, Leaf) and value.type == TOKEN.NAME:
                     if value.value == old_name and value.parent is not None:
-                        value.replace(Name(new_name, prefix=value.prefix))
-                        break
+                        # Check if the old_name is part of a dotted path
+                        parts = old_name.split(".")
+                        if len(parts) > 1:
+                            # Extract the base name (the last part) and the parent path
+                            base_name = parts[-1]
+                            parent_path = ".".join(parts[:-1])
+                            
+                            # Check if the parent path matches
+                            if parent_path == node.value:
+                                # Replace with the new module path and base name
+                                value.replace(Name(new_name, prefix=value.prefix))
+                                break
+                        elif old_name == node.value:
+                            # If it's a simple name, replace it directly
+                            value.replace(Name(new_name, prefix=value.prefix))
+                            break
                 elif isinstance(value, Node):
                     if type_repr(value.type) == "dotted_name":
                         dp_old = dotted_parts(old_name)
@@ -674,14 +688,12 @@ class Query:
                                 leaf.replace(Name(new, prefix=leaf.prefix))
 
                         if len(dp_new) < len(dp_old):
-                            # if new path is shorter, remove excess children
-                            del value.children[len(dp_new) : len(dp_old)]
+                            # if the new path is shorter, remove excess children
+                            del value.children[len(dp_new): len(dp_old)]
                         elif len(dp_new) > len(dp_old):
-                            # if new path is longer, add new children
-                            children = [
-                                Name(new) for new in dp_new[len(dp_old) : len(dp_new)]
-                            ]
-                            value.children[len(dp_old) : len(dp_old)] = children
+                            # if the new path is longer, add new children
+                            children = [Name(new) for new in dp_new[len(dp_old): len(dp_new)]]
+                            value.children[len(dp_old): len(dp_old)] = children
 
                     elif type_repr(value.type) == "power":
                         # We don't actually need the '.' so just skip it
@@ -699,7 +711,7 @@ class Query:
 
                         if len(dp_new) < len(dp_old):
                             # if new path is shorter, remove excess children
-                            del value.children[len(dp_new) : len(dp_old)]
+                            del value.children[len(dp_new): len(dp_old)]
                         elif len(dp_new) > len(dp_old):
                             # if new path is longer, add new trailers in the middle
                             for i in range(len(dp_old), len(dp_new)):
@@ -709,6 +721,7 @@ class Query:
 
         transform.callbacks.append(rename_transform)
         return self
+
 
     def add_argument(
         self,
